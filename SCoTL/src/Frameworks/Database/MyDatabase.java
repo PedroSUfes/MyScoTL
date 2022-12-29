@@ -1,0 +1,626 @@
+package Frameworks.Database;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Policy.BusinessRules.BatchOperationsInterface;
+import Policy.BusinessRules.CoffeeBagOperationsInterface;
+import Policy.BusinessRules.EmployeeOperationsInterface;
+import Policy.BusinessRules.LoginInterface;
+import Policy.BusinessRules.LoginManager;
+import Policy.BusinessRules.PropertyOperationsInterface;
+import Policy.BusinessRules.WarehouseOperationsInterface;
+import Policy.Entity.Batch;
+import Policy.Entity.CoffeeBag;
+import Policy.Entity.Employee;
+import Policy.Entity.Servant;
+import Policy.Entity.Person;
+import Policy.Entity.Property;
+import Policy.Entity.User;
+import Policy.Entity.Warehouse;
+import Policy.Entity.WarehouseManager;
+import Utility.ArrayHelper;
+import Utility.Func1;
+import Utility.ListHelper;
+
+public class MyDatabase 
+implements 
+    BatchOperationsInterface, 
+    CoffeeBagOperationsInterface,
+    EmployeeOperationsInterface,
+    LoginInterface,
+    WarehouseOperationsInterface,
+    PropertyOperationsInterface
+{
+    private class ManageWarehouse
+    {
+        private String m_warehouseId = null;
+        private String m_managerCpf = null;
+        private String m_beginDate = null;
+        private String m_endDate = null;
+
+        public ManageWarehouse
+        (
+            String warehouseId,
+            String managerCpf,
+            String beginDate
+        )
+        {
+            m_warehouseId = warehouseId;
+            m_managerCpf = managerCpf;
+            m_beginDate = beginDate;
+        }
+
+        public String GetWarehouseId()
+        {
+            return m_warehouseId;
+        }
+
+        public String GetManagerCpf()
+        {
+            return m_managerCpf;
+        }
+
+        public String GetBeginDate()
+        {
+            return m_beginDate;
+        }
+
+        public String GetEndDate()
+        {
+            return m_endDate;
+        }
+
+        public void SetEndDate(String endDate)
+        {
+            m_endDate = endDate;
+        }
+    }
+
+    private class IsWarehouseOwner
+    {
+        private String m_warehouseId = null;
+        private String m_ownerCpf = null;
+        private String m_beginDate = null;
+        private String m_endDate = null;
+
+        public IsWarehouseOwner
+        (
+            String warehouseId,
+            String ownerCpf,
+            String beginDate
+        )
+        {
+            m_warehouseId = warehouseId;
+            m_ownerCpf = ownerCpf;
+            m_beginDate = beginDate;
+        }
+
+        public String GetWarehouseId()
+        {
+            return m_warehouseId;
+        }
+
+        public String GetOwnerCpf()
+        {
+            return m_ownerCpf;
+        }
+
+        public String GetBeginDate()
+        {
+            return m_beginDate;
+        }
+
+        public String GetEndDate()
+        {
+            return m_endDate;
+        }
+
+        public void SetEndDate(String endDate)
+        {
+            m_endDate = endDate;
+        }
+    }
+
+    private class WorksOn
+    {
+        private String m_cpf = null;
+        private String m_propertyId = null;
+        private String m_beginDate = null;
+        private String m_endDate = null;
+
+        public WorksOn
+        (
+            String cpf,
+            String propertyId,
+            String beginDate
+        )
+        {
+            m_cpf = cpf;
+            m_propertyId = propertyId;
+            m_beginDate = beginDate;
+        }
+
+        public String GetCpf()
+        {
+            return m_cpf;
+        }
+
+        public String GetPropertyId()
+        {
+            return m_propertyId;
+        }
+
+        public String GetBeginDate()
+        {
+            return m_beginDate;
+        }
+
+        public String GetEndDate()
+        {
+            return m_endDate;
+        }
+    }
+
+    private class BuyBag
+    {
+        private String m_batchId = null;
+        private String m_bagId = null;
+        private String m_cpf = null;
+        private String m_buyDate = null;
+
+        public BuyBag
+        (
+            String batchId,
+            String bagId, 
+            String cpf,
+            String buyDate
+        )
+        {
+            m_batchId = batchId;
+            m_bagId = bagId;
+            m_cpf = cpf;
+            m_buyDate = buyDate;
+        }
+
+        public String GetBatchId()
+        {
+            return m_batchId;
+        }
+
+        public String GetBagId()
+        {
+            return m_bagId;
+        }
+
+        public String GetCpf()
+        {
+            return m_cpf;
+        }
+    }
+
+    private List<User> userList = new ArrayList<User>();
+    private List<Person> personList = new ArrayList<Person>();
+    private List<Warehouse> warehouseList = new ArrayList<Warehouse>();
+    private List<ManageWarehouse> manageWarehouseList = new ArrayList<ManageWarehouse>();
+    private List<IsWarehouseOwner> isWarehouseOwnerList = new ArrayList<IsWarehouseOwner>();
+    private List<WorksOn> worksOnList = new ArrayList<WorksOn>();
+    private List<BuyBag> buyBagList = new ArrayList<BuyBag>();
+    private List<Property> propertyList = new ArrayList<Property>();
+
+    public void AddUser(User user)
+    {
+        userList.add(user);
+    }
+
+    @Override
+    public Boolean TryLogin(String login, String password) 
+    {
+        var iterator = userList.iterator();
+        while(iterator.hasNext())
+        {
+            User user = iterator.next();
+            if(user.GetLogin() == login && user.GetPassword() == password)
+            {
+                LoginManager.SetUserType(user.GetUserType());
+                return true;
+            }
+        }
+
+        System.out.println("Wrong login or password");
+        return false;
+    }
+
+    @Override
+    public Batch[] GetBatches() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Batch GetBatch(String batchId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryRegisterBatch(Batch batch) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryRemoveBatch(String batchId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public CoffeeBag[] GetCoffeeBags() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public CoffeeBag[] GetCoffeeBags(String batchId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public CoffeeBag[] GetCoffeeBag(String batchId, String coffeeBagId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryRegisterCoffeeBag(CoffeeBag coffeeBag) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryRemoveBag(String batchId, String coffeeBagId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Employee[] GetEmployees() 
+    {
+        // Os funcionários são as pessoas cujos cpf's são "mencionados" nas tabelas worksOn e ManageWarehouse
+        var toReturn = new Employee[worksOnList.size() + manageWarehouseList.size()];
+        int currentAddress = 0;
+        var employeeArrayHelper = new ArrayHelper<Employee>();
+        var personListHelper = new ListHelper<Person>();
+        for(var element : worksOnList)
+        {
+            if(employeeArrayHelper.Exists(toReturn, (e) -> e != null && e.GetCpf() == element.GetCpf()))
+            {
+                continue;
+            }
+
+            toReturn[currentAddress] = (Employee) personListHelper.Find(personList, (e) -> e.GetCpf() == element.GetCpf());
+            ++currentAddress;
+        }
+
+        for(var element : manageWarehouseList)
+        {
+            if(employeeArrayHelper.Exists(toReturn, (e) -> e != null && e.GetCpf() == element.GetManagerCpf()))
+            {
+                continue;
+            }
+
+            toReturn[currentAddress] = (Employee) personListHelper.Find(personList, (e) -> e.GetCpf() == element.GetManagerCpf());
+            ++currentAddress;
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public Employee GetEmployee(String cpf) 
+    {
+        // Os empregados têm suas chaves primárias presentes nas tabelas worksOn e ManageWarehouse
+        // Deve-se usar essas tabelas para resolver para a classe Employee
+
+        var worksOnListHelper = new ListHelper<WorksOn>();
+        var manageWarehouseListHelper = new ListHelper<ManageWarehouse>();
+
+        if
+        (
+            worksOnListHelper.Exists(worksOnList, (e) -> e.GetCpf() == cpf) || 
+            manageWarehouseListHelper.Exists(manageWarehouseList, (e) -> e.GetManagerCpf() == cpf)
+        )
+        {
+            var personListHelper = new ListHelper<Person>();
+            return (Employee) personListHelper.Find(personList, (e) -> e.GetCpf() == cpf);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Boolean TryRegisterServant(Servant servant, String beginDate) 
+    {
+        // Verificar se a propriedade está cadastrada
+            // Se não estiver, uma mensagem de erro deve ser exibida e a função retorna falso
+        // Verificar se o servente está cadastrado
+        // Se não estiver, deve o cadastrar
+        // Verificar a tabela worksOn. Caso já tenha uma tupla equivalente aos parâmetros dessa função,
+        // se a data de fim estiver setada, deve-se cadastrar o novo registro.
+
+        var propertyListHelper = new ListHelper<Property>();
+        if(!propertyListHelper.Exists(propertyList, (e) -> e.GetId() == servant.GetProperty().GetId()))
+        {
+            System.out.println("Property with id"+servant.GetProperty().GetId()+" not in register");
+            return false;
+        }
+
+        var personListHelper = new ListHelper<Person>();
+        if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == servant.GetCpf()))
+        {
+            personList.add(servant);
+        }
+
+        var worksOnListHelper = new ListHelper<WorksOn>();
+        var worksOnTuple = worksOnListHelper.Find
+        (
+            worksOnList, (e) -> e.GetCpf() == servant.GetCpf() && e.GetPropertyId() == servant.GetProperty().GetId()
+        );
+
+        if(worksOnTuple == null)
+        {
+            worksOnList.add(new WorksOn(servant.GetCpf(), servant.GetProperty().GetId(), beginDate));
+            return true;
+        }
+        
+        if(worksOnTuple.GetEndDate() == null)
+        {
+            System.out.println
+            (
+                "Servant with cpf"+servant.GetCpf()+" already works on property with id"+servant.GetProperty().GetId()
+            );
+            return false;
+        }
+        
+        worksOnList.add(new WorksOn(servant.GetCpf(), servant.GetProperty().GetId(), beginDate));
+        return true;
+    }
+
+    @Override
+    public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate) 
+    {
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        if(!warehouseListHelper.Exists(warehouseList, (e) -> e.GetId() == warehouseManager.GetWarehouse().GetId()))
+        {
+            System.out.println("Warehouse with id"+warehouseManager.GetWarehouse().GetId()+" not in register");
+            return false;
+        }
+
+        var personListHelper = new ListHelper<Person>();
+        if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == warehouseManager.GetCpf()))
+        {
+            personList.add(warehouseManager);
+        }
+
+        var manageWarehouseListHelper = new ListHelper<ManageWarehouse>();
+        var manageWarehouseTuple = manageWarehouseListHelper.Find
+        (
+            manageWarehouseList, 
+            (e) -> e.GetManagerCpf() == warehouseManager.GetCpf() && 
+            e.GetWarehouseId() == warehouseManager.GetWarehouse().GetId()
+        );
+
+        if(manageWarehouseTuple == null)
+        {
+            manageWarehouseList.add(new ManageWarehouse
+            (
+                warehouseManager.GetWarehouse().GetId(), 
+                warehouseManager.GetCpf(),
+                beginDate
+            ));
+            return true;
+        }
+        
+        if(manageWarehouseTuple.GetEndDate() == null)
+        {
+            System.out.println
+            (
+                "Warehouse manager with cpf"+warehouseManager.GetCpf()+" already manage warehouse with id"+warehouseManager.GetWarehouse().GetId()
+            );
+            return false;
+        }
+        
+        manageWarehouseList.add(new ManageWarehouse
+        (
+            warehouseManager.GetCpf(), warehouseManager.GetWarehouse().GetId(), beginDate
+        ));
+        return true;
+    }
+
+    @Override
+    public Boolean TryUpdateServant(Servant servant) 
+    {
+        // Supor que a propriedade não mudará
+
+        var worksOnListHelper = new ListHelper<WorksOn>();
+        if(!worksOnListHelper.Exists(worksOnList, (e) -> e.GetCpf() == servant.GetCpf()))
+        {
+            System.out.println("Servant with cpf "+servant.GetCpf()+" not in register");
+            return false;
+        }
+
+        var personListHelper = new ListHelper<Person>();
+        var personResult = personListHelper.Find(personList, (e) -> e.GetCpf() == servant.GetCpf());
+        personResult = servant;
+        return true;
+    }
+
+    @Override
+    public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager) 
+    {
+        // Supor que o galpão administrado permanece constante
+
+        var manageWarehouseListHelper = new ListHelper<ManageWarehouse>();
+        if(!manageWarehouseListHelper.Exists(manageWarehouseList, (e) -> e.GetManagerCpf() == warehouseManager.GetCpf()))
+        {
+            System.out.println("Warehouse manager with cpf "+warehouseManager.GetCpf()+" not in register");
+            return false;
+        }
+
+        var personListHelper = new ListHelper<Person>();
+        var personResult = personListHelper.Find(personList, (e) -> e.GetCpf() == warehouseManager.GetCpf());
+        personResult = warehouseManager;
+        return true;
+    }
+
+    @Override
+    public Boolean TryRemoveEmployee(String cpf, String currentDate) 
+    {
+        // Deve verificar se é realmente o cpf de um funcionario (existe nas tabelas worksOn e ManageWarehouse)
+        var worksOnListHelper = new ListHelper<WorksOn>();
+        var managerWarehouseListHelper = new ListHelper<ManageWarehouse>();
+        if
+        (
+            !worksOnListHelper.Exists(worksOnList, (e) -> e.GetCpf() == cpf) &&
+            !managerWarehouseListHelper.Exists(manageWarehouseList, (e) -> e.GetManagerCpf() == cpf
+        ))
+        {
+            System.out.println("The cpf "+cpf+" is not owned by a employee. Fail to remove.");
+            return false;
+        }
+
+        worksOnList.removeIf((e) -> e.GetCpf() == cpf);
+        manageWarehouseList.removeIf((e) -> e.GetManagerCpf() == cpf);
+        personList.removeIf((e) -> e.GetCpf() == cpf);
+
+        return true;
+    }
+
+    @Override
+    public Warehouse[] GetWarehouses() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Warehouse[] GetWarehouses(String stateName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Warehouse[] GetWarehouses(String stateName, String streetName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Warehouse GetWarehouse(String id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Warehouse GetWarehouse(String stateName, String streetName, int number) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryRegisterWarehouse(Warehouse warehouse) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryUpdateWarehouse(Warehouse warehouse) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Boolean TryRemoveWarehouse(String id) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Property[] GetProperties() 
+    {    
+        var toReturn = new Property[propertyList.size()];
+        
+        for(var i = 0; i < propertyList.size(); ++i)
+        {
+            toReturn[i] = new Property(propertyList.get(i));
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public Property GetPropertyById(String id) 
+    {
+        var propertyListHelper = new ListHelper<Property>();
+        var toReturn = propertyListHelper.Find(propertyList, (e) -> e.GetId() == id);
+        if(toReturn == null)
+        {
+            System.out.println("Fail to get property with id "+id);
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public Boolean TryRegisterProperty(Property property) 
+    {
+        var propertyListHelper = new ListHelper<Property>();
+        if(propertyListHelper.Exists(propertyList, (e) -> e.GetId() == property.GetId()))
+        {
+            System.out.println("Property with same ID already in register");
+            return false;
+        }
+
+        propertyList.add(property);
+        return true;
+    }
+
+    @Override
+    public Boolean TryUpdateProperty(Property property) 
+    {
+        var propertyListHelper = new ListHelper<Property>();
+        if(!propertyListHelper.Exists(propertyList, (e) -> e.GetId() == property.GetId()))
+        {
+            System.out.println("Property with id "+property.GetId()+" is not registered. Fail to update");
+            return false;
+        }
+
+        propertyList.set
+        (
+            propertyListHelper.GetIndexOf(propertyList, (e) -> e.GetId() == property.GetId()), 
+            property
+        );
+        return true;
+    }
+
+    @Override
+    public Boolean TryRemoveProperty(String id) 
+    {
+        var propertyListHelper = new ListHelper<Property>();
+        if(!propertyListHelper.Exists(propertyList, (e) -> e.GetId() == id))
+        {
+            System.out.println("Property with id "+id+" is not registered. Fail to remove.");
+            return false;
+        }
+
+        propertyList.remove(propertyListHelper.GetIndexOf(propertyList, (e) -> e.GetId() == id));
+        return true;
+    }
+}
