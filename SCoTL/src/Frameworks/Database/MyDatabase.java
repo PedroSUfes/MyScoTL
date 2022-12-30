@@ -379,8 +379,9 @@ implements
         {
             System.out.println
             (
-                "Servant with cpf"+servant.GetCpf()+" already works on property with id"+servant.GetProperty().GetId()
+                "Servant with cpf "+servant.GetCpf()+" already works on property with id "+servant.GetProperty().GetId()+"."
             );
+
             return false;
         }
         
@@ -394,7 +395,7 @@ implements
         var warehouseListHelper = new ListHelper<Warehouse>();
         if(!warehouseListHelper.Exists(warehouseList, (e) -> e.GetId() == warehouseManager.GetWarehouse().GetId()))
         {
-            System.out.println("Warehouse with id"+warehouseManager.GetWarehouse().GetId()+" not in register");
+            System.out.println("Warehouse with id "+warehouseManager.GetWarehouse().GetId()+" not in register");
             return false;
         }
 
@@ -420,6 +421,7 @@ implements
                 warehouseManager.GetCpf(),
                 beginDate
             ));
+
             return true;
         }
         
@@ -427,8 +429,9 @@ implements
         {
             System.out.println
             (
-                "Warehouse manager with cpf"+warehouseManager.GetCpf()+" already manage warehouse with id"+warehouseManager.GetWarehouse().GetId()
+                "Warehouse manager with cpf "+warehouseManager.GetCpf()+" already manage warehouse with id "+warehouseManager.GetWarehouse().GetId()
             );
+
             return false;
         }
         
@@ -436,6 +439,7 @@ implements
         (
             warehouseManager.GetCpf(), warehouseManager.GetWarehouse().GetId(), beginDate
         ));
+
         return true;
     }
 
@@ -476,7 +480,7 @@ implements
     }
 
     @Override
-    public Boolean TryRemoveEmployee(String cpf, String currentDate) 
+    public Boolean TryRemoveEmployee(String cpf) 
     {
         // Deve verificar se é realmente o cpf de um funcionario (existe nas tabelas worksOn e ManageWarehouse)
         var worksOnListHelper = new ListHelper<WorksOn>();
@@ -499,57 +503,222 @@ implements
     }
 
     @Override
-    public Warehouse[] GetWarehouses() {
-        // TODO Auto-generated method stub
+    public Warehouse[] GetWarehouses() 
+    {
+        var toReturn = new Warehouse[warehouseList.size()];
+        int currentIndex = 0;
+        for(var element : warehouseList)
+        {
+            toReturn[currentIndex] = element;
+            ++currentIndex;
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public Warehouse[] GetWarehouses(String stateName) 
+    {
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        var filterList = warehouseListHelper.FindAll(warehouseList, (e) -> e.GetStateName() == stateName);
+        var toReturn = new Warehouse[filterList.size()];
+        int currentIndex = 0;
+        for(var element : filterList)
+        {
+            if(element == null)
+            {
+                continue;
+            }
+
+            toReturn[currentIndex] = element;
+            ++currentIndex;
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public Warehouse[] GetWarehouses(String stateName, String streetName) 
+    {
+        var warehouseArrayHelper = new ArrayHelper<Warehouse>();
+        var withStateName = GetWarehouses(stateName);
+
+        var filterList = warehouseArrayHelper.FindAll(withStateName, (e) -> e.GetStreetName() == streetName);
+        var toReturn = new Warehouse[filterList.size()];
+        int currentIndex = 0;
+        for(var element : filterList)
+        {
+            if(element == null)
+            {
+                continue;
+            }
+
+            toReturn[currentIndex] = new Warehouse(element);
+            ++currentIndex;
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf) 
+    {
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        var filterList = warehouseListHelper.FindAll(warehouseList, (e) -> e.GetOwner().GetCpf() == ownerCpf);
+        var toReturn = new Warehouse[filterList.size()];
+        int currentIndex = 0;
+        for(var element : filterList)
+        {
+            if(element == null)
+            {
+                continue;
+            }
+
+            toReturn[currentIndex] = element;
+            ++currentIndex;
+        }
         return null;
     }
 
     @Override
-    public Warehouse[] GetWarehouses(String stateName) {
-        // TODO Auto-generated method stub
-        return null;
+    public Warehouse GetWarehouse(String id) 
+    {
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        var toCopyWarehouse = warehouseListHelper.Find(warehouseList, (e) -> e.GetId() == id);
+        if(toCopyWarehouse == null)
+        {
+            return null;
+        }
+
+        return new Warehouse(toCopyWarehouse); 
     }
 
     @Override
-    public Warehouse[] GetWarehouses(String stateName, String streetName) {
-        // TODO Auto-generated method stub
-        return null;
+    public Warehouse GetWarehouse(String stateName, String streetName, int number) 
+    {
+        var warehouseArrayHelper = new ArrayHelper<Warehouse>();
+        var withStateNameAndStreetName = GetWarehouses(stateName, streetName);
+        var toReturn = warehouseArrayHelper.Find(withStateNameAndStreetName, (e) -> e.GetNumber() == number);
+
+        return toReturn;
     }
 
     @Override
-    public Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf) {
-        // TODO Auto-generated method stub
-        return null;
+    public Boolean TryRegisterWarehouse(Warehouse warehouse, String beginDate) 
+    {
+        // Deve-se verificar se já existe um galpão com mesmo id
+        // Caso a pessoa dona do galpão não esteja na tabela pessoa, deve-se a adicionar
+        // Lembrar dce preencher a tabela de relacionamento isWarehouseOwnerList
+
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        if(warehouseListHelper.Exists(warehouseList, (e) -> e.GetId() == warehouse.GetId()))
+        {
+            System.out.println("A warehouse with the same id "+warehouse.GetId()+" already is in register. Fail to register.");
+            return false;
+        }
+
+        isWarehouseOwnerList.add(new IsWarehouseOwner(warehouse.GetId(), warehouse.GetOwner().GetCpf(), beginDate));
+        var personListHelper = new ListHelper<Person>();
+        if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == warehouse.GetOwner().GetCpf()))
+        {
+            personList.add(warehouse.GetOwner());
+        }
+
+        warehouseList.add(warehouse);
+        return true;
     }
 
     @Override
-    public Warehouse GetWarehouse(String id) {
-        // TODO Auto-generated method stub
-        return null;
+    public Boolean TryUpdateWarehouse(Warehouse warehouse, String date) 
+    {
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        if(!warehouseListHelper.Exists(warehouseList, (e) -> e.GetId() == warehouse.GetId()))
+        {
+            System.out.println("The warehouse with id "+warehouse.GetId()+" is not in register. Fail to update.");
+            return false;
+        }
+        var plh = new ListHelper<Person>();
+        System.out.println("Person Table:");
+        plh.ForAllDo(personList, (e) -> System.out.println(e.GetCpf()));
+        var toUpdate = warehouseListHelper.Find(warehouseList, (e) -> e.GetId() == warehouse.GetId());
+        var oldOwnerCpf = toUpdate.GetOwner().GetCpf();
+        var newOwnerCpf = warehouse.GetOwner().GetCpf();
+        // Precisa-se saber se o antigo dono está a ser referenciado por alguma outra tupla.
+        // Caso não esteja, deve ser removido do banco.
+        // Caso esteja, deve-se setar a data de fim na tupla em isWarehouseOwnerList.
+        System.out.println("Old owner cpf: "+oldOwnerCpf);
+        System.out.println("New owner cpf: "+newOwnerCpf);
+        if(oldOwnerCpf != newOwnerCpf) 
+        {
+            var numberOfReferences = GetNumberOfReferences(oldOwnerCpf);
+            System.out.println("Number of references to the old owner: "+numberOfReferences);
+            if(numberOfReferences == 1)
+            {
+                var personListHelper = new ListHelper<Person>();
+                personList.remove(personListHelper.GetIndexOf(personList, (e) -> e.GetCpf() == oldOwnerCpf));
+            }
+            else
+            {
+                var isWarehouseOwnerListHelper = new ListHelper<IsWarehouseOwner>();
+                var toUp = isWarehouseOwnerListHelper.Find
+                (
+                    isWarehouseOwnerList, 
+                    (e) -> e.GetOwnerCpf() == newOwnerCpf && e.GetWarehouseId() == warehouse.GetId()
+                );
+
+                toUp.SetEndDate(date);
+            }
+        }
+
+        // Caso o novo dono não esteja cadastrado
+        var personListHelper = new ListHelper<Person>();
+        if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == warehouse.GetOwner().GetCpf()))
+        {
+            personList.add(warehouse.GetOwner());
+        }
+        isWarehouseOwnerList.add(new IsWarehouseOwner(warehouse.GetId(), newOwnerCpf, date));
+        System.out.println("Person Table:");
+        plh.ForAllDo(personList, (e) -> System.out.println(e.GetCpf()));
+        toUpdate.CopyAttributesOf(warehouse);
+        return true;
     }
 
     @Override
-    public Warehouse GetWarehouse(String stateName, String streetName, int number) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Boolean TryRegisterWarehouse(Warehouse warehouse) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Boolean TryUpdateWarehouse(Warehouse warehouse) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Boolean TryRemoveWarehouse(String id) {
-        // TODO Auto-generated method stub
-        return null;
+    public Boolean TryRemoveWarehouse(String id) 
+    {
+        // Caso o galpão com id não esteja registrado, uma mensagem de erro deve ser informada e a função deve retornar falso
+        // Caso o dono do galpão removido não esteja referenciado em nenhuma outra tabela, deve-se o remover do banco
+        var warehouseListHelper = new ListHelper<Warehouse>();
+        if(!warehouseListHelper.Exists(warehouseList, (e) -> e.GetId() == id))
+        {
+            System.out.println("The warehouse with id "+id+" is not in register. Fail to remove.");
+            return false;
+        }
+        var plh = new ListHelper<Person>();
+        System.out.println("To remove: "+id);
+        System.out.println("Person table");
+        plh.ForAllDo(personList, (e) -> System.out.println(e.GetCpf())); 
+        
+        isWarehouseOwnerList.remove(new ListHelper<IsWarehouseOwner>().GetIndexOf
+        (
+            isWarehouseOwnerList, (e) -> e.GetWarehouseId() == id
+        ));
+            
+        var ownerCpf = warehouseListHelper.Find(warehouseList, (e) -> e.GetId() == id).GetOwner().GetCpf();
+        if(GetNumberOfReferences(ownerCpf) == 0)
+        {
+            var personListHelper = new ListHelper<Person>();
+            personList.remove(personListHelper.GetIndexOf
+            (
+                personList, (e) -> e.GetCpf() == ownerCpf
+            ));
+        }
+        System.out.println("To remove: "+id);
+        System.out.println("Person table");
+        plh.ForAllDo(personList, (e) -> System.out.println(e.GetCpf())); 
+        var toRemoveIndex = warehouseListHelper.GetIndexOf(warehouseList, (e) -> e.GetId() == id);
+        warehouseList.remove(toRemoveIndex);
+        return true;
     }
 
     @Override
@@ -622,5 +791,21 @@ implements
 
         propertyList.remove(propertyListHelper.GetIndexOf(propertyList, (e) -> e.GetId() == id));
         return true;
+    }
+
+    // Busca por referências (chaves estrangeiras) a um cpf. As tabelas em que são varridas podem ser identificadas no corpo da função
+    private int GetNumberOfReferences(String cpf)
+    {
+        var worksOnListHelper = new ListHelper<WorksOn>();
+        var managerWarehouseListHelper = new ListHelper<ManageWarehouse>();
+        var isWarehouseOwnerListHelper = new ListHelper<IsWarehouseOwner>();
+        var buyBagListHelper = new ListHelper<BuyBag>();
+
+        var inWorksOn = worksOnListHelper.FindAll(worksOnList, (e) -> e.GetCpf() == cpf);
+        var inManageWarehouse = managerWarehouseListHelper.FindAll(manageWarehouseList, (e) -> e.GetManagerCpf() == cpf);
+        var inIsWarehouseOwner = isWarehouseOwnerListHelper.FindAll(isWarehouseOwnerList, (e) -> e.GetOwnerCpf() == cpf);
+        var inBuyBag = buyBagListHelper.FindAll(buyBagList, (e) -> e.GetCpf() == cpf);
+        
+        return inWorksOn.size() + inManageWarehouse.size() + inIsWarehouseOwner.size() + inBuyBag.size();
     }
 }

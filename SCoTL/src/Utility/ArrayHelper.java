@@ -1,5 +1,6 @@
 package Utility;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class ArrayHelper<T>
@@ -41,5 +42,19 @@ public class ArrayHelper<T>
         }
 
         return null;
+    }
+
+    public ArrayList<T> FindAll(T[] array, Predicate<T> predicate)
+    {
+        var toReturn = new ArrayList<T>();
+        for(var element : array)
+        {
+            if(predicate.test(element))
+            {
+                toReturn.add(element);
+            }
+        }
+
+        return toReturn;
     }
 }

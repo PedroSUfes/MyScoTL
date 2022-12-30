@@ -2,7 +2,6 @@ package Policy.BusinessRules;
 
 import Policy.Entity.Servant;
 import Policy.Entity.Employee;
-import Policy.Entity.Property;
 import Policy.Entity.WarehouseManager;
 
 public interface EmployeeOperationsInterface 
@@ -13,5 +12,5 @@ public interface EmployeeOperationsInterface
     public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate);
     public Boolean TryUpdateServant(Servant servant);
     public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager);
-    public Boolean TryRemoveEmployee(String cpf, String currentDate);
+    public Boolean TryRemoveEmployee(String cpf);
 }

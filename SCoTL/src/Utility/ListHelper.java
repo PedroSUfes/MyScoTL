@@ -1,5 +1,6 @@
 package Utility;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -44,6 +45,21 @@ public class ListHelper<T>
         return null;
     }
 
+    public ArrayList<T> FindAll(List<T> list, Predicate<T> predicate)
+    {
+        var toReturn = new ArrayList<T>();
+
+        for(var element : list)
+        {
+            if(predicate.test(element))
+            {
+                toReturn.add(element);
+            }
+        }
+
+        return toReturn;
+    }
+
     public int GetIndexOf(List<T> list, Predicate<T> predicate)
     {
         int currentIndex = 0;
@@ -65,6 +81,19 @@ public class ListHelper<T>
         for(var element : list)
         {
             if(!predicate.test(element))
+            {
+                continue;
+            }
+
+            action.Invoke(element);
+        }
+    }
+
+    public void ForAllDo(List<T> list, Action1<T> action)
+    {
+        for(var element : list)
+        {
+            if(element == null)
             {
                 continue;
             }

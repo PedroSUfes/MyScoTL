@@ -21,6 +21,14 @@ public class Person
         m_birthDate = birthDate;
     }
 
+    public Person(Person toCopy)
+    {
+        m_cpf = toCopy.m_cpf;
+        m_name = toCopy.m_name;
+        m_cellphone = toCopy.m_cellphone;
+        m_birthDate = toCopy.m_birthDate;
+    }
+
     public String GetCpf()
     {
         return m_cpf;

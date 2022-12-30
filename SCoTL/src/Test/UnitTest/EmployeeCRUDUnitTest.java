@@ -59,7 +59,21 @@ public class EmployeeCRUDUnitTest
                     "20062001", 
                     "Today", 
                     property
-    
+                ),
+
+                "Today"
+            );
+
+            DatabaseAccess.employeeOperationsInterface.TryRegisterServant
+            (
+                new Servant
+                (
+                    "1111", 
+                    "Name", 
+                    "11", 
+                    "20062001", 
+                    "Today", 
+                    property
                 ),
 
                 "Today"
