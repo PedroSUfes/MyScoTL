@@ -45,7 +45,7 @@ public class ListHelper<T>
         return null;
     }
 
-    public ArrayList<T> FindAll(List<T> list, Predicate<T> predicate)
+    public ArrayList<T> FindAllThat(List<T> list, Predicate<T> predicate)
     {
         var toReturn = new ArrayList<T>();
 
@@ -99,6 +99,19 @@ public class ListHelper<T>
             }
 
             action.Invoke(element);
+        }
+    }
+
+    public void ReplaceThat(List<T> list, Predicate<T> predicate, T toPlace)
+    {
+        var iterator = list.listIterator();
+        while(iterator.hasNext())
+        {
+            var next = iterator.next();
+            if(predicate.test(next))
+            {
+                iterator.set(toPlace);
+            }
         }
     }
 }

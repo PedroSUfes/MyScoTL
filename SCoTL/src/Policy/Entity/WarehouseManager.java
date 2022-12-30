@@ -21,6 +21,13 @@ extends
         m_warehouse = warehouse;
     }
     
+    public WarehouseManager(WarehouseManager toCopy)
+    {
+        super(toCopy);
+
+        m_warehouse = toCopy.m_warehouse;
+    }
+
     public Warehouse GetWarehouse()
     {
         return m_warehouse;

@@ -57,4 +57,17 @@ public class ArrayHelper<T>
 
         return toReturn;
     }
+
+    public void ForAllThatDo(ArrayList<T> array, Predicate<T> predicate, Action1<T> action)
+    {
+        for(var element : array)
+        {
+            if(!predicate.test(element))
+            {
+                continue;
+            }
+
+            action.Invoke(element);
+        }
+    }
 }

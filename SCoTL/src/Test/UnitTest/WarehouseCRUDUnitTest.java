@@ -21,7 +21,8 @@ public class WarehouseCRUDUnitTest
         // System.out.println("\n\n");
         // PrintAllWarehouses();
         // PrintWarehousesInState("SP");
-        PrintWarehousesInStateAndStreet("ES", "Rua dos Bobos");
+        // PrintWarehousesInStateAndStreet("ES", "Rua dos Bobos");
+        PrintWarehousesWithOwner("1235");
     }    
 
     private static void InjectDatabase()
@@ -131,6 +132,21 @@ public class WarehouseCRUDUnitTest
         if(searchResult.length == 0)
         {
             System.out.println("No warehouses in state "+stateName+" and street "+streetName);
+            return;
+        }
+
+        for(var element : searchResult)
+        {
+            System.out.println(element);
+        }
+    }
+
+    private static void PrintWarehousesWithOwner(String ownerCpf)
+    {
+        var searchResult = DatabaseAccess.warehouseOperationsInterface.GetWarehousesByOwnerCpf(ownerCpf);
+        if(searchResult.length == 0)
+        {
+            System.out.println("No warehouses with owner "+ownerCpf);
             return;
         }
 

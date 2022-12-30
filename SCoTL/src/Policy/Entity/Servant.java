@@ -21,9 +21,21 @@ extends
         m_property = property;
     }
     
+    public Servant(Servant toCopy)
+    {
+        super(toCopy);
+
+        m_property = toCopy.m_property;
+    }
+
     public Property GetProperty()
     {
         return m_property;
+    }
+
+    public void SetProperty(Property property)
+    {
+        m_property = property;
     }
 
     @Override

@@ -49,6 +49,21 @@ public class Person
         return m_birthDate;
     }
 
+    public void SetCpf(String cpf)
+    {
+        m_cpf = cpf;
+    }
+
+    public void SetName(String name)
+    {
+        m_name = name;
+    }
+
+    public void SetCellphone(String cellphone)
+    {
+        m_cellphone = cellphone;
+    }
+
     @Override
     public String toString()
     {

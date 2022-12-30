@@ -19,14 +19,19 @@ extends
         
         m_hiringDate = hiringDate;
     }
-    
+
+    public Employee(Employee toCopy)
+    {
+        super(toCopy.m_cpf, toCopy.m_name, toCopy.m_cellphone, toCopy.m_birthDate);
+
+        m_hiringDate = toCopy.m_hiringDate;
+    }
+
     public String GetHiringDate()
     {
         return m_hiringDate;
     }
-
-    public abstract EmployeeType GetEmployeeType();
-
+    
     @Override
     public String toString()
     {
@@ -35,5 +40,21 @@ extends
         stringBuilder.append("Hiring date: "+m_hiringDate+"\n");
         
         return stringBuilder.toString();
+    }
+
+    public abstract EmployeeType GetEmployeeType();
+
+    public static Employee GetEmployeeCopy(Employee toCopy)
+    {
+        if(toCopy.GetEmployeeType() == EmployeeType.SERVANT)
+        {
+            return new Servant((Servant) toCopy);
+        }
+        else if(toCopy.GetEmployeeType() == EmployeeType.WAREHOUSE_MANAGER)
+        {
+            return new WarehouseManager((WarehouseManager) toCopy);
+        }
+    
+        return null;
     }
 }
