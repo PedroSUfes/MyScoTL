@@ -107,8 +107,7 @@ public class ListHelper<T>
         var iterator = list.listIterator();
         while(iterator.hasNext())
         {
-            var next = iterator.next();
-            if(predicate.test(next))
+            if(predicate.test(iterator.next()))
             {
                 iterator.set(toPlace);
             }

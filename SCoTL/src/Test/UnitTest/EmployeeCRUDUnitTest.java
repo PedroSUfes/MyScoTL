@@ -20,10 +20,13 @@ public class EmployeeCRUDUnitTest
         AddWarehouses();
         AddEmployees();
         // PrintEmployees();
-        PrintServants();
+        // PrintServants();
         // UpdateServant();
-        UpdateServantProperty();
-        PrintServants();
+        // UpdateServantProperty();
+        PrintEmployeeOfType(EmployeeType.WAREHOUSE_MANAGER);
+        // UpdateWarehouseManagerWarehouse();
+        RemoveEmployee();
+        PrintEmployeeOfType(EmployeeType.WAREHOUSE_MANAGER);
     }
 
     private static void InjectDatabase()
@@ -104,6 +107,24 @@ public class EmployeeCRUDUnitTest
                 (
                     "1236",
                     "Pedro3",
+                    "Cellphone",
+                    "Today"
+                )
+            ), 
+            "Some Day"
+        );
+        DatabaseAccess.warehouseOperationsInterface.TryRegisterWarehouse
+        (
+            new Warehouse
+            (
+                "4444", 
+                "ES", 
+                "Rua das Lamentacoes", 
+                28, 
+                new Person
+                (
+                    "1237",
+                    "Pedro4",
                     "Cellphone",
                     "Today"
                 )
@@ -260,5 +281,57 @@ public class EmployeeCRUDUnitTest
             property, 
             "Today"
         );
+    }
+
+    private static void UpdateWarehouseManager()
+    {
+        var warehouseManager = (WarehouseManager) DatabaseAccess.employeeOperationsInterface.GetEmployee("22222");
+        if(warehouseManager == null)
+        {
+            return;
+        }
+
+        warehouseManager.SetCellphone("27992250622");
+        // warehouseManager.SetWarehouse
+        // (
+        //     DatabaseAccess.warehouseOperationsInterface.GetWarehouse("2222")
+        // );
+
+        DatabaseAccess.employeeOperationsInterface.TryUpdateWarehouseManager(warehouseManager);
+    }
+
+    private static void UpdateWarehouseManagerWarehouse()
+    {
+        var newWarehouse = DatabaseAccess.warehouseOperationsInterface.GetWarehouse("1111");
+        if(newWarehouse == null)
+        {
+            return;
+        }
+
+        DatabaseAccess.employeeOperationsInterface.TryUpdateWarehouseManagerWarehouse
+        (
+            "11111",
+            newWarehouse,
+            "Today"
+        );
+    }
+
+    private static void PrintEmployeeOfType(EmployeeType employeeType)
+    {
+        var employeeArray = DatabaseAccess.employeeOperationsInterface.GetEmployees();
+        for(var element : employeeArray)
+        {
+            if(element.GetEmployeeType() != employeeType)
+            {
+                continue;
+            }
+
+            System.out.println(element);
+        }
+    }
+
+    private static void RemoveEmployee()
+    {
+        DatabaseAccess.employeeOperationsInterface.TryRemoveEmployee("11111");
     }
 }

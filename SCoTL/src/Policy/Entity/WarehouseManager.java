@@ -39,6 +39,11 @@ extends
         return EmployeeType.WAREHOUSE_MANAGER;
     }
 
+    public void SetWarehouse(Warehouse warehouse)
+    {
+        m_warehouse = warehouse;
+    }
+
     @Override
     public String toString()
     {
