@@ -30,7 +30,7 @@ public class LoginUnitTest
     
     private static void TryLogIn()
     {
-        if(LoginManager.TryLogin("Pedro", "200601"))
+        if(LoginManager.TryLogin("Pedro", "20001"))
         {   
             System.out.println("Success on login");
             System.out.println("User Type: "+LoginManager.GetUserType());

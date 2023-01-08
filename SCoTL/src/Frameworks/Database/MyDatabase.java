@@ -212,6 +212,7 @@ implements
     private List<BuyBag> buyBagList = new ArrayList<BuyBag>();
     private List<Property> propertyList = new ArrayList<Property>();
 
+    // Usuários não são cadastrados pela aplicação. Eles deve estar previamente registrados!
     public void AddUser(User user)
     {
         userList.add(user);
@@ -272,7 +273,8 @@ implements
     }
 
     @Override
-    public CoffeeBag[] GetCoffeeBag(String batchId, String coffeeBagId) {
+    public CoffeeBag GetCoffeeBag(String batchId, String coffeeBagId) 
+    {
         // TODO Auto-generated method stub
         return null;
     }
@@ -820,14 +822,14 @@ implements
             return false;
         }
 
-        isWarehouseOwnerList.add(new IsWarehouseOwner(warehouse.GetId(), warehouse.GetOwner().GetCpf(), beginDate));
+        isWarehouseOwnerList.add(new IsWarehouseOwner(warehouse.GetId(), warehouse.GetOwner().GetCpf(), new String(beginDate)));
         var personListHelper = new ListHelper<Person>();
         if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == warehouse.GetOwner().GetCpf()))
         {
-            personList.add(warehouse.GetOwner());
+            personList.add(new Person(warehouse.GetOwner()));
         }
 
-        warehouseList.add(warehouse);
+        warehouseList.add(new Warehouse(warehouse));
         return true;
     }
 
@@ -840,29 +842,40 @@ implements
             System.out.println("The warehouse with id "+warehouse.GetId()+" is not in register. Fail to update.");
             return false;
         }
-        var plh = new ListHelper<Person>();
-        System.out.println("Person Table:");
-        plh.ForAllDo(personList, (e) -> System.out.println(e.GetCpf()));
         var toUpdate = warehouseListHelper.Find(warehouseList, (e) -> e.GetId() == warehouse.GetId());
         var oldOwnerCpf = toUpdate.GetOwner().GetCpf();
         var newOwnerCpf = warehouse.GetOwner().GetCpf();
         // Precisa-se saber se o antigo dono está a ser referenciado por alguma outra tupla.
         // Caso não esteja, deve ser removido do banco.
         // Caso esteja, deve-se setar a data de fim na tupla em isWarehouseOwnerList.
-        System.out.println("Old owner cpf: "+oldOwnerCpf);
-        System.out.println("New owner cpf: "+newOwnerCpf);
+
         if(oldOwnerCpf != newOwnerCpf) 
         {
+            // Caso o novo dono não estja cadastrado
+            var personListHelper = new ListHelper<Person>();
+            if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == newOwnerCpf))
+            {
+                personList.add(warehouse.GetOwner());
+            }
+
+            isWarehouseOwnerList.add(new IsWarehouseOwner(warehouse.GetId(), newOwnerCpf, date));
+            var isWarehouseOwnerListHelper = new ListHelper<IsWarehouseOwner>();
             var numberOfReferences = GetNumberOfReferences(oldOwnerCpf);
-            System.out.println("Number of references to the old owner: "+numberOfReferences);
             if(numberOfReferences == 1)
             {
-                var personListHelper = new ListHelper<Person>();
                 personList.remove(personListHelper.GetIndexOf(personList, (e) -> e.GetCpf() == oldOwnerCpf));
+                isWarehouseOwnerList.remove
+                (
+                    isWarehouseOwnerListHelper.Find
+                    (
+                        isWarehouseOwnerList, 
+                        (e) -> e.GetWarehouseId() == warehouse.GetId() && e.GetOwnerCpf() == oldOwnerCpf
+                    )
+                );
             }
             else
             {
-                var isWarehouseOwnerListHelper = new ListHelper<IsWarehouseOwner>();
+                // Atualização da tabela de relacionamento
                 var toUp = isWarehouseOwnerListHelper.Find
                 (
                     isWarehouseOwnerList, 
@@ -872,17 +885,7 @@ implements
                 toUp.SetEndDate(date);
             }
         }
-
-        // Caso o novo dono não esteja cadastrado
-        var personListHelper = new ListHelper<Person>();
-        if(!personListHelper.Exists(personList, (e) -> e.GetCpf() == warehouse.GetOwner().GetCpf()))
-        {
-            personList.add(warehouse.GetOwner());
-        }
-        
-        isWarehouseOwnerList.add(new IsWarehouseOwner(warehouse.GetId(), newOwnerCpf, date));
-        System.out.println("Person Table:");
-        plh.ForAllDo(personList, (e) -> System.out.println(e.GetCpf()));
+    
         toUpdate.CopyAttributesOf(warehouse);
         return true;
     }
@@ -946,9 +949,10 @@ implements
         if(toReturn == null)
         {
             System.out.println("Fail to get property with id "+id);
+            return null;
         }
 
-        return toReturn;
+        return new Property(toReturn);
     }
 
     @Override
@@ -978,7 +982,7 @@ implements
         propertyList.set
         (
             propertyListHelper.GetIndexOf(propertyList, (e) -> e.GetId() == property.GetId()), 
-            property
+            new Property(property)
         );
         return true;
     }

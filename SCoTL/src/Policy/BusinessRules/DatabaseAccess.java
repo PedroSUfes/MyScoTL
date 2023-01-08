@@ -2,6 +2,7 @@ package Policy.BusinessRules;
 
 public class DatabaseAccess 
 {
+    // Devem ser definidas a partir de injeção de dependência
     public static LoginInterface loginInterface = null;    
     public static EmployeeOperationsInterface employeeOperationsInterface = null;    
     public static BatchOperationsInterface batchOperationsInterface = null;    

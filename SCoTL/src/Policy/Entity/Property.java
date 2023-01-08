@@ -58,6 +58,26 @@ public class Property
         return m_number;
     }
 
+    public void SetPropertyName(String name)
+    {
+        m_propertyName = String.copyValueOf(name.toCharArray());
+    }
+
+    public void SetStateNAme(String name)
+    {
+        m_stateName = String.copyValueOf(name.toCharArray());
+    }
+
+    public void SetStreetName(String name)
+    {
+        m_streetName = String.copyValueOf(name.toCharArray());
+    }
+
+    public void SetNumber(int number)
+    {
+        m_number = number;
+    }
+
     @Override
     public String toString()
     {
