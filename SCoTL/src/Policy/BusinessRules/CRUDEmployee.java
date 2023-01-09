@@ -1,5 +1,7 @@
 package Policy.BusinessRules;
 
+import javax.management.monitor.StringMonitor;
+
 import Policy.Entity.Employee;
 import Policy.Entity.Property;
 import Policy.Entity.Servant;
@@ -18,9 +20,29 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetEmployee(cpf);
     }
 
-    public static Boolean TryRegisterServant(Servant servant, String beginDate)
+    public static Servant[] GetServants()
     {
-        return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant, beginDate);
+        return DatabaseAccess.employeeOperationsInterface.GetServants();
+    }
+
+    public static Servant GetServant(String cpf)
+    {
+        return DatabaseAccess.employeeOperationsInterface.GetServant(cpf);
+    }
+
+    public static WarehouseManager[] GetWarehouseManagers()
+    {
+        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers();
+    }
+
+    public static WarehouseManager GetWarehouseManager(String cpf)
+    {
+        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManager(cpf);
+    }
+
+    public static Boolean TryRegisterServant(Servant servant, String date)
+    {
+        return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant, date);
     }
 
     public static Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate)
@@ -28,25 +50,25 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.TryRegisterWarehouseManager(warehouseManager, beginDate);
     }
 
-    public static Boolean TryUpdateServant(Servant servant)
+    public static Boolean TryUpdateServant(Servant servant, String date)
     {
-        return DatabaseAccess.employeeOperationsInterface.TryUpdateServant(servant);
+        return DatabaseAccess.employeeOperationsInterface.TryUpdateServant(servant, date);
     }
     
-    public static Boolean TryUpdateServantProperty(String servantCpf, Property property, String date)
+    // public static Boolean TryUpdateServantProperty(String servantCpf, Property property, String date)
+    // {
+    //     return DatabaseAccess.employeeOperationsInterface.TryUpdateServantProperty(servantCpf, property, date);
+    // }
+
+    public static Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager, String date)
     {
-        return DatabaseAccess.employeeOperationsInterface.TryUpdateServantProperty(servantCpf, property, date);
+        return DatabaseAccess.employeeOperationsInterface.TryUpdateWarehouseManager(warehouseManager, date);
     }
 
-    public static Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager)
-    {
-        return DatabaseAccess.employeeOperationsInterface.TryUpdateWarehouseManager(warehouseManager);
-    }
-
-    public static Boolean TryUpdateWarehouseManagerWarehouse(String warehouseManagerCpf, Warehouse warehouse, String date)
-    {
-        return DatabaseAccess.employeeOperationsInterface.TryUpdateWarehouseManagerWarehouse(warehouseManagerCpf, warehouse, date);
-    }
+    // public static Boolean TryUpdateWarehouseManagerWarehouse(String warehouseManagerCpf, Warehouse warehouse, String date)
+    // {
+    //     return DatabaseAccess.employeeOperationsInterface.TryUpdateWarehouseManagerWarehouse(warehouseManagerCpf, warehouse, date);
+    // }
     
     public static Boolean TryRemoveEmployee(String cpf)
     {

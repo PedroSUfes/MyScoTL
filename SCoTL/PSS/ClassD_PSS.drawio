@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="aHqZM26ZM8oJ_C4KOD-p" name="Page-1">
-        <mxGraphModel dx="2767" dy="2898" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="2325" dy="2618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -492,7 +492,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="290" value="&lt;&lt;interface&gt;&gt;&#10;InterfaceOperacoesFuncionario" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-                    <mxGeometry x="3090" y="174" width="530" height="308" as="geometry"/>
+                    <mxGeometry x="3090" y="148" width="530" height="334" as="geometry"/>
                 </mxCell>
                 <mxCell id="292" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="40" width="530" height="8" as="geometry"/>
@@ -503,29 +503,32 @@
                 <mxCell id="294" value="+ RetornarFuncionario(cpf: string): Funcionario" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="74" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="296" value="+ TentarCadastrarServente(Servente, dataComeco: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="746" value="+ RetornarGerentesGalpao(cpf: string): GerenteGalpao" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
                     <mxGeometry y="100" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="297" value="+ TentarCadastrarGerenteGalpao(gerenteGalpao: GerenteGalpao): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="747" value="+ RetornarGerenteGalpao(cpf: string): GerenteGalpao" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
                     <mxGeometry y="126" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="298" value="+ TentarAtualizarGerenteGalpao(gerenteGalpao: GerenteGalpao): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="749" value="+ RetornarServentes(): Servente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
                     <mxGeometry y="152" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="746" value="+ TentarAtualizarGerenteGalpaoGalpao(cpf: string, Galpao, data: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="748" value="+ RetornarServente(cpf: string): Servente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
                     <mxGeometry y="178" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="299" value="+ TentarAtualizarServente(servente: Servente): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="296" value="+ TentarCadastrarServente(Servente, dataComeco: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="204" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="743" value="+ TentarAtualizarPropriedadeServente(cpf: string, propriedade: Propriedadae, data: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="297" value="+ TentarCadastrarGerenteGalpao(gerenteGalpao: GerenteGalpao): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="230" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="300" value="+ TentarRemoverFuncionario(cpf: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="298" value="+ TentarAtualizarGerenteGalpao(gerenteGalpao: GerenteGalpao, data: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="256" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="301" value="+ ehGerenteGalpao(cpf: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                <mxCell id="299" value="+ TentarAtualizarServente(servente: Servente, data: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="282" width="530" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="300" value="+ TentarRemoverFuncionario(cpf: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
+                    <mxGeometry y="308" width="530" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="327" style="edgeStyle=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fontSize=12;endArrow=none;endFill=0;startArrow=block;startFill=0;dashed=1;entryX=0.923;entryY=1.028;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="302" target="333" edge="1">
                     <mxGeometry relative="1" as="geometry">

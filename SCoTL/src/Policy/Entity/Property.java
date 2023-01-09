@@ -26,31 +26,31 @@ public class Property
 
     public Property(Property property)
     {
-        m_id = property.m_id;
-        m_propertyName = property.m_propertyName;
-        m_stateName = property.m_stateName;
-        m_streetName = property.m_streetName;
+        m_id = String.copyValueOf(property.m_id.toCharArray());
+        m_propertyName = String.copyValueOf(property.m_propertyName.toCharArray());
+        m_stateName = String.copyValueOf(property.m_stateName.toCharArray());
+        m_streetName = String.copyValueOf(property.m_streetName.toCharArray());
         property.m_number = property.m_number;
     }
 
     public String GetId() 
     {
-        return m_id;
+        return new String(m_id);
     }
 
     public String GetPropertyName() 
     {
-        return m_propertyName;
+        return new String(m_propertyName);
     }
 
     public String GetStateName() 
     {
-        return m_stateName;
+        return new String(m_stateName);
     }
 
     public String GetStreetName() 
     {
-        return m_streetName;
+        return new String(m_streetName);
     }
 
     public int GetNumber() 
@@ -78,6 +78,15 @@ public class Property
         m_number = number;
     }
 
+    public void CopyValuesOf(Property property)
+    {
+        m_id = property.GetId();
+        m_number = property.GetNumber();
+        m_propertyName = property.GetStateName();
+        m_stateName = property.GetStateName();
+        m_streetName = property.GetStreetName();
+    }
+
     @Override
     public String toString()
     {
@@ -89,5 +98,22 @@ public class Property
         toReturn.append("Residential Number: "+m_number+"\n");
 
         return toReturn.toString();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(o == this)
+        {
+            return true;
+        }
+
+        if(o == null || o.getClass() != Property.class)
+        {
+            return false;
+        }
+
+        var casted = (Property) o;
+        return m_id.equals(casted.m_id);
     }
 }

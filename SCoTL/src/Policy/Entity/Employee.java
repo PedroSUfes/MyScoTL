@@ -4,7 +4,7 @@ public abstract class Employee
 extends
     Person
 {
-    protected String m_hiringDate = null;
+    protected String m_hiringDate = new String();
         
     public Employee
     (
@@ -17,19 +17,19 @@ extends
     {
         super(cpf, name, cellphone, birthDate);
         
-        m_hiringDate = hiringDate;
+        m_hiringDate = String.copyValueOf(hiringDate.toCharArray());
     }
 
     public Employee(Employee toCopy)
     {
         super(toCopy.m_cpf, toCopy.m_name, toCopy.m_cellphone, toCopy.m_birthDate);
 
-        m_hiringDate = toCopy.m_hiringDate;
+        m_hiringDate = String.copyValueOf(toCopy.m_hiringDate.toCharArray());
     }
 
     public String GetHiringDate()
     {
-        return m_hiringDate;
+        return new String(m_hiringDate);
     }
     
     @Override

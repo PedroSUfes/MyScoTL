@@ -23,9 +23,9 @@ public class CRUDCoffeeBag
     {
         return DatabaseAccess.coffeeBagOperationsInterface.TryRegisterCoffeeBag(coffeeBag);
     }
-    
-    public static Boolean TryRemoveBag(String batchId, String coffeeBagId)
+
+    public static Boolean TryRemoveCoffeeBag(String batchId, String coffeeBagId)
     {
-        return DatabaseAccess.coffeeBagOperationsInterface.TryRemoveBag(batchId, coffeeBagId);
+        return DatabaseAccess.coffeeBagOperationsInterface.TryRemoveCoffeeBag(batchId, coffeeBagId);
     }
 }

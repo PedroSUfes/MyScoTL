@@ -18,19 +18,19 @@ extends
     {
         super(cpf, name, cellphone, birthDate, hiringDate);
     
-        m_warehouse = warehouse;
+        m_warehouse = new Warehouse(warehouse);
     }
     
     public WarehouseManager(WarehouseManager toCopy)
     {
         super(toCopy);
 
-        m_warehouse = toCopy.m_warehouse;
+        m_warehouse = new Warehouse(toCopy.m_warehouse);
     }
 
     public Warehouse GetWarehouse()
     {
-        return m_warehouse;
+        return new Warehouse(m_warehouse);
     }
 
     @Override
@@ -41,7 +41,14 @@ extends
 
     public void SetWarehouse(Warehouse warehouse)
     {
-        m_warehouse = warehouse;
+        m_warehouse.CopyAttributesOf(warehouse);
+    }
+
+    public void CopyValuesOf(WarehouseManager toCopy)
+    {
+        super.CopyValuesOf(toCopy);
+
+        m_warehouse = toCopy.GetWarehouse();
     }
 
     @Override

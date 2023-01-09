@@ -18,24 +18,31 @@ extends
     {
         super(cpf, name, cellphone, birthDate, hiringDate);
         
-        m_property = property;
+        m_property = new Property(property);
     }
     
     public Servant(Servant toCopy)
     {
         super(toCopy);
 
-        m_property = toCopy.m_property;
+        m_property = new Property(toCopy.m_property);
     }
 
     public Property GetProperty()
     {
-        return m_property;
+        return new Property(m_property);
     }
 
     public void SetProperty(Property property)
     {
-        m_property = property;
+        m_property.CopyValuesOf(property);
+    }
+
+    public void CopyValuesOf(Servant toCopy)
+    {
+        super.CopyValuesOf(toCopy);
+
+        m_property.CopyValuesOf(toCopy.m_property);
     }
 
     @Override
