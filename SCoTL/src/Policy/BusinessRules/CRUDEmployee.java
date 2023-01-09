@@ -1,11 +1,7 @@
 package Policy.BusinessRules;
 
-import javax.management.monitor.StringMonitor;
-
 import Policy.Entity.Employee;
-import Policy.Entity.Property;
 import Policy.Entity.Servant;
-import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 
 public class CRUDEmployee 

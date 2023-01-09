@@ -1,6 +1,5 @@
 package Policy.BusinessRules;
 
-
 import Policy.Entity.Batch;
 
 public class CRUDBatch 

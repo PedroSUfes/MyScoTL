@@ -1,5 +1,11 @@
 package Policy.BusinessRules;
 
+import Policy.BusinessRules.Adapters.BatchOperationsInterface;
+import Policy.BusinessRules.Adapters.CoffeeBagOperationsInterface;
+import Policy.BusinessRules.Adapters.EmployeeOperationsInterface;
+import Policy.BusinessRules.Adapters.LoginInterface;
+import Policy.BusinessRules.Adapters.WarehouseOperationsInterface;
+
 public class DatabaseAccess 
 {
     // Devem ser definidas a partir de injeção de dependência
