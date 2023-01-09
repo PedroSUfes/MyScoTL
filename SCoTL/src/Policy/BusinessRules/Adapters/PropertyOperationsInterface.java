@@ -1,4 +1,4 @@
-package Policy.BusinessRules;
+package Policy.BusinessRules.Adapters;
 
 import Policy.Entity.Property;
 
