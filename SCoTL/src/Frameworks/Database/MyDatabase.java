@@ -7,11 +7,11 @@ import java.util.List;
 import javax.print.DocFlavor.STRING;
 
 import Policy.BusinessRules.LoginManager;
-import Policy.BusinessRules.PropertyOperationsInterface;
 import Policy.BusinessRules.Adapters.BatchOperationsInterface;
 import Policy.BusinessRules.Adapters.CoffeeBagOperationsInterface;
 import Policy.BusinessRules.Adapters.EmployeeOperationsInterface;
 import Policy.BusinessRules.Adapters.LoginInterface;
+import Policy.BusinessRules.Adapters.PropertyOperationsInterface;
 import Policy.BusinessRules.Adapters.WarehouseOperationsInterface;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
