@@ -35,7 +35,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
-        sqLiteDatabase.execSQL(PersonTableQueryHelper.GetCreationalCommand());
+        sqLiteDatabase.execSQL(PersonTableQueryHelper.GetCreateCommand());
     }
 
     @Override

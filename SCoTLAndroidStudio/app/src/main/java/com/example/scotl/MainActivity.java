@@ -15,23 +15,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        SQLiteDAO database = new SQLiteDAO(this);
-        database.Test();
-        Person[] persons = database.GetAllPersons();
-        if(persons == null)
-        {
-            return;
-        }
-
-        for(Person p : persons)
-        {
-            if(p == null)
-            {
-                continue;
-            }
-
-            System.out.println(p);
-        }
     }
 }
