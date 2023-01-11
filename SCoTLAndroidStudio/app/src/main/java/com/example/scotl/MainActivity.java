@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDAO database = new SQLiteDAO(this);
         database.Test();
         Person[] persons = database.GetAllPersons();
+        if(persons == null)
+        {
+            return;
+        }
 
         for(Person p : persons)
         {

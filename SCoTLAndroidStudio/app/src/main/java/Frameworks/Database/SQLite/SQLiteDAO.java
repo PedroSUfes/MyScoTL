@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-
 import Policy.BusinessRules.Adapters.*;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
@@ -32,77 +30,18 @@ public class SQLiteDAO extends SQLiteOpenHelper
     public SQLiteDAO(Context context)
     {
         super(context, DB_NAME, null, 1);
-        context.deleteDatabase(DB_NAME);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
         sqLiteDatabase.execSQL(PersonTableQueryHelper.GetCreationalCommand());
-//        sqLiteDatabase.execSQL(PersonTableQueryHelper.GetCreationalCommand());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
-    }
 
-    public void Test()
-    {
-        SQLiteDatabase database = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(PersonTableQueryHelper.PRIMARY_KEY, "1234");
-        contentValues.put(PersonTableQueryHelper.NAME, "Pedro");
-        contentValues.put(PersonTableQueryHelper.BIRTH_DATE, "20/06/2001");
-        contentValues.put(PersonTableQueryHelper.TELEPHONE, "0800");
-
-        long result = database.insert(PersonTableQueryHelper.PERSON_TABLE, null, contentValues);
-        database.close();
-    }
-
-    public Person[] GetAllPersons()
-    {
-        final SQLiteDatabase database = getWritableDatabase();
-        Person[] toReturn = null;
-
-        Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectAllQuery(), null);
-
-        ArrayList<Person> personList = new ArrayList<Person>();
-        if(personCursor.moveToFirst())
-        {
-            do
-            {
-                personList.add
-                (
-                   new Person
-                   (
-                       personCursor.getString(0),
-                       personCursor.getString(1),
-                       personCursor.getString(2),
-                       personCursor.getString(3)
-                   )
-                );
-            } while(personCursor.moveToNext());
-        }
-
-        if(personList.isEmpty())
-        {
-            return null;
-        }
-
-        toReturn = new Person[personList.size()];
-        int index = -1;
-        for(Person person : personList)
-        {
-            ++index;
-            if(person == null)
-            {
-                continue;
-            }
-            toReturn[index] = person;
-        }
-
-        return toReturn;
     }
 
     // Queries
