@@ -8,7 +8,7 @@ public class PersonTableQueryHelper
     public static final String BIRTH_DATE = "birth_date";
     public static final String TELEPHONE = "telephone";
 
-    public static String GetCreationalCommand()
+    public static String GetCreateCommand()
     {
         return "CREATE TABLE "+PERSON_TABLE+" ("
                 +PRIMARY_KEY +" TEXT PRIMARY KEY,"

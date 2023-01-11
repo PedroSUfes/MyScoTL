@@ -8,7 +8,7 @@ public class UserTableQueryHelper
     public static final String PASSWORD = "password";
     public static final String USER_TYPE = "userType";
 
-    public static String GetCreationalCommand()
+    public static String GetCreateCommand()
     {
         return "CREATE TABLE "+USER_TABLE+" ("
                 +LOGIN +" TEXT PRIMARY KEY,"

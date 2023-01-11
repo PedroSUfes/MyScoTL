@@ -9,7 +9,7 @@ public class WarehouseTableQueryHelper
     public static final String STREET_NAME = "streetName";
     public static final String RESIDENTIAL_NUMBER = "residentialNumber";
 
-    public static String GetCreationalCommand()
+    public static String GetCreateCommand()
     {
         return "CREATE TABLE "+WAREHOUSE_TABLE+" ("
                 +ID +" TEXT PRIMARY KEY,"
