@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.media.MediaDrm;
 
 import java.util.ArrayList;
 
@@ -19,7 +18,9 @@ import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 import kotlin.Triple;
 
-public class SQLiteDAO extends SQLiteOpenHelper
+public class SQLiteDAO
+    extends
+        SQLiteOpenHelper
     implements
         LoginInterface,
         BatchOperationsInterface,
@@ -173,8 +174,8 @@ public class SQLiteDAO extends SQLiteOpenHelper
                 (
                     personCursor.getString(PersonTableQueryHelper.GetCpfIndex()),
                     personCursor.getString(PersonTableQueryHelper.GetNameIndex()),
-                    personCursor.getString(PersonTableQueryHelper.GetTelephoneIndex()),
-                    personCursor.getString(PersonTableQueryHelper.GteBirthDateIndex()),
+                    personCursor.getString(PersonTableQueryHelper.GetCellphoneIndex()),
+                    personCursor.getString(PersonTableQueryHelper.GetBirthDateIndex()),
                     triple.component3(),
                     new Property
                     (
@@ -333,7 +334,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
             database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouseManager));
         }
 
-        database.insert(ManageWarehouseTableQueryHelper.WAREHOUSE_ID, null, ManageWarehouseTableQueryHelper.GetContentValue(warehouseId, warehouseManagerCpf, warehouseManager.GetHiringDate()));
+        database.insert(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, null, ManageWarehouseTableQueryHelper.GetContentValue(warehouseId, warehouseManagerCpf, warehouseManager.GetHiringDate()));
         database.close();
         return true;
     }
@@ -424,7 +425,15 @@ public class SQLiteDAO extends SQLiteOpenHelper
     }
 
     @Override
-    public Warehouse GetWarehouse(String id) {
+    public Warehouse GetWarehouse(String id)
+    {
+//        SQLiteDatabase database = getReadableDatabase();
+//        Cursor cursor = database.rawQuery(WarehouseTableQueryHelper.GetSelectQuery(id), null);
+//        if(!cursor.moveToFirst())
+//        {
+//            return null;
+//        }
+
         return null;
     }
 

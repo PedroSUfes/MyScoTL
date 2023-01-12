@@ -11,6 +11,11 @@ public class Warehouse
 
     public Warehouse() {}
 
+    public Warehouse(String id)
+    {
+        m_id = new String(id);
+    }
+
     public Warehouse
     (
         String id,
@@ -32,10 +37,23 @@ public class Warehouse
     public Warehouse(Warehouse toCopy)
     {
         m_id = toCopy.GetId();
-        m_stateName = toCopy.GetStateName();
-        m_streetName = toCopy.GetStateName();
+        if(toCopy.m_stateName != null)
+        {
+            m_stateName = toCopy.GetStateName();
+        }
+        if(toCopy.m_cityName != null)
+        {
+            m_cityName = toCopy.m_cityName;
+        }
+        if(toCopy.m_streetName != null)
+        {
+            m_streetName = toCopy.GetStreetName();
+        }
+        if(toCopy.m_owner != null)
+        {
+            m_owner = new Person(toCopy.GetOwner());
+        }
         m_number = toCopy.m_number;
-        m_owner = new Person(toCopy.GetOwner());
     }
 
     public String GetId() 

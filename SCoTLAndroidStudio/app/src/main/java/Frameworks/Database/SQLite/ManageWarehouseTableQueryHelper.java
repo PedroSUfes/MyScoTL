@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import Policy.Entity.Warehouse;
+
 public class ManageWarehouseTableQueryHelper
 {
     public static final String MANAGE_WAREHOUSE_TABLE = "manageWarehouse";

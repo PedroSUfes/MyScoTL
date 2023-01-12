@@ -44,4 +44,15 @@ public class IsWarehouseOwnerTableQueryHelper
         contentValues.put(BEGIN_DATE, beginbDate);
         return contentValues;
     }
+
+    public static String GetOwnerCpfOf(SQLiteDatabase database, String warehouseId)
+    {
+        Cursor cursor = database.rawQuery("SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+WAREHOUSE_ID+"='"+warehouseId+" AND "+END_DATE+" IS NULL", null);
+        if(!cursor.moveToFirst())
+        {
+            return null;
+        }
+
+        return new String(cursor.getString(1));
+    }
 }

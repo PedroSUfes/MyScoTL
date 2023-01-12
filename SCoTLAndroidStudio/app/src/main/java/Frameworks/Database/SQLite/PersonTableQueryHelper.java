@@ -44,12 +44,12 @@ public class PersonTableQueryHelper
         return 1;
     }
 
-    public static int GteBirthDateIndex()
+    public static int GetBirthDateIndex()
     {
         return 2;
     }
 
-    public static int GetTelephoneIndex()
+    public static int GetCellphoneIndex()
     {
         return 3;
     }
@@ -68,5 +68,16 @@ public class PersonTableQueryHelper
     {
         Cursor cursor = database.rawQuery(GetSelectQuery(cpf), null);
         return cursor.moveToFirst();
+    }
+
+    public static Person GetPersonFromCursor(Cursor cursor)
+    {
+        return new Person
+        (
+            cursor.getString(GetCpfIndex()),
+            cursor.getString(GetNameIndex()),
+            cursor.getString(GetCellphoneIndex()),
+            cursor.getString(GetBirthDateIndex())
+        );
     }
 }
