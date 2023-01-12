@@ -12,8 +12,9 @@ public class CoffeeBagTableQueryHelper
         return "CREATE TABLE "+COFFEE_BAG_TABLE+"("
                 +ID+" TEXT,"
                 +BATCH_ID+" TEXT,"
-                +"FOREIGN KEY("+WAREHOUSE_ID+") REFERENCES("+WarehouseTableQueryHelper.WAREHOUSE_TABLE+"("+WarehouseTableQueryHelper.ID+")),"
-                +"Primary KEY("+ID+", "+BATCH_ID+")"
+                +WAREHOUSE_ID+" TEXT,"
+                +"Primary KEY("+ID+", "+BATCH_ID+"),"
+                +"FOREIGN KEY("+WAREHOUSE_ID+") REFERENCES "+WarehouseTableQueryHelper.WAREHOUSE_TABLE+"("+WarehouseTableQueryHelper.ID+")"
                 +")";
     }
 }

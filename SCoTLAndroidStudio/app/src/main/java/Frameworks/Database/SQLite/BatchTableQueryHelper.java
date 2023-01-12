@@ -1,5 +1,11 @@
 package Frameworks.Database.SQLite;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import Policy.Entity.Batch;
+
 public class BatchTableQueryHelper
 {
     public static final String BATCH_TABLE = "batch";
@@ -10,7 +16,31 @@ public class BatchTableQueryHelper
     {
         return "CREATE TABLE "+BATCH_TABLE+" ("
                 +ID +" TEXT PRIMARY KEY,"
-                +CREATION_DATE + " TEXT,"
+                +CREATION_DATE + " TEXT"
                 +")";
+    }
+
+    public static String GetSelectAllQuery()
+    {
+        return "SELECT * FROM "+BATCH_TABLE;
+    }
+
+    public static String GetSelectQuery(String id)
+    {
+        return "SELECT * FROM "+BATCH_TABLE+" WHERE "+ID+"='"+id+"'";
+    }
+
+    public static boolean Exists(SQLiteDatabase database, String id)
+    {
+        Cursor cursor = database.rawQuery(GetSelectQuery(id), null);
+        return cursor.moveToFirst();
+    }
+
+    public static ContentValues GetContentValues(Batch batch)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID, batch.GetId());
+        contentValues.put(CREATION_DATE, batch.GetCreationDate());
+        return contentValues;
     }
 }

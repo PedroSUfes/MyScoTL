@@ -12,8 +12,8 @@ public interface EmployeeOperationsInterface
     public Servant GetServant(String cpf);
     public WarehouseManager[] GetWarehouseManagers();
     public WarehouseManager GetWarehouseManager(String cpf);
-    public Boolean TryRegisterServant(Servant servant, String beginDate);
-    public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate);
+    public Boolean TryRegisterServant(Servant servant);
+    public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager);
     public Boolean TryUpdateServant(Servant servant, String date);
     public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager, String date);
     public Boolean TryRemoveEmployee(String cpf);
