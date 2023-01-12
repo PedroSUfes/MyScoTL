@@ -132,8 +132,77 @@ public class SQLiteDAO
     public Servant[] GetServants()
     {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor cursor = database.rawQuery(WorksOnTableQueryHelper.GetSelectAllCommand(), null);
-        return null;
+        Cursor worksOnCursor = database.rawQuery(WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(), null);
+
+        // Cpf do servente, id da propriedade, data contratação
+        ArrayList<Triple<String, String, String>> tripleList = new ArrayList<Triple<String, String, String>>();
+        if(worksOnCursor.moveToFirst())
+        {
+            do
+            {
+                tripleList.add
+                (
+                    new Triple<String, String, String>
+                    (
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex())
+                    )
+                );
+            } while(worksOnCursor.moveToNext());
+        }
+
+        if(tripleList.isEmpty())
+        {
+            MyLog.LogMessage("No servants in database");
+            database.close();
+            return null;
+        }
+
+        ArrayList<Servant> servantList = new ArrayList<Servant>();
+        for(Triple<String, String, String> triple : tripleList)
+        {
+            if(triple == null)
+            {
+                continue;
+            }
+
+            Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(triple.component2()), null);
+            if(!propertyCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            Property property = PropertyTableQueryHelper.GetPropertyFromCursor(propertyCursor);
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(triple.component1()), null);
+            if(!personCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            servantList.add(PersonTableQueryHelper.GetServantFromCursor(personCursor, property, triple.component3()));
+        }
+
+        if(servantList.isEmpty())
+        {
+            database.close();
+            return null;
+        }
+
+        Servant[] toReturn = new Servant[servantList.size()];
+        int index = -1;
+        for(Servant s : servantList)
+        {
+            ++index;
+            if(s == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = servantList.get(index);
+        }
+        database.close();
+        return toReturn;
     }
 
     @Override

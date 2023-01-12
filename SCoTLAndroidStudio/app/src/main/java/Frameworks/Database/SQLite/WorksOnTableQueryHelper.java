@@ -29,9 +29,14 @@ public class WorksOnTableQueryHelper
         return "SELECT * FROM "+WORKS_ON_TABLE+" WHERE personCpf='"+personCpf+"'";
     }
 
-    public static String GetSelectAllCommand()
+    public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+WORKS_ON_TABLE;
+    }
+
+    public static String GetSelectAllThatEndDateIsNullQuery()
+    {
+        return "SELECT * FROM "+WORKS_ON_TABLE+" WHERE "+END_DATE+" IS NULL";
     }
 
     public static int GetPersonCpfIndex()
@@ -59,7 +64,7 @@ public class WorksOnTableQueryHelper
         ContentValues contentValues = new ContentValues();
         contentValues.put(PERSON_CPF, personCpf);
         contentValues.put(BEGIN_DATE, beginDate);
-        contentValues.put(PROPERTY_ID, PROPERTY_ID);
+        contentValues.put(PROPERTY_ID, propertyId);
         return contentValues;
     }
 

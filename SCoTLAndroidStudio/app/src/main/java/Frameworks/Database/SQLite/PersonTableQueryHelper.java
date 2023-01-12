@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import Policy.Entity.Person;
+import Policy.Entity.Property;
+import Policy.Entity.Servant;
 
 public class PersonTableQueryHelper
 {
@@ -78,6 +80,19 @@ public class PersonTableQueryHelper
             cursor.getString(GetNameIndex()),
             cursor.getString(GetCellphoneIndex()),
             cursor.getString(GetBirthDateIndex())
+        );
+    }
+
+    public static Servant GetServantFromCursor(Cursor personCursor, Property property, String hiringDate)
+    {
+        return new Servant
+        (
+            personCursor.getString(GetCpfIndex()),
+            personCursor.getString(GetNameIndex()),
+            personCursor.getString(GetCellphoneIndex()),
+            personCursor.getString(GetBirthDateIndex()),
+            hiringDate,
+            property
         );
     }
 }
