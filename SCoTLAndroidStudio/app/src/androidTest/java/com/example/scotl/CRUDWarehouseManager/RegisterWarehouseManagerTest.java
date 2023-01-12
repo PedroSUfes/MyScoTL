@@ -31,6 +31,7 @@ public class RegisterWarehouseManagerTest
                 "0800",
                 "Today",
                  "Tomorrow",
+                 "Never",
                  new Warehouse("1113")
             )
         );

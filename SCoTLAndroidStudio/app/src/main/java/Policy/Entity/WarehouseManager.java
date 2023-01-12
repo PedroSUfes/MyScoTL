@@ -14,10 +14,11 @@ extends
         String cellphone, 
         String birthDate, 
         String hiringDate,
+        String endDate,
         Warehouse warehouse
     ) 
     {
-        super(cpf, name, cellphone, birthDate, hiringDate);
+        super(cpf, name, cellphone, birthDate, hiringDate, endDate);
     
         m_warehouse = new Warehouse(warehouse);
         m_hiringDate = new String(hiringDate);

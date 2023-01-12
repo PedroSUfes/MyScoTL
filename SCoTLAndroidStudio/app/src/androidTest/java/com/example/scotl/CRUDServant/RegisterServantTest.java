@@ -31,6 +31,7 @@ public class RegisterServantTest
                 "0800",
                 "20/06/2001",
                 "Today",
+                "Tomorrow",
                 DatabaseAccess.propertyOperationsInterface.GetPropertyById("1111")
 //                new Property("333")
             )
