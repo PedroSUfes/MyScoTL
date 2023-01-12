@@ -68,8 +68,8 @@ public class SQLiteDAO extends SQLiteOpenHelper
 
     //Teoricamente feita e.e
     @Override
-    public Boolean TryRegisterBatch(Batch batch) {
-
+    public Boolean TryRegisterBatch(Batch batch)
+    {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -78,10 +78,12 @@ public class SQLiteDAO extends SQLiteOpenHelper
 
         long insert = db.insert(BatchTableQueryHelper.BATCH_TABLE, null, cv);
 
-        if(insert == -1){
+        if(insert < 0)
+        {
             return false;
         }
-        else{
+        else
+        {
             return true;
         }
     }
