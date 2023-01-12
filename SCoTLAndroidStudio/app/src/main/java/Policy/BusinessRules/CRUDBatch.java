@@ -1,5 +1,7 @@
 package Policy.BusinessRules;
 
+import java.util.List;
+
 import Policy.Entity.Batch;
 
 public class CRUDBatch 

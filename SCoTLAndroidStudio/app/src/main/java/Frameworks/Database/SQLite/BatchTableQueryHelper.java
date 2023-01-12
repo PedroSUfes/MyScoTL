@@ -20,6 +20,16 @@ public class BatchTableQueryHelper
                 +")";
     }
 
+    public static int GetBatchIdIndex()
+    {
+        return 0;
+    }
+
+    public static int GetCreationDateIndex()
+    {
+        return 1;
+    }
+
     public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+BATCH_TABLE;
@@ -42,5 +52,6 @@ public class BatchTableQueryHelper
         contentValues.put(ID, batch.GetId());
         contentValues.put(CREATION_DATE, batch.GetCreationDate());
         return contentValues;
+
     }
 }

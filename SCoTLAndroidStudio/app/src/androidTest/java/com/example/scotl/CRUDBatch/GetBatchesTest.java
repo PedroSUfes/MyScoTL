@@ -10,7 +10,7 @@ import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Batch;
 
-public class TryRegisterBatchTest {
+public class GetBatchesTest {
 
     @Test
     public void test() {
@@ -20,6 +20,6 @@ public class TryRegisterBatchTest {
 
         DatabaseAccess.batchOperationsInterface = database;
 
-        DatabaseAccess.batchOperationsInterface.TryRegisterBatch(new Batch("2", "11/01/2023"));
+        DatabaseAccess.batchOperationsInterface.GetBatches();
     }
 }
