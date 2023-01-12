@@ -18,4 +18,14 @@ public class BatchTableQueryHelper
     {
         return "SELECT * FROM "+ BATCH_TABLE;
     }
+
+    public static int GetBatchIdIndex()
+    {
+        return 0;
+    }
+
+    public static int GetCreationDateIndex()
+    {
+        return 1;
+    }
 }

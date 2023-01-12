@@ -17,7 +17,12 @@ import Policy.Entity.Property;
 import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
+<<<<<<< Updated upstream
 import Policy.Entity.Person;
+=======
+import kotlin.Pair;
+import kotlin.Triple;
+>>>>>>> Stashed changes
 
 public class SQLiteDAO extends SQLiteOpenHelper
     implements
@@ -55,8 +60,51 @@ public class SQLiteDAO extends SQLiteOpenHelper
         return null;
     }
 
+    //
     @Override
+<<<<<<< Updated upstream
     public List<Batch> GetBatches() {
+=======
+    public Batch[] GetBatches() {
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllQuery(), null);
+
+        //BatchID and BatchCreationDate
+        ArrayList<Batch> batchList = new ArrayList<Batch>();
+
+		if(cursor.moveToFirst()){
+			do{
+				batchList.add(
+					new Batch(
+						cursor.getString(BatchTableQueryHelper.GetBatchIdIndex()),
+						cursor.getString(BatchTableQueryHelper.GetCreationDateIndex())
+					)
+				);
+			}while(cursor.moveToNext());
+		}
+
+		if(batchList.isEmpty()){
+			MyLog.LogMessage("No batches in database");
+			db.close();
+			return null;
+		}
+
+		Batch[] batchesReturn = new Batch[batchList.size()];
+		int index = -1;
+		for(Batch b : batchList){
+			++index;
+			if(b == null){
+                continue;
+			}
+
+            batchesReturn[index] = batchList.get(index);
+		}
+        db.close();
+
+        return batchesReturn;
+    }
+>>>>>>> Stashed changes
 
         List<Batch> returnList = new ArrayList<>();
 

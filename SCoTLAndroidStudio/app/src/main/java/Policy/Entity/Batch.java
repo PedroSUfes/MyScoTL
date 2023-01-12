@@ -17,8 +17,13 @@ public class Batch
         String creationDate
     )
     {
+<<<<<<< Updated upstream
         m_id = new String(id);
         m_creationDate = new String (creationDate);
+=======
+        m_id = id;
+        m_creationDate = creationDate;
+>>>>>>> Stashed changes
     }
 
     public Batch(Batch toCopy)
