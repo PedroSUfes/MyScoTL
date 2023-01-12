@@ -5,6 +5,7 @@ public class Batch
     private String m_id = null;
     private String m_creationDate = null;
 
+    //Constructors
     public Batch()
     {
 
@@ -30,20 +31,24 @@ public class Batch
         m_creationDate = new String(toCopy.m_creationDate);
     }
 
+    //Getters and Setters
     public String GetId() 
     {
-        return new String(m_id);
+        //return new String(m_id);
+        return m_id;
     }
 
     public String GetCreationDate() 
     {
-        return new String(m_creationDate);
+        //return new String(m_creationDate);
+        return m_creationDate;
     }
 
     @Override
     public String toString()
     {
         StringBuilder stringBuilder = new StringBuilder();
+
         stringBuilder.append("Bach ID: "+m_id+"\n");
         stringBuilder.append("Created on: "+m_creationDate+"\n");
 

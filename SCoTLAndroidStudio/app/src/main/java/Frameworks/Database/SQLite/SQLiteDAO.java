@@ -71,9 +71,14 @@ public class SQLiteDAO
 
     @Override
     public Batch GetBatch(String batchId) {
+
+
+
+
         return null;
     }
 
+    //Teoricamente feita e.e
     @Override
     public Boolean TryRegisterBatch(Batch batch)
     {
