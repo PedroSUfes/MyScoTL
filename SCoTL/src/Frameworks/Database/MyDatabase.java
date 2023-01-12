@@ -276,7 +276,7 @@ implements
     {
         // Apenas se precisa verificar se um lote com o id em batch já está cadastrado
         // Se já estiver, exibe-se uma mensagem de erro se retorna falso
-        // Caso contrário, insere-se o lote na tabela se retorna verdadeiro
+        // Caso contrário, insere-se o lote na tabela e se retorna verdadeiro
 
         var batchListHelper = new ListHelper<Batch>();
         if(batchListHelper.Exists(m_batchList, (e) -> e.GetId().equals(batch.GetId())))
@@ -668,7 +668,7 @@ implements
         // Se já estiver somente na tabela pessoa, deve-se verificar se esse cpf está incluído na tabela
         // de gerência de galpão
         // Se estiver, uma mensagem de erro deve ser exibida e a função retorna falso
-        // Caso contrário, faz-se o cadastro do servente, pelo menos, na tabela woksOn
+        // Caso contrário, faz-se o cadastro do servente, pelo menos, na tabela worksOn
 
         var newServantCpf = servant.GetCpf();
         var newServantProperty = servant.GetProperty();
@@ -1285,6 +1285,8 @@ implements
     @Override
     public Property GetPropertyById(String id) 
     {
+        // Verifica-se se a propriedade com id id está cadastrada
+        // Caso não esteja, imprime-se uma mensagem de erro e se retorna null
         var propertyListHelper = new ListHelper<Property>();
         var toReturn = propertyListHelper.Find(m_propertyList, (e) -> e.GetId() == id);
         if(toReturn == null)
@@ -1299,6 +1301,9 @@ implements
     @Override
     public Boolean TryRegisterProperty(Property property) 
     {
+        // Verifica-se se uma properiedade com mesmo id já existe
+        // Caso exista, imprimi-se uma mensagem de erro e se retorna falso 
+
         var propertyListHelper = new ListHelper<Property>();
         if(propertyListHelper.Exists(m_propertyList, (e) -> e.GetId().equals(property.GetId())))
         {

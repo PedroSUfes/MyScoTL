@@ -13,10 +13,11 @@ extends
         String cellphone, 
         String birthDate, 
         String hiringDate,
+        String endDate,
         Property property
     ) 
     {
-        super(cpf, name, cellphone, birthDate, hiringDate);
+        super(cpf, name, cellphone, birthDate, hiringDate, endDate);
         
         m_property = new Property(property);
     }

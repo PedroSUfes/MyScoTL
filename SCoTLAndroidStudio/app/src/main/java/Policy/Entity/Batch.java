@@ -18,7 +18,7 @@ public class Batch
     )
     {
         m_id = new String(id);
-        m_creationDate = new String (creationDate);
+        m_creationDate = new String(creationDate);
     }
 
     public Batch(Batch toCopy)

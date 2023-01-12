@@ -16,14 +16,14 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetEmployee(cpf);
     }
 
-    public static Servant[] GetServants()
+    public static Servant[] GetServants(boolean withPastRegister)
     {
-        return DatabaseAccess.employeeOperationsInterface.GetServants();
+        return DatabaseAccess.employeeOperationsInterface.GetServants(withPastRegister);
     }
 
-    public static Servant GetServant(String cpf)
+    public static Servant[] GetServant(String cpf, boolean withPastRegister)
     {
-        return DatabaseAccess.employeeOperationsInterface.GetServant(cpf);
+        return DatabaseAccess.employeeOperationsInterface.GetServant(cpf, withPastRegister);
     }
 
     public static WarehouseManager[] GetWarehouseManagers()
@@ -31,19 +31,19 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers();
     }
 
-    public static WarehouseManager GetWarehouseManager(String cpf)
+    public static WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister)
     {
-        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManager(cpf);
+        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManager(cpf, withPastRegister);
     }
 
     public static Boolean TryRegisterServant(Servant servant, String date)
     {
-        return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant, date);
+        return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant);
     }
 
-    public static Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate)
+    public static Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager)
     {
-        return DatabaseAccess.employeeOperationsInterface.TryRegisterWarehouseManager(warehouseManager, beginDate);
+        return DatabaseAccess.employeeOperationsInterface.TryRegisterWarehouseManager(warehouseManager);
     }
 
     public static Boolean TryUpdateServant(Servant servant, String date)

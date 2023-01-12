@@ -12,8 +12,9 @@ public class BuyCoffeeBagTableQueryHelper
         return "CREATE TABLE "+BUY_COFFEE_BAG_TABLE+"("
                 +BATCH_ID+" TEXT,"
                 +COFFEE_BAG_ID+" TEXT,"
-                +"FOREIGN KEY("+BUYER_CPF+") REFERENCES("+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.PRIMARY_KEY+")),"
-                +"Primary KEY("+BATCH_ID+", "+COFFEE_BAG_ID+")"
+                +BUYER_CPF+" TEXT,"
+                +"Primary KEY("+BATCH_ID+", "+COFFEE_BAG_ID+"),"
+                +"FOREIGN KEY("+BUYER_CPF+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF +")"
                 +")";
     }
 }
