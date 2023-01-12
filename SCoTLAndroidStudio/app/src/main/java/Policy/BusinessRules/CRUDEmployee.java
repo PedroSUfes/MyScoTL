@@ -16,9 +16,9 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetEmployee(cpf);
     }
 
-    public static Servant[] GetServants()
+    public static Servant[] GetServants(boolean withPastRegister)
     {
-        return DatabaseAccess.employeeOperationsInterface.GetServants();
+        return DatabaseAccess.employeeOperationsInterface.GetServants(withPastRegister);
     }
 
     public static Servant GetServant(String cpf)

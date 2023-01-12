@@ -29,6 +29,28 @@ public class SQLiteDAO
         PropertyOperationsInterface,
         WarehouseOperationsInterface
 {
+    private class WorksOnContainer
+    {
+        public String m_workerCpf = null;
+        public String m_propertyId = null;
+        public String m_hireDate = null;
+        public String m_endDate = null;
+
+        public WorksOnContainer
+        (
+            String workerCpf,
+            String propertyId,
+            String hireDate,
+            String endDate
+        )
+        {
+            m_workerCpf = workerCpf;
+            m_propertyId = propertyId;
+            m_hireDate = hireDate;
+            m_endDate = endDate;
+        }
+    }
+
     private static final String DB_NAME = "SCoTLLocalDb";
 
     public SQLiteDAO(Context context)
@@ -134,30 +156,35 @@ public class SQLiteDAO
     }
 
     @Override
-    public Servant[] GetServants()
+    public Servant[] GetServants(boolean withPastRegister)
     {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor worksOnCursor = database.rawQuery(WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(), null);
+        Cursor worksOnCursor = database.rawQuery
+        (
+            withPastRegister ? WorksOnTableQueryHelper.GetSelectAllQuery() :
+            WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(), null
+        );
 
         // Cpf do servente, id da propriedade, data contratação
-        ArrayList<Triple<String, String, String>> tripleList = new ArrayList<Triple<String, String, String>>();
+        ArrayList<WorksOnContainer> worksOnContainerList = new ArrayList<WorksOnContainer>();
         if(worksOnCursor.moveToFirst())
         {
             do
             {
-                tripleList.add
+                worksOnContainerList.add
                 (
-                    new Triple<String, String, String>
+                    new WorksOnContainer
                     (
                         worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
                         worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
-                        worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex())
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex()),
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetEndDateIndex())
                     )
                 );
             } while(worksOnCursor.moveToNext());
         }
 
-        if(tripleList.isEmpty())
+        if(worksOnContainerList.isEmpty())
         {
             MyLog.LogMessage("No servants in database");
             database.close();
@@ -165,27 +192,27 @@ public class SQLiteDAO
         }
 
         ArrayList<Servant> servantList = new ArrayList<Servant>();
-        for(Triple<String, String, String> triple : tripleList)
+        for(WorksOnContainer e : worksOnContainerList)
         {
-            if(triple == null)
+            if(e == null)
             {
                 continue;
             }
 
-            Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(triple.component2()), null);
+            Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(e.m_propertyId), null);
             if(!propertyCursor.moveToFirst())
             {
                 continue;
             }
 
             Property property = PropertyTableQueryHelper.GetPropertyFromCursor(propertyCursor);
-            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(triple.component1()), null);
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_workerCpf), null);
             if(!personCursor.moveToFirst())
             {
                 continue;
             }
 
-            servantList.add(PersonTableQueryHelper.GetServantFromCursor(personCursor, property, triple.component3()));
+            servantList.add(PersonTableQueryHelper.GetServantFromCursor(personCursor, property, e.m_hireDate, e.m_endDate));
         }
 
         if(servantList.isEmpty())

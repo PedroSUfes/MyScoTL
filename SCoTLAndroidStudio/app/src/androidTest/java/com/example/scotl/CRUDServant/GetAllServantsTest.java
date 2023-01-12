@@ -21,7 +21,7 @@ public class GetAllServantsTest
 
         DatabaseAccess.employeeOperationsInterface = database;
 
-        Servant[] servants = DatabaseAccess.employeeOperationsInterface.GetServants();
+        Servant[] servants = DatabaseAccess.employeeOperationsInterface.GetServants(true);
         if(servants == null)
         {
             return;

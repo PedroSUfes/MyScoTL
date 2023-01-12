@@ -8,7 +8,7 @@ public interface EmployeeOperationsInterface
 {
     public Employee[] GetEmployees();
     public Employee GetEmployee(String cpf);
-    public Servant[] GetServants();
+    public Servant[] GetServants(boolean withPastRegister);
     public Servant GetServant(String cpf);
     public WarehouseManager[] GetWarehouseManagers();
     public WarehouseManager GetWarehouseManager(String cpf);

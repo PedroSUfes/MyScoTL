@@ -83,7 +83,7 @@ public class PersonTableQueryHelper
         );
     }
 
-    public static Servant GetServantFromCursor(Cursor personCursor, Property property, String hiringDate)
+    public static Servant GetServantFromCursor(Cursor personCursor, Property property, String hiringDate, String endDate)
     {
         return new Servant
         (
@@ -92,6 +92,7 @@ public class PersonTableQueryHelper
             personCursor.getString(GetCellphoneIndex()),
             personCursor.getString(GetBirthDateIndex()),
             hiringDate,
+            endDate,
             property
         );
     }

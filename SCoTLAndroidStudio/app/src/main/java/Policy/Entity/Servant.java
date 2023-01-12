@@ -13,10 +13,11 @@ extends
         String cellphone, 
         String birthDate, 
         String hiringDate,
+        String endDate,
         Property property
     ) 
     {
-        super(cpf, name, cellphone, birthDate, hiringDate);
+        super(cpf, name, cellphone, birthDate, hiringDate, endDate);
         
         m_property = new Property(property);
     }
@@ -57,7 +58,6 @@ extends
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(super.toString()+"\n");
         stringBuilder.append("Job: "+GetEmployeeType().toString()+"\n");
-        stringBuilder.append("Hiring date: "+m_hiringDate+"\n");
         stringBuilder.append("Works on property: "+m_property+"\n");
         stringBuilder.append("----------------------------------------------------\n");
 
