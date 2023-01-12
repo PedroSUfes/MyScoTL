@@ -16,7 +16,6 @@ import Policy.Entity.Property;
 import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
-import kotlin.Triple;
 
 public class SQLiteDAO
     extends
@@ -165,81 +164,35 @@ public class SQLiteDAO
             WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(), null
         );
 
-        // Cpf do servente, id da propriedade, data contratação
-        ArrayList<WorksOnContainer> worksOnContainerList = new ArrayList<WorksOnContainer>();
-        if(worksOnCursor.moveToFirst())
-        {
-            do
-            {
-                worksOnContainerList.add
-                (
-                    new WorksOnContainer
-                    (
-                        worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
-                        worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
-                        worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex()),
-                        worksOnCursor.getString(WorksOnTableQueryHelper.GetEndDateIndex())
-                    )
-                );
-            } while(worksOnCursor.moveToNext());
-        }
-
-        if(worksOnContainerList.isEmpty())
+        if(!worksOnCursor.moveToFirst())
         {
             MyLog.LogMessage("No servants in database");
             database.close();
             return null;
         }
 
-        ArrayList<Servant> servantList = new ArrayList<Servant>();
-        for(WorksOnContainer e : worksOnContainerList)
+        return GetServantsFromWorksOnCursor(worksOnCursor, database);
+    }
+
+    @Override
+    public Servant[] GetServant(String cpf, boolean withPastRegister)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor worksOnCursor = database.rawQuery
+        (
+            withPastRegister ?  WorksOnTableQueryHelper.GetSelectQuery(cpf) :
+            WorksOnTableQueryHelper.GetSelectQueryNoPastRegisters(cpf),
+            null
+        );
+        if(!worksOnCursor.moveToFirst())
         {
-            if(e == null)
-            {
-                continue;
-            }
-
-            Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(e.m_propertyId), null);
-            if(!propertyCursor.moveToFirst())
-            {
-                continue;
-            }
-
-            Property property = PropertyTableQueryHelper.GetPropertyFromCursor(propertyCursor);
-            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_workerCpf), null);
-            if(!personCursor.moveToFirst())
-            {
-                continue;
-            }
-
-            servantList.add(PersonTableQueryHelper.GetServantFromCursor(personCursor, property, e.m_hireDate, e.m_endDate));
-        }
-
-        if(servantList.isEmpty())
-        {
+            MyLog.LogMessage("No servant with cpf "+cpf);
+            MyLog.LogMessage("Fail to read servant");
             database.close();
             return null;
         }
 
-        Servant[] toReturn = new Servant[servantList.size()];
-        int index = -1;
-        for(Servant s : servantList)
-        {
-            ++index;
-            if(s == null)
-            {
-                continue;
-            }
-
-            toReturn[index] = servantList.get(index);
-        }
-        database.close();
-        return toReturn;
-    }
-
-    @Override
-    public Servant[] GetServant(String cpf) {
-        return null;
+        return GetServantsFromWorksOnCursor(worksOnCursor, database);
     }
 
     @Override
@@ -509,5 +462,77 @@ public class SQLiteDAO
     @Override
     public Boolean TryRemoveWarehouse(String id) {
         return null;
+    }
+
+    private Servant[] GetServantsFromWorksOnCursor(Cursor worksOnCursor, SQLiteDatabase database)
+    {
+        ArrayList<WorksOnContainer> worksOnContainerList = new ArrayList<WorksOnContainer>();
+        if(worksOnCursor.moveToFirst())
+        {
+            do
+            {
+                worksOnContainerList.add
+                (
+                    new WorksOnContainer
+                    (
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex()),
+                        worksOnCursor.getString(WorksOnTableQueryHelper.GetEndDateIndex())
+                    )
+                );
+            } while(worksOnCursor.moveToNext());
+        }
+
+        if(worksOnContainerList.isEmpty())
+        {
+            database.close();
+            return null;
+        }
+
+        ArrayList<Servant> servantList = new ArrayList<Servant>();
+        for(WorksOnContainer e : worksOnContainerList)
+        {
+            if(e == null)
+            {
+                continue;
+            }
+
+            Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(e.m_propertyId), null);
+            if(!propertyCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            Property property = PropertyTableQueryHelper.GetPropertyFromCursor(propertyCursor);
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_workerCpf), null);
+            if(!personCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            servantList.add(PersonTableQueryHelper.GetServantFromCursor(personCursor, property, e.m_hireDate, e.m_endDate));
+        }
+
+        if(servantList.isEmpty())
+        {
+            database.close();
+            return null;
+        }
+
+        Servant[] toReturn = new Servant[servantList.size()];
+        int index = -1;
+        for(Servant s : servantList)
+        {
+            ++index;
+            if(s == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = servantList.get(index);
+        }
+        database.close();
+        return toReturn;
     }
 }
