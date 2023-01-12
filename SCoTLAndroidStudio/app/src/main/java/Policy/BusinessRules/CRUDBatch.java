@@ -6,7 +6,7 @@ import Policy.Entity.Batch;
 
 public class CRUDBatch 
 {
-    public static List<Batch> GetBatches()
+    public static Batch[] GetBatches()
     {
         return DatabaseAccess.batchOperationsInterface.GetBatches();
     }

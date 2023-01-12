@@ -62,9 +62,6 @@ public class SQLiteDAO extends SQLiteOpenHelper
 
     //
     @Override
-<<<<<<< Updated upstream
-    public List<Batch> GetBatches() {
-=======
     public Batch[] GetBatches() {
 
         SQLiteDatabase db = getReadableDatabase();
@@ -103,32 +100,6 @@ public class SQLiteDAO extends SQLiteOpenHelper
         db.close();
 
         return batchesReturn;
-    }
->>>>>>> Stashed changes
-
-        List<Batch> returnList = new ArrayList<>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllCommand(), null);
-
-        if(cursor.moveToFirst()){
-            do{
-                String batchID = cursor.getString(0);
-                String batchCreate_Date = cursor.getString(1);
-
-                Batch newBatch = new Batch(batchID, batchCreate_Date);
-
-                returnList.add(newBatch);
-
-            }while(cursor.moveToFirst());
-        }
-        else{
-        }
-
-        cursor.close();
-        db.close();
-        return returnList;
     }
 
     @Override
