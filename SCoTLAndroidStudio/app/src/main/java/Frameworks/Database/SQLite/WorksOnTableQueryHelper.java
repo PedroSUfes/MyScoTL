@@ -29,6 +29,11 @@ public class WorksOnTableQueryHelper
         return "SELECT * FROM "+WORKS_ON_TABLE+" WHERE personCpf='"+personCpf+"'";
     }
 
+    public static String GetSelectQueryNoPastRegisters(String personCpf)
+    {
+        return "SELECT * FROM "+WORKS_ON_TABLE+" WHERE personCpf='"+personCpf+"' AND "+END_DATE+" IS NULL";
+    }
+
     public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+WORKS_ON_TABLE;
