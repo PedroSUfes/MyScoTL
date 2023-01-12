@@ -1,5 +1,11 @@
 package Frameworks.Database.SQLite;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import Policy.Entity.Warehouse;
+
 public class WarehouseTableQueryHelper
 {
     public static final String WAREHOUSE_TABLE = "warehouse";
@@ -18,5 +24,27 @@ public class WarehouseTableQueryHelper
                 +STREET_NAME + " TEXT,"
                 +RESIDENTIAL_NUMBER + " INTEGER"
                 +")";
+    }
+
+    public static String GetSelectQuery(String id)
+    {
+        return "SELECT * FROM "+WAREHOUSE_TABLE+" WHERE "+ID+"='"+id+"'";
+    }
+
+    public static boolean Exists(SQLiteDatabase database, String id)
+    {
+        Cursor cursor = database.rawQuery(GetSelectQuery(id), null);
+        return cursor.moveToFirst();
+    }
+
+    public static ContentValues GetContentValue(Warehouse warehouse)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ID, warehouse.GetId());
+        contentValues.put(STATE_NAME, warehouse.GetStateName());
+        contentValues.put(CITY_NAME, warehouse.GetCityName());
+        contentValues.put(STREET_NAME, warehouse.GetStreetName());
+        contentValues.put(RESIDENTIAL_NUMBER, warehouse.GetNumber());
+        return contentValues;
     }
 }

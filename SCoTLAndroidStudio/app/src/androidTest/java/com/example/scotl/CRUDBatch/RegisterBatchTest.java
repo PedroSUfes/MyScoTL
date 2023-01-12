@@ -28,6 +28,7 @@ public class RegisterBatchTest
                 "Today"
             )
         );
+
         System.out.println(result);
     }
 }

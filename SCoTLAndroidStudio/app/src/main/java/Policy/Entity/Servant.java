@@ -5,7 +5,6 @@ extends
     Employee
 {
     private Property m_property = null;
-    private String m_hiringDate = null;
     
     public Servant
     (
@@ -20,7 +19,6 @@ extends
         super(cpf, name, cellphone, birthDate, hiringDate);
         
         m_property = new Property(property);
-        m_hiringDate = new String(hiringDate);
     }
     
     public Servant(Servant toCopy)

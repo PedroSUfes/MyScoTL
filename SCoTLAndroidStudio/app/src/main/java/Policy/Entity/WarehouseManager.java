@@ -5,6 +5,7 @@ extends
     Employee
 {
     private Warehouse m_warehouse = null;
+    private String m_hiringDate = null;
     
     public WarehouseManager
     (
@@ -19,6 +20,7 @@ extends
         super(cpf, name, cellphone, birthDate, hiringDate);
     
         m_warehouse = new Warehouse(warehouse);
+        m_hiringDate = new String(hiringDate);
     }
     
     public WarehouseManager(WarehouseManager toCopy)
@@ -26,6 +28,7 @@ extends
         super(toCopy);
 
         m_warehouse = new Warehouse(toCopy.m_warehouse);
+        m_hiringDate = new String(toCopy.GetHiringDate());
     }
 
     public Warehouse GetWarehouse()

@@ -2,9 +2,10 @@ package Policy.Entity;
 
 public class Warehouse 
 {
-    private String m_id = new String();    
-    private String m_stateName = new String();    
-    private String m_streetName = new String();    
+    private String m_id = null;
+    private String m_stateName = null;
+    private String m_cityName = null;
+    private String m_streetName = null;
     private int m_number = 0;    
     private Person m_owner = null;
 
@@ -14,14 +15,16 @@ public class Warehouse
     (
         String id,
         String stateName,
+        String cityName,
         String streetName,
         int number,
         Person owner
     )
     {
-        m_id = String.copyValueOf(id.toCharArray());
-        m_stateName = String.copyValueOf(stateName.toCharArray());
-        m_streetName = String.copyValueOf(streetName.toCharArray());
+        m_id = new String(id);
+        m_stateName = new String(stateName);
+        m_cityName = new String(cityName);
+        m_streetName = new String(streetName);
         m_number = number;
         m_owner = new Person(owner);
     }
@@ -45,6 +48,11 @@ public class Warehouse
         return new String(m_stateName);
     }
 
+    public String GetCityName()
+    {
+        return new String(m_cityName);
+    }
+
     public String GetStreetName() 
     {
         return new String(m_streetName);
@@ -63,6 +71,11 @@ public class Warehouse
     public void SetStateName(String stateName)
     {   
         m_stateName = String.copyValueOf(stateName.toCharArray());
+    }
+
+    public void SetCityName(String cityName)
+    {
+        m_cityName = String.copyValueOf(cityName.toCharArray());
     }
 
     public void SetStreetName(String streetName)
@@ -114,6 +127,7 @@ public class Warehouse
         stringBuilder.append(super.toString());
         stringBuilder.append("Warehouse ID: "+m_id+"\n");
         stringBuilder.append("State name: "+m_stateName+"\n");
+        stringBuilder.append("City name: "+m_cityName+"\n");
         stringBuilder.append("Street name: "+m_streetName+"\n");
         stringBuilder.append("Number: "+m_number+"\n");
         stringBuilder.append("Owner: \n"+m_owner+"\n");

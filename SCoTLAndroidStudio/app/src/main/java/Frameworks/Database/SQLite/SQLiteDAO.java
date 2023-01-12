@@ -1,14 +1,14 @@
 package Frameworks.Database.SQLite;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Pair;
+import android.media.MediaDrm;
 
 import java.util.ArrayList;
 
+import Policy.Adapters.MyLog;
 import Policy.BusinessRules.Adapters.*;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
@@ -17,7 +17,6 @@ import Policy.Entity.Property;
 import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
-import Policy.Entity.Person;
 import kotlin.Triple;
 
 public class SQLiteDAO extends SQLiteOpenHelper
@@ -77,17 +76,14 @@ public class SQLiteDAO extends SQLiteOpenHelper
     @Override
     public Boolean TryRegisterBatch(Batch batch)
     {
-        SQLiteDatabase database = getReadableDatabase();
-        if(BatchTableQueryHelper.Exists(database, batch.GetId()))
+        SQLiteDatabase database = getWritableDatabase();
+        long result = database.insert(BatchTableQueryHelper.BATCH_TABLE, null, BatchTableQueryHelper.GetContentValues(batch));
+        if(result < 0)
         {
-            database.close();
+            MyLog.LogMessage("There's a batch with id "+batch.GetId()+" already in database");
+            MyLog.LogMessage("Fail to register batch");
             return false;
         }
-
-        database.close();
-        database = getWritableDatabase();
-        database.insert(BatchTableQueryHelper.BATCH_TABLE, null, BatchTableQueryHelper.GetContentValues(batch));
-        database.close();
         return true;
     }
 
@@ -241,32 +237,33 @@ public class SQLiteDAO extends SQLiteOpenHelper
         if
         (
             !PropertyTableQueryHelper.Exists(database, property.GetId()) ||
-            WorksOnTableQueryHelper.PersonExists(database, servantCpf) ||
             IsWarehouseOwnerTableQueryHelper.PersonExists(database, servantCpf) ||
             ManageWarehouseTableQueryHelper.PersonExists(database, servantCpf)
         )
         {
             database.close();
-            return null;
-        }
-
-        if(!PersonTableQueryHelper.Exists(database, servantCpf))
-        {
-            database.close();
-            database = getWritableDatabase();
-            database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValues(servant));
+            return false;
         }
 
         database.close();
         database = getWritableDatabase();
-        database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, WorksOnTableQueryHelper.GetContentValue(servantCpf, servant.GetHiringDate(), property.GetId()));
+
+        database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(servant));
+        long worksOnResult = database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, WorksOnTableQueryHelper.GetContentValue(servantCpf, servant.GetHiringDate(), property.GetId()));
+
+        if(worksOnResult < 0)
+        {
+            // Imprimir mensagem de "erro"
+            return false;
+        }
 
         return true;
     }
 
     @Override
-    public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate) {
-        return null;
+    public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager)
+    {
+        return false;
     }
 
     @Override
@@ -300,6 +297,11 @@ public class SQLiteDAO extends SQLiteOpenHelper
         }
 
         Cursor cursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(id), null);
+        if(!cursor.moveToFirst())
+        {
+            return null;
+        }
+
         Property toReturn = PropertyTableQueryHelper.GetPropertyFromCursor(cursor);
         database.close();
         return toReturn;
@@ -308,17 +310,12 @@ public class SQLiteDAO extends SQLiteOpenHelper
     @Override
     public Boolean TryRegisterProperty(Property property)
     {
-        SQLiteDatabase database = getReadableDatabase();
-        if(PropertyTableQueryHelper.Exists(database, property.GetId()))
+        SQLiteDatabase database = getWritableDatabase();
+        long result = database.insert(PropertyTableQueryHelper.PROPERTY_TABLE, null, PropertyTableQueryHelper.GetContentValues(property));
+        if(result < 0)
         {
-            database.close();
             return false;
         }
-
-        database.close();
-        database = getWritableDatabase();
-        database.insert(PropertyTableQueryHelper.PROPERTY_TABLE, null, PropertyTableQueryHelper.GetContentValues(property));
-        database.close();
         return true;
     }
 
@@ -363,8 +360,37 @@ public class SQLiteDAO extends SQLiteOpenHelper
     }
 
     @Override
-    public Boolean TryRegisterWarehouse(Warehouse warehouse, String beginDate) {
-        return null;
+    public Boolean TryRegisterWarehouse(Warehouse warehouse, String beginDate)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        String warehouseId = warehouse.GetId();
+        if(WarehouseTableQueryHelper.Exists(database, warehouseId))
+        {
+            MyLog.LogMessage("The warehouse with id "+warehouseId+" already exists in database");
+            MyLog.LogMessage("Fail to register warehouse");
+            return false;
+        }
+
+        String ownerCpf = warehouse.GetOwner().GetCpf();
+        if
+        (
+            PersonTableQueryHelper.Exists(database, ownerCpf) &&
+            (WorksOnTableQueryHelper.PersonExists(database, ownerCpf) ||
+            ManageWarehouseTableQueryHelper.PersonExists(database, ownerCpf))
+        )
+        {
+            MyLog.LogMessage("There's a employee with cpf "+ownerCpf+" already in the database");
+            MyLog.LogMessage("Fail to register warehouse with id "+warehouseId);
+            return false;
+        }
+
+        database.close();
+        database = getWritableDatabase();
+        database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouse.GetOwner()));
+        database.insert(WarehouseTableQueryHelper.WAREHOUSE_TABLE, null, WarehouseTableQueryHelper.GetContentValue(warehouse));
+        database.insert(IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE, null, IsWarehouseOwnerTableQueryHelper.GetContentValues(warehouseId, ownerCpf, beginDate));
+
+        return true;
     }
 
     @Override

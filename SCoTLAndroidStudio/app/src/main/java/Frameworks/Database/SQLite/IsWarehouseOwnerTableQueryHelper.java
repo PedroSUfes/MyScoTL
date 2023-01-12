@@ -1,7 +1,10 @@
 package Frameworks.Database.SQLite;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import Policy.Entity.Warehouse;
 
 public class IsWarehouseOwnerTableQueryHelper
 {
@@ -31,5 +34,14 @@ public class IsWarehouseOwnerTableQueryHelper
     {
         Cursor isWarehouseOwnerCursor = database.rawQuery(GetSelectByOwnerCpfQuery(personCpf), null);
         return isWarehouseOwnerCursor.moveToFirst();
+    }
+
+    public static ContentValues GetContentValues(String warehouseId, String ownerCpf, String beginbDate)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WAREHOUSE_ID, warehouseId);
+        contentValues.put(OWNER_CPF, ownerCpf);
+        contentValues.put(BEGIN_DATE, beginbDate);
+        return contentValues;
     }
 }

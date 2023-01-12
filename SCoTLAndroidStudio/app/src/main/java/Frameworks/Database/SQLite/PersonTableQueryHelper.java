@@ -54,7 +54,7 @@ public class PersonTableQueryHelper
         return 3;
     }
 
-    public static ContentValues GetContentValues(Person person)
+    public static ContentValues GetContentValue(Person person)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(CPF, person.GetCpf());

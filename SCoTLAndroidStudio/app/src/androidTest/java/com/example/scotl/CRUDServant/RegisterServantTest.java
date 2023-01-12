@@ -34,5 +34,7 @@ public class RegisterServantTest
                 DatabaseAccess.propertyOperationsInterface.GetPropertyById("1111")
             )
         );
+
+        System.out.println(result);
     }
 }
