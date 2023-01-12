@@ -1,10 +1,12 @@
 package Policy.BusinessRules;
 
+import java.util.List;
+
 import Policy.Entity.Batch;
 
 public class CRUDBatch 
 {
-    public static Batch[] GetBatches()
+    public static List<Batch> GetBatches()
     {
         return DatabaseAccess.batchOperationsInterface.GetBatches();
     }

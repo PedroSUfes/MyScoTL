@@ -13,4 +13,9 @@ public class BatchTableQueryHelper
                 +CREATION_DATE + " TEXT,"
                 +")";
     }
+
+    public static String GetSelectAllCommand()
+    {
+        return "SELECT * FROM "+ BATCH_TABLE;
+    }
 }

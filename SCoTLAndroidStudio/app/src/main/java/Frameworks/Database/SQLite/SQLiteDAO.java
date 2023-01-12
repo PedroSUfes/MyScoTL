@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Policy.BusinessRules.Adapters.*;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
@@ -53,15 +56,35 @@ public class SQLiteDAO extends SQLiteOpenHelper
     }
 
     @Override
-    public Batch[] GetBatches() {
-        return new Batch[0];
+    public List<Batch> GetBatches() {
+
+        List<Batch> returnList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllCommand(), null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String batchID = cursor.getString(0);
+                String batchCreate_Date = cursor.getString(1);
+
+                Batch newBatch = new Batch(batchID, batchCreate_Date);
+
+                returnList.add(newBatch);
+
+            }while(cursor.moveToFirst());
+        }
+        else{
+        }
+
+        cursor.close();
+        db.close();
+        return returnList;
     }
 
     @Override
     public Batch GetBatch(String batchId) {
-
-
-
 
         return null;
     }
