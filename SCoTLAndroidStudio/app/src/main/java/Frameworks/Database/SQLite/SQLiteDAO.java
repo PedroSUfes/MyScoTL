@@ -12,6 +12,7 @@ import Policy.BusinessRules.Adapters.*;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
+import Policy.Entity.Person;
 import Policy.Entity.Property;
 import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
@@ -46,6 +47,28 @@ public class SQLiteDAO
             m_workerCpf = workerCpf;
             m_workLocalId = workLocalId;
             m_hireDate = hireDate;
+            m_endDate = endDate;
+        }
+    }
+
+    private class IsWarehouseOwnerContainer
+    {
+        public String m_warehouseId = null;
+        public String m_ownerCpf = null;
+        public String m_beginDate = null;
+        public String m_endDate = null;
+
+        public IsWarehouseOwnerContainer
+        (
+            String warehouseId,
+            String ownerCpf,
+            String beginDate,
+            String endDate
+        )
+        {
+            m_warehouseId = warehouseId;
+            m_ownerCpf = ownerCpf;
+            m_beginDate = beginDate;
             m_endDate = endDate;
         }
     }
@@ -171,7 +194,9 @@ public class SQLiteDAO
             return null;
         }
 
-        return GetServantsFromWorksOnCursor(worksOnCursor, database);
+        Servant[] result = GetServantsFromWorksOnCursor(worksOnCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
@@ -192,7 +217,9 @@ public class SQLiteDAO
             return null;
         }
 
-        return GetServantsFromWorksOnCursor(worksOnCursor, database);
+        Servant[] result = GetServantsFromWorksOnCursor(worksOnCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
@@ -394,13 +421,34 @@ public class SQLiteDAO
     }
 
     @Override
-    public Warehouse[] GetWarehouses() {
-        return new Warehouse[0];
+    public Warehouse[] GetWarehouses()
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery(IsWarehouseOwnerTableQueryHelper.GetSelectAllQuery(), null);
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No warehouses in database");
+            database.close();
+            return null;
+        }
+
+        Warehouse[] result = GetWarehousesByManagerIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
-    public Warehouse[] GetWarehouses(String stateName) {
-        return new Warehouse[0];
+    public Warehouse[] GetWarehouses(String stateName)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor iSWarehouseOwnerCursor = database.rawQuery(IsWarehouseOwnerTableQueryHelper.GetSelectAllQuery(), null);
+        if(!iSWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No warehouses in database");
+            database.close();
+            return null;
+        }
+        return null;
     }
 
     @Override
@@ -414,7 +462,7 @@ public class SQLiteDAO
     }
 
     @Override
-    public Warehouse GetWarehouse(String id)
+    public Warehouse[] GetWarehouse(String id, boolean withPastRegister)
     {
 //        SQLiteDatabase database = getReadableDatabase();
 //        Cursor cursor = database.rawQuery(WarehouseTableQueryHelper.GetSelectQuery(id), null);
@@ -432,7 +480,7 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryRegisterWarehouse(Warehouse warehouse, String beginDate)
+    public Boolean TryRegisterWarehouse(Warehouse warehouse)
     {
         SQLiteDatabase database = getReadableDatabase();
         String warehouseId = warehouse.GetId();
@@ -462,7 +510,12 @@ public class SQLiteDAO
         database = getWritableDatabase();
         database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouse.GetOwner()));
         database.insert(WarehouseTableQueryHelper.WAREHOUSE_TABLE, null, WarehouseTableQueryHelper.GetContentValue(warehouse));
-        database.insert(IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE, null, IsWarehouseOwnerTableQueryHelper.GetContentValues(warehouseId, ownerCpf, beginDate));
+        database.insert
+                (
+                        IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE,
+                        null,
+                        IsWarehouseOwnerTableQueryHelper.GetContentValues(warehouseId, ownerCpf, warehouse.GetBeginDate(), warehouse.GetEndDate())
+                );
         database.close();
         return true;
     }
@@ -543,7 +596,7 @@ public class SQLiteDAO
 
             toReturn[index] = servantList.get(index);
         }
-        database.close();
+
         return toReturn;
     }
 
@@ -583,5 +636,91 @@ public class SQLiteDAO
         }
 
         return null;
+    }
+
+    private Warehouse[] GetWarehousesByManagerIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
+    {
+        ArrayList<IsWarehouseOwnerContainer> containerList = new ArrayList<IsWarehouseOwnerContainer>();
+        do
+        {
+            containerList.add
+                    (
+                            new IsWarehouseOwnerContainer
+                                    (
+                                            isWarehouseOwnerCursor.getString(IsWarehouseOwnerTableQueryHelper.GetWarehouseIdIndex()),
+                                            isWarehouseOwnerCursor.getString(IsWarehouseOwnerTableQueryHelper.GetOwnerCpfIndex()),
+                                            isWarehouseOwnerCursor.getString(IsWarehouseOwnerTableQueryHelper.GetBeginDateIndex()),
+                                            isWarehouseOwnerCursor.getString(IsWarehouseOwnerTableQueryHelper.GetEndDateIndex())
+                                    )
+                    );
+        } while(isWarehouseOwnerCursor.moveToNext());
+
+        if(containerList.isEmpty())
+        {
+            return null;
+        }
+
+        ArrayList<Warehouse> warehouseList = new ArrayList<Warehouse>();
+        for(IsWarehouseOwnerContainer e : containerList)
+        {
+            if(e == null)
+            {
+                continue;
+            }
+
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_ownerCpf), null);
+            if(!personCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            Person owner = new Person
+                    (
+                            personCursor.getString(PersonTableQueryHelper.GetCpfIndex()),
+                            personCursor.getString(PersonTableQueryHelper.GetNameIndex()),
+                            personCursor.getString(PersonTableQueryHelper.GetCellphoneIndex()),
+                            personCursor.getString(PersonTableQueryHelper.GetBirthDateIndex())
+                    );
+
+            Cursor warehouseCursor = database.rawQuery(WarehouseTableQueryHelper.GetSelectQuery(e.m_warehouseId), null);
+            if(!warehouseCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            Warehouse warehouse = new Warehouse
+                    (
+                            warehouseCursor.getString(WarehouseTableQueryHelper.GetIdIndex()),
+                            warehouseCursor.getString(WarehouseTableQueryHelper.GetStateNameIndex()),
+                            warehouseCursor.getString(WarehouseTableQueryHelper.GetCityNameIndex()),
+                            warehouseCursor.getString(WarehouseTableQueryHelper.GetStreetNameIndex()),
+                            warehouseCursor.getInt(WarehouseTableQueryHelper.GetResidentialNumberIndex()),
+                            e.m_beginDate,
+                            e.m_endDate,
+                            owner
+                    );
+
+            warehouseList.add(warehouse);
+        }
+
+        if(warehouseList.isEmpty())
+        {
+            return null;
+        }
+
+        Warehouse[] toReturn = new Warehouse[warehouseList.size()];
+        int index = -1;
+        for(Warehouse w: warehouseList)
+        {
+            ++index;
+            if(w == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = warehouseList.get(index);
+        }
+
+        return toReturn;
     }
 }

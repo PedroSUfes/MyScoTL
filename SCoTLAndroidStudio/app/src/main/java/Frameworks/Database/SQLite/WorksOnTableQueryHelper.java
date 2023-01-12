@@ -70,6 +70,7 @@ public class WorksOnTableQueryHelper
         contentValues.put(PERSON_CPF, personCpf);
         contentValues.put(BEGIN_DATE, beginDate);
         contentValues.put(PROPERTY_ID, propertyId);
+        contentValues.put(PROPERTY_ID, propertyId);
         return contentValues;
     }
 
