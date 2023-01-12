@@ -36,6 +36,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
         sqLiteDatabase.execSQL(PersonTableQueryHelper.GetCreateCommand());
+        sqLiteDatabase.execSQL(BatchTableQueryHelper.GetCreateCommand());
     }
 
     @Override
@@ -58,12 +59,31 @@ public class SQLiteDAO extends SQLiteOpenHelper
 
     @Override
     public Batch GetBatch(String batchId) {
+
+
+
+
         return null;
     }
 
+    //Teoricamente feita e.e
     @Override
     public Boolean TryRegisterBatch(Batch batch) {
-        return null;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(BatchTableQueryHelper.ID, batch.GetId());
+        cv.put(BatchTableQueryHelper.CREATION_DATE, batch.GetCreationDate());
+
+        long insert = db.insert(BatchTableQueryHelper.BATCH_TABLE, null, cv);
+
+        if(insert == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     @Override
