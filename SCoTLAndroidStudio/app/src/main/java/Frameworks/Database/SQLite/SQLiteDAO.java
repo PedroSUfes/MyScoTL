@@ -438,7 +438,7 @@ public class SQLiteDAO
             return null;
         }
 
-        Warehouse[] result = GetWarehousesByManagerIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
         database.close();
         return result;
     }
@@ -470,14 +470,24 @@ public class SQLiteDAO
     @Override
     public Warehouse[] GetWarehouse(String id, boolean withPastRegister)
     {
-//        SQLiteDatabase database = getReadableDatabase();
-//        Cursor cursor = database.rawQuery(IsWarehouseOwnerTableQueryHelper.(id), null);
-//        if(!cursor.moveToFirst())
-//        {
-//            return null;
-//        }
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdQuery(id) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdEndDateNullQuery(id),
+                        null
+                );
 
-        return null;
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No warehouse with id "+id+" in database");
+            MyLog.LogMessage("Fail to read warehouse");
+            return null;
+        }
+
+        Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
@@ -647,7 +657,7 @@ public class SQLiteDAO
         return null;
     }
 
-    private Warehouse[] GetWarehousesByManagerIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
+    private Warehouse[] GetWarehousesFromIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
     {
         ArrayList<IsWarehouseOwnerContainer> containerList = new ArrayList<IsWarehouseOwnerContainer>();
         do

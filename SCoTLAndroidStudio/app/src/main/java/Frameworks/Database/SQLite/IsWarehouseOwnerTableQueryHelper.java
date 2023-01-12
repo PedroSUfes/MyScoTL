@@ -30,11 +30,16 @@ public class IsWarehouseOwnerTableQueryHelper
         return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+OWNER_CPF+"='"+cpf+"'";
     }
 
-    public static String GetSelectByWarehouseIdEndDateNull(String warehouseId)
+    public static String GetSelectByWarehouseIdEndDateNullQuery(String warehouseId)
     {
-        return null;
+        return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+WAREHOUSE_ID+"='"+warehouseId+"' AND "+END_DATE+" IS NULL";
     }
 
+    public static String GetSelectByWarehouseIdQuery(String id)
+    {
+        return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+WAREHOUSE_ID+"='"+id+"'";
+    }
+    
     public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE;
