@@ -1,6 +1,8 @@
 package Policy.Entity;
 
-public abstract class Employee 
+import org.jetbrains.annotations.NotNull;
+
+public abstract class Employee
 extends
     Person
 {
@@ -44,7 +46,16 @@ extends
 
     public String GetEndDate()
     {
+        if(m_endDate == null)
+        {
+            return null;
+        }
         return new String(m_endDate);
+    }
+
+    public void SetEndDate(@NotNull String endDate)
+    {
+        m_endDate = new String(endDate);
     }
 
     @Override

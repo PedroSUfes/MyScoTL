@@ -61,22 +61,22 @@ public class Property
 
     public String GetPropertyName() 
     {
-        return new String(m_propertyName);
+        return m_propertyName == null ? null : new String(m_propertyName);
     }
 
     public String GetStateName() 
     {
-        return new String(m_stateName);
+        return m_stateName == null ? null : new String(m_stateName);
     }
 
     public String GetCityName()
     {
-        return new String(m_cityName);
+        return m_cityName == null ? null : new String(m_cityName);
     }
 
     public String GetStreetName() 
     {
-        return new String(m_streetName);
+        return m_streetName == null ? null : new String(m_streetName);
     }
 
     public int GetNumber() 
