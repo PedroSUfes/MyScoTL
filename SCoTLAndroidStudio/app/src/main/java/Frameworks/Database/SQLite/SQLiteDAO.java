@@ -238,7 +238,7 @@ public class SQLiteDAO
     }
 
     @Override
-    public Servant GetServant(String cpf) {
+    public Servant[] GetServant(String cpf) {
         return null;
     }
 
