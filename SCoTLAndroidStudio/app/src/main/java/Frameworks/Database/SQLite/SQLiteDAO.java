@@ -276,7 +276,7 @@ public class SQLiteDAO
             personExists &&
             (IsWarehouseOwnerTableQueryHelper.PersonExists(database, servantCpf) || WorksOnTableQueryHelper.PersonExists(database, servantCpf)))
         {
-            MyLog.LogMessage("There's a employee with cpf "+ servantCpf+" already in database");
+            MyLog.LogMessage("There's a owner or a manager with cpf "+ servantCpf+" already in database");
             MyLog.LogMessage("Fail to register servant");
             database.close();
             return false;
@@ -556,7 +556,6 @@ public class SQLiteDAO
 
         if(employeeContainerList.isEmpty())
         {
-            database.close();
             return null;
         }
 
@@ -568,7 +567,8 @@ public class SQLiteDAO
                 continue;
             }
 
-            Property property = GetPropertyById(e.m_workLocalId);
+            Property property = GetPropertyById(e.m_workLocalId); // Lembrar que fecha o banco
+            database = getWritableDatabase();
             if(property == null)
             {
                 continue;
@@ -584,7 +584,6 @@ public class SQLiteDAO
 
         if(servantList.isEmpty())
         {
-            database.close();
             return null;
         }
 
