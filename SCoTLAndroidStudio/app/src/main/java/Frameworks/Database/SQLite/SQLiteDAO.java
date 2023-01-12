@@ -289,7 +289,11 @@ public class SQLiteDAO
         {
             database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(servant));
         }
-        database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, WorksOnTableQueryHelper.GetContentValue(servantCpf, servant.GetHiringDate(), property.GetId()));
+        database.insert
+                (
+                        WorksOnTableQueryHelper.WORKS_ON_TABLE,
+                        null,
+                        WorksOnTableQueryHelper.GetContentValue(servantCpf, property.GetId(), servant.GetHiringDate(), servant.GetEndDate()));
         database.close();
         return true;
     }

@@ -1,6 +1,11 @@
 package Policy.Entity;
 
-public class Servant 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.jetbrains.annotations.NotNull;
+
+public class Servant
 extends
     Employee
 {
@@ -8,13 +13,13 @@ extends
     
     public Servant
     (
-        String cpf, 
-        String name, 
-        String cellphone, 
-        String birthDate, 
-        String hiringDate,
-        String endDate,
-        Property property
+        @NotNull String cpf,
+        @NotNull String name,
+        @NotNull String cellphone,
+        @NotNull String birthDate,
+        @NotNull String hiringDate,
+        @Nullable String endDate,
+        @NotNull Property property
     ) 
     {
         super(cpf, name, cellphone, birthDate, hiringDate, endDate);
