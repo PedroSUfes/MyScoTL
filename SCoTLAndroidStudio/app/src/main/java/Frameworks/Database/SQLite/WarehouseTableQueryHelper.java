@@ -16,7 +16,7 @@ public class WarehouseTableQueryHelper
                 +STATE_NAME + " TEXT,"
                 +CITY_NAME + " TEXT,"
                 +STREET_NAME + " TEXT,"
-                +RESIDENTIAL_NUMBER + " INTEGER,"
+                +RESIDENTIAL_NUMBER + " INTEGER"
                 +")";
     }
 }

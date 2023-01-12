@@ -12,9 +12,10 @@ public class UserTableQueryHelper
     {
         return "CREATE TABLE "+USER_TABLE+" ("
                 +LOGIN +" TEXT PRIMARY KEY,"
-                +"FOREIGN KEY("+CPF_PERSON+") REFERENCES("+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.PRIMARY_KEY+")),"
+                +CPF_PERSON+" TEXT,"
                 +PASSWORD + " TEXT,"
-                +USER_TYPE + " INTEGER"
+                +USER_TYPE + " INTEGER,"
+                +"FOREIGN KEY("+CPF_PERSON+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF +")"
                 +")";
     }
 

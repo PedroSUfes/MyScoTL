@@ -1,5 +1,8 @@
 package Frameworks.Database.SQLite;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class IsWarehouseOwnerTableQueryHelper
 {
     public static final String IS_WAREHOUSE_OWNER_TABLE = "isWarehouseOwner";
@@ -17,5 +20,16 @@ public class IsWarehouseOwnerTableQueryHelper
                 +END_DATE+" TEXT,"
                 +"PRIMARY KEY("+WAREHOUSE_ID+","+OWNER_CPF+","+BEGIN_DATE+")"
                 +")";
+    }
+
+    public static String GetSelectByOwnerCpfQuery(String cpf)
+    {
+        return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+OWNER_CPF+"='"+cpf+"'";
+    }
+
+    public static boolean PersonExists(SQLiteDatabase database, String personCpf)
+    {
+        Cursor isWarehouseOwnerCursor = database.rawQuery(GetSelectByOwnerCpfQuery(personCpf), null);
+        return isWarehouseOwnerCursor.moveToFirst();
     }
 }

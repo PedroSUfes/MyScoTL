@@ -1,5 +1,8 @@
 package Frameworks.Database.SQLite;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class ManageWarehouseTableQueryHelper
 {
     public static final String MANAGE_WAREHOUSE_TABLE = "manageWarehouse";
@@ -17,5 +20,16 @@ public class ManageWarehouseTableQueryHelper
                 +END_DATE+" TEXT,"
                 +"PRIMARY KEY("+WAREHOUSE_ID+","+PERSON_CPF+","+BEGIN_DATE+")"
                 +")";
+    }
+
+    public static String GetSelectByPersonCpfQuery(String personCpf)
+    {
+        return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+PERSON_CPF+"='"+personCpf+"'";
+    }
+
+    public static boolean PersonExists(SQLiteDatabase database, String personCpf)
+    {
+        Cursor cursor = database.rawQuery(GetSelectByPersonCpfQuery(personCpf), null);
+        return  cursor.moveToFirst();
     }
 }

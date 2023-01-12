@@ -38,7 +38,7 @@ public class CRUDEmployee
 
     public static Boolean TryRegisterServant(Servant servant, String date)
     {
-        return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant, date);
+        return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant);
     }
 
     public static Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager, String beginDate)

@@ -5,6 +5,7 @@ extends
     Employee
 {
     private Property m_property = null;
+    private String m_hiringDate = null;
     
     public Servant
     (
@@ -19,6 +20,7 @@ extends
         super(cpf, name, cellphone, birthDate, hiringDate);
         
         m_property = new Property(property);
+        m_hiringDate = new String(hiringDate);
     }
     
     public Servant(Servant toCopy)
@@ -57,6 +59,7 @@ extends
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(super.toString()+"\n");
         stringBuilder.append("Job: "+GetEmployeeType().toString()+"\n");
+        stringBuilder.append("Hiring date: "+m_hiringDate+"\n");
         stringBuilder.append("Works on property: "+m_property+"\n");
         stringBuilder.append("----------------------------------------------------\n");
 
