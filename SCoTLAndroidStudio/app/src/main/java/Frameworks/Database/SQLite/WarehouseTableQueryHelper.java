@@ -49,7 +49,7 @@ public class WarehouseTableQueryHelper
         return contentValues;
     }
 
-    public static Warehouse GetWarehouseFromCursor(Cursor cursor, Person owner)
+    public static Warehouse GetWarehouseFromCursor(Cursor cursor, Person owner, String beginDate, String endDate)
     {
         return new Warehouse
         (
@@ -58,6 +58,8 @@ public class WarehouseTableQueryHelper
             cursor.getString(GetCityNameIndex()),
             cursor.getString(GetStateNameIndex()),
             cursor.getInt(GetResidentialNumberIndex()),
+            beginDate,
+            endDate,
             owner
         );
     }

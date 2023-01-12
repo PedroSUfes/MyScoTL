@@ -31,7 +31,10 @@ extends
         super(toCopy.m_cpf, toCopy.m_name, toCopy.m_cellphone, toCopy.m_birthDate);
 
         m_hiringDate = new String(toCopy.m_hiringDate);
-        m_endDate = new String(toCopy.m_endDate);
+        if(toCopy.m_endDate != null)
+        {
+            m_endDate = new String(toCopy.m_endDate);
+        }
     }
 
     public String GetHiringDate()

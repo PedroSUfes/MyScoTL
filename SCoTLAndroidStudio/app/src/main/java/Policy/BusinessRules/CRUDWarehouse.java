@@ -24,9 +24,9 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.GetWarehousesByOwnerCpf(ownerCpf);
     }
 
-    public static Warehouse GetWarehouse(String id)
+    public static Warehouse[] GetWarehouse(String id, boolean withPastRegister)
     {
-        return DatabaseAccess.warehouseOperationsInterface.GetWarehouse(id);
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehouse(id, withPastRegister);
     }
 
     public static Warehouse GetWarehouse(String stateName, String streetName, int number)
@@ -34,9 +34,9 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.GetWarehouse(stateName, streetName, number);
     }
 
-    public static Boolean TryRegisterWarehouse(Warehouse warehouse, String beginDate)
+    public static Boolean TryRegisterWarehouse(Warehouse warehouse)
     {
-        return DatabaseAccess.warehouseOperationsInterface.TryRegisterWarehouse(warehouse, beginDate);
+        return DatabaseAccess.warehouseOperationsInterface.TryRegisterWarehouse(warehouse);
     }
 
     public static Boolean TryUpdateWarehouse(Warehouse warehouse, String date)
