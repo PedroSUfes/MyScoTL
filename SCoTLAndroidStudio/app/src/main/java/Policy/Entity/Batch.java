@@ -17,8 +17,8 @@ public class Batch
         String creationDate
     )
     {
-        m_id = String.copyValueOf(id.toCharArray());
-        m_creationDate = String.copyValueOf(creationDate.toCharArray());
+        m_id = new String(id);
+        m_creationDate = new String(creationDate);
     }
 
     public Batch(Batch toCopy)
