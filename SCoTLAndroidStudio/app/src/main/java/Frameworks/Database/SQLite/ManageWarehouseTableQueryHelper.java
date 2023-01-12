@@ -30,6 +30,11 @@ public class ManageWarehouseTableQueryHelper
         return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+PERSON_CPF+"='"+personCpf+"'";
     }
 
+    public static String GetSelectAllQuery()
+    {
+        return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE;
+    }
+
     public static boolean PersonExists(SQLiteDatabase database, String personCpf)
     {
         Cursor cursor = database.rawQuery(GetSelectByPersonCpfQuery(personCpf), null);
@@ -49,5 +54,25 @@ public class ManageWarehouseTableQueryHelper
         contentValues.put(BEGIN_DATE, beginDate);
         contentValues.put(PERSON_CPF, managerCpf);
         return contentValues;
+    }
+
+    public static int GetWarehouseIdIndex()
+    {
+        return 0;
+    }
+
+    public static int GetBeginDateIndex()
+    {
+        return 1;
+    }
+
+    public static int GetManagerCpfIndex()
+    {
+        return 2;
+    }
+
+    public static int GetEndDateIndex()
+    {
+        return 3;
     }
 }

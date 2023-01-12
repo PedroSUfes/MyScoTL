@@ -28,23 +28,23 @@ public class SQLiteDAO
         PropertyOperationsInterface,
         WarehouseOperationsInterface
 {
-    private class WorksOnContainer
+    private class EmployeeContainer
     {
         public String m_workerCpf = null;
-        public String m_propertyId = null;
+        public String m_workLocalId = null;
         public String m_hireDate = null;
         public String m_endDate = null;
 
-        public WorksOnContainer
+        public EmployeeContainer
         (
             String workerCpf,
-            String propertyId,
+            String workLocalId,
             String hireDate,
             String endDate
         )
         {
             m_workerCpf = workerCpf;
-            m_propertyId = propertyId;
+            m_workLocalId = workLocalId;
             m_hireDate = hireDate;
             m_endDate = endDate;
         }
@@ -196,12 +196,25 @@ public class SQLiteDAO
     }
 
     @Override
-    public WarehouseManager[] GetWarehouseManagers() {
-        return new WarehouseManager[0];
+    public WarehouseManager[] GetWarehouseManagers()
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor manageWarehouseCursor = database.rawQuery(ManageWarehouseTableQueryHelper.GetSelectAllQuery(), null);
+        if(!manageWarehouseCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No warehouse managers in database");
+            database.close();
+            return null;
+        }
+
+        return GetWarehouseManagersFromManageWarehouseCursor(manageWarehouseCursor, database);
     }
 
     @Override
-    public WarehouseManager GetWarehouseManager(String cpf) {
+    public WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister)
+    {
+//        SQLiteDatabase database = getReadableDatabase();
+//        Cursor manageWarehouseCursor = database.rawQuery(ManageWarehouseTableQueryHelper.)
         return null;
     }
 
@@ -466,14 +479,14 @@ public class SQLiteDAO
 
     private Servant[] GetServantsFromWorksOnCursor(Cursor worksOnCursor, SQLiteDatabase database)
     {
-        ArrayList<WorksOnContainer> worksOnContainerList = new ArrayList<WorksOnContainer>();
+        ArrayList<EmployeeContainer> employeeContainerList = new ArrayList<EmployeeContainer>();
         if(worksOnCursor.moveToFirst())
         {
             do
             {
-                worksOnContainerList.add
+                employeeContainerList.add
                 (
-                    new WorksOnContainer
+                    new EmployeeContainer
                     (
                         worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
                         worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
@@ -484,27 +497,25 @@ public class SQLiteDAO
             } while(worksOnCursor.moveToNext());
         }
 
-        if(worksOnContainerList.isEmpty())
+        if(employeeContainerList.isEmpty())
         {
             database.close();
             return null;
         }
 
         ArrayList<Servant> servantList = new ArrayList<Servant>();
-        for(WorksOnContainer e : worksOnContainerList)
+        for(EmployeeContainer e : employeeContainerList)
         {
             if(e == null)
             {
                 continue;
             }
 
-            Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(e.m_propertyId), null);
-            if(!propertyCursor.moveToFirst())
+            Property property = GetPropertyById(e.m_workLocalId);
+            if(property == null)
             {
                 continue;
             }
-
-            Property property = PropertyTableQueryHelper.GetPropertyFromCursor(propertyCursor);
             Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_workerCpf), null);
             if(!personCursor.moveToFirst())
             {
@@ -534,5 +545,43 @@ public class SQLiteDAO
         }
         database.close();
         return toReturn;
+    }
+
+    private WarehouseManager[] GetWarehouseManagersFromManageWarehouseCursor(Cursor manageWarehouseCursor, SQLiteDatabase database)
+    {
+        ArrayList<EmployeeContainer> employeeContainerList = new ArrayList<EmployeeContainer>();
+        if(manageWarehouseCursor.moveToFirst())
+        {
+            do
+            {
+                employeeContainerList.add
+                (
+                    new EmployeeContainer
+                    (
+                        manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetManagerCpfIndex()),
+                        manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetWarehouseIdIndex()),
+                        manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetBeginDateIndex()),
+                        manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetEndDateIndex())
+                    )
+                );
+            } while(manageWarehouseCursor.moveToNext());
+        }
+
+        if(employeeContainerList.isEmpty())
+        {
+            return null;
+        }
+
+        for(EmployeeContainer e : employeeContainerList)
+        {
+            if(e == null)
+            {
+                continue;
+            }
+
+
+        }
+
+        return null;
     }
 }

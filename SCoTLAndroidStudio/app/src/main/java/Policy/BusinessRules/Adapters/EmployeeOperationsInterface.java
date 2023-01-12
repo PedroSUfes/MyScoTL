@@ -11,7 +11,7 @@ public interface EmployeeOperationsInterface
     public Servant[] GetServants(boolean withPastRegister);
     public Servant[] GetServant(String cpf, boolean withPastRegister);
     public WarehouseManager[] GetWarehouseManagers();
-    public WarehouseManager GetWarehouseManager(String cpf);
+    public WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister);
     public Boolean TryRegisterServant(Servant servant);
     public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager);
     public Boolean TryUpdateServant(Servant servant, String date);
