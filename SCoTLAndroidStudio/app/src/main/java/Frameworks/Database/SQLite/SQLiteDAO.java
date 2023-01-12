@@ -191,6 +191,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
 
         if(servantArrayList.isEmpty())
         {
+            MyLog.LogMessage("No servant in database");
             database.close();
             return null;
         }
@@ -234,13 +235,32 @@ public class SQLiteDAO extends SQLiteOpenHelper
         Property property = servant.GetProperty();
         String servantCpf = servant.GetCpf();
 
+        // Caso já estejacadastrado
+        if(WorksOnTableQueryHelper.PersonExists(database, servantCpf))
+        {
+            MyLog.LogMessage("There's a servant with cpf "+servantCpf+" already in database");
+            MyLog.LogMessage("Fail to register servant");
+            database.close();
+            return false;
+        }
+
+        // Caso a propriedade não exista
+        if (!PropertyTableQueryHelper.Exists(database, property.GetId()))
+        {
+            MyLog.LogMessage("There's no property with id "+ property.GetId()+" in database");
+            MyLog.LogMessage("Fail to register servant with cpf "+servantCpf);
+            database.close();
+            return false;
+        }
+
+        boolean personExists = PersonTableQueryHelper.Exists(database, servantCpf);
         if
         (
-            !PropertyTableQueryHelper.Exists(database, property.GetId()) ||
-            IsWarehouseOwnerTableQueryHelper.PersonExists(database, servantCpf) ||
-            ManageWarehouseTableQueryHelper.PersonExists(database, servantCpf)
-        )
+            personExists &&
+            (IsWarehouseOwnerTableQueryHelper.PersonExists(database, servantCpf) || WorksOnTableQueryHelper.PersonExists(database, servantCpf)))
         {
+            MyLog.LogMessage("There's a employee with cpf "+ servantCpf+" already in database");
+            MyLog.LogMessage("Fail to register servant");
             database.close();
             return false;
         }
@@ -248,22 +268,74 @@ public class SQLiteDAO extends SQLiteOpenHelper
         database.close();
         database = getWritableDatabase();
 
-        database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(servant));
-        long worksOnResult = database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, WorksOnTableQueryHelper.GetContentValue(servantCpf, servant.GetHiringDate(), property.GetId()));
-
-        if(worksOnResult < 0)
+        if(!personExists)
         {
-            // Imprimir mensagem de "erro"
-            return false;
+            database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(servant));
         }
-
+        database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, WorksOnTableQueryHelper.GetContentValue(servantCpf, servant.GetHiringDate(), property.GetId()));
+        database.close();
         return true;
     }
 
     @Override
     public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager)
     {
-        return false;
+        SQLiteDatabase database = getReadableDatabase();
+        String warehouseManagerCpf = warehouseManager.GetCpf();
+
+        // Caso em que já está registrado
+        if(ManageWarehouseTableQueryHelper.PersonExists(database, warehouseManagerCpf))
+        {
+            MyLog.LogMessage("The warehouse manager with cpf "+warehouseManagerCpf+" is already in database");
+            MyLog.LogMessage("Fail to register warehouse manager");
+            database.close();
+            return false;
+        }
+
+        // Caso em que o galpão não existe
+        String warehouseId = warehouseManager.GetWarehouse().GetId();
+        if(!WarehouseTableQueryHelper.Exists(database, warehouseId))
+        {
+            MyLog.LogMessage("There's no warehouse with id "+warehouseId+" in database");
+            MyLog.LogMessage("Fail to register warehouse manager");
+            database.close();
+            return false;
+        }
+
+        // Caso em que o galpão já é administrado
+        if(ManageWarehouseTableQueryHelper.HaveWarehouseManager(database, warehouseId))
+        {
+            MyLog.LogMessage("The warehouse with id "+warehouseId+" already have a manager");
+            MyLog.LogMessage("Fail to register warehouse manager");
+            database.close();
+            return false;
+        }
+
+        // Caso o gerente de galpão a ser cadastrado já é dono ou servente
+        boolean personExists = PersonTableQueryHelper.Exists(database, warehouseManagerCpf);
+        if
+        (
+            personExists &&
+            (IsWarehouseOwnerTableQueryHelper.PersonExists(database, warehouseManagerCpf) ||
+            WorksOnTableQueryHelper.PersonExists(database, warehouseManagerCpf))
+        )
+        {
+            MyLog.LogMessage("The person with cpf "+warehouseManagerCpf+" is already in warehouse owner or servant");
+            MyLog.LogMessage("Fail to register warehouse manager");
+            database.close();
+            return false;
+        }
+
+        database.close();
+        database = getWritableDatabase();
+        if(!personExists)
+        {
+            database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouseManager));
+        }
+
+        database.insert(ManageWarehouseTableQueryHelper.WAREHOUSE_ID, null, ManageWarehouseTableQueryHelper.GetContentValue(warehouseId, warehouseManagerCpf, warehouseManager.GetHiringDate()));
+        database.close();
+        return true;
     }
 
     @Override
@@ -299,6 +371,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
         Cursor cursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(id), null);
         if(!cursor.moveToFirst())
         {
+            database.close();
             return null;
         }
 
@@ -312,6 +385,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
     {
         SQLiteDatabase database = getWritableDatabase();
         long result = database.insert(PropertyTableQueryHelper.PROPERTY_TABLE, null, PropertyTableQueryHelper.GetContentValues(property));
+        database.close();
         if(result < 0)
         {
             return false;
@@ -368,6 +442,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
         {
             MyLog.LogMessage("The warehouse with id "+warehouseId+" already exists in database");
             MyLog.LogMessage("Fail to register warehouse");
+            database.close();
             return false;
         }
 
@@ -381,6 +456,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
         {
             MyLog.LogMessage("There's a employee with cpf "+ownerCpf+" already in the database");
             MyLog.LogMessage("Fail to register warehouse with id "+warehouseId);
+            database.close();
             return false;
         }
 
@@ -389,7 +465,7 @@ public class SQLiteDAO extends SQLiteOpenHelper
         database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouse.GetOwner()));
         database.insert(WarehouseTableQueryHelper.WAREHOUSE_TABLE, null, WarehouseTableQueryHelper.GetContentValue(warehouse));
         database.insert(IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE, null, IsWarehouseOwnerTableQueryHelper.GetContentValues(warehouseId, ownerCpf, beginDate));
-
+        database.close();
         return true;
     }
 

@@ -35,10 +35,22 @@ public class Property
     public Property(Property property)
     {
         m_id = new String(property.m_id);
-        m_propertyName = new String(property.m_propertyName);
-        m_cityName = new String(property.m_cityName);
-        m_stateName = new String(property.m_stateName);
-        m_streetName = new String(property.m_streetName);
+        if(property.m_propertyName != null)
+        {
+            m_propertyName = new String(property.m_propertyName);
+        }
+        if(property.m_cityName != null)
+        {
+            m_cityName = new String(property.m_cityName);
+        }
+        if(property.m_stateName != null)
+        {
+            m_stateName = new String(property.m_stateName);
+        }
+        if(property.m_streetName != null)
+        {
+            m_streetName = new String(property.m_streetName);
+        }
         m_number = property.m_number;
     }
 

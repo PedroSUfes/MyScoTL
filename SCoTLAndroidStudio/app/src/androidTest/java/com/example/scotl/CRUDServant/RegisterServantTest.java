@@ -32,6 +32,7 @@ public class RegisterServantTest
                 "20/06/2001",
                 "Today",
                 DatabaseAccess.propertyOperationsInterface.GetPropertyById("1111")
+//                new Property("333")
             )
         );
 

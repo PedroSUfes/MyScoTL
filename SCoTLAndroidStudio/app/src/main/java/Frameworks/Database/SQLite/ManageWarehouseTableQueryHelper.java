@@ -1,5 +1,6 @@
 package Frameworks.Database.SQLite;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -31,5 +32,20 @@ public class ManageWarehouseTableQueryHelper
     {
         Cursor cursor = database.rawQuery(GetSelectByPersonCpfQuery(personCpf), null);
         return  cursor.moveToFirst();
+    }
+
+    public static boolean HaveWarehouseManager(SQLiteDatabase database, String warehouseId)
+    {
+        Cursor cursor = database.rawQuery("SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+WAREHOUSE_ID+"='"+warehouseId+"' AND "+END_DATE+" IS NULL", null);
+        return cursor.moveToFirst();
+    }
+
+    public static ContentValues GetContentValue(String warehouseId, String managerCpf, String beginDate)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WAREHOUSE_ID, warehouseId);
+        contentValues.put(BEGIN_DATE, beginDate);
+        contentValues.put(PERSON_CPF, managerCpf);
+        return contentValues;
     }
 }
