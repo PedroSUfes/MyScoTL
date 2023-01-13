@@ -18,6 +18,11 @@ import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 
+import Policy.Entity.Person;
+import kotlin.Pair;
+import kotlin.Triple;
+
+
 public class SQLiteDAO
     extends
         SQLiteOpenHelper
@@ -108,16 +113,50 @@ public class SQLiteDAO
         return null;
     }
 
+    //
     @Override
     public Batch[] GetBatches() {
-        return new Batch[0];
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllQuery(), null);
+
+        //BatchID and BatchCreationDate
+        ArrayList<Batch> batchList = new ArrayList<Batch>();
+
+		if(cursor.moveToFirst()){
+			do{
+				batchList.add(
+					new Batch(
+						cursor.getString(BatchTableQueryHelper.GetBatchIdIndex()),
+						cursor.getString(BatchTableQueryHelper.GetCreationDateIndex())
+					)
+				);
+			}while(cursor.moveToNext());
+		}
+
+		if(batchList.isEmpty()){
+			MyLog.LogMessage("No batches in database");
+			db.close();
+			return null;
+		}
+
+		Batch[] batchesReturn = new Batch[batchList.size()];
+		int index = -1;
+		for(Batch b : batchList){
+			++index;
+			if(b == null){
+                continue;
+			}
+
+            batchesReturn[index] = batchList.get(index);
+		}
+        db.close();
+
+        return batchesReturn;
     }
 
     @Override
     public Batch GetBatch(String batchId) {
-
-
-
 
         return null;
     }
@@ -470,14 +509,24 @@ public class SQLiteDAO
     @Override
     public Warehouse[] GetWarehouse(String id, boolean withPastRegister)
     {
-//        SQLiteDatabase database = getReadableDatabase();
-//        Cursor cursor = database.rawQuery(WarehouseTableQueryHelper.GetSelectQuery(id), null);
-//        if(!cursor.moveToFirst())
-//        {
-//            return null;
-//        }
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdQuery(id) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdEndDateNullQuery(id),
+                        null
+                );
 
-        return null;
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No warehouse with id "+id+" in database");
+            MyLog.LogMessage("Fail to read warehouse");
+            return null;
+        }
+
+        Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
