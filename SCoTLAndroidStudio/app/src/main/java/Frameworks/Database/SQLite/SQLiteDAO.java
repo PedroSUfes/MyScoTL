@@ -679,6 +679,7 @@ public class SQLiteDAO
             return null;
         }
 
+        ArrayList<WarehouseManager> warehouseManagerList = new ArrayList<WarehouseManager>();
         for(EmployeeContainer e : employeeContainerList)
         {
             if(e == null)
@@ -686,14 +687,49 @@ public class SQLiteDAO
                 continue;
             }
 
-            // Construir Warehouse a partir de seu id. Deve-se achar o cpf de seu dono atual
-            String ownerCpf = IsWarehouseOwnerTableQueryHelper.GetOwnerCpfOf(database, e.m_workLocalId);
-            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(ownerCpf), null);
-            Person owner = PersonTableQueryHelper.GetPersonFromCursor(personCursor);
-//            Warehouse warehouse = GetWarehouse()
+            Warehouse[] warehouseArray = GetWarehouse(e.m_workLocalId, false);
+            if(warehouseArray == null || warehouseArray.length != 1)
+            {
+                continue;
+            }
+
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_workerCpf), null);
+            if(!personCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            Person person = PersonTableQueryHelper.GetPersonFromCursor(personCursor);
+            WarehouseManager warehouseManager = new WarehouseManager
+                    (
+                            person,
+                            e.m_hireDate,
+                            e.m_endDate,
+                            warehouseArray[0]
+                    );
+
+            warehouseManagerList.add(warehouseManager);
         }
 
-        return null;
+        if(warehouseManagerList.isEmpty())
+        {
+            return null;
+        }
+
+        WarehouseManager[] toReturn = new WarehouseManager[warehouseManagerList.size()];
+        int index = -1;
+        for(WarehouseManager w : warehouseManagerList)
+        {
+            ++index;
+            if(w == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = warehouseManagerList.get(index);
+        }
+
+        return toReturn;
     }
 
     private Warehouse[] GetWarehousesFromIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)

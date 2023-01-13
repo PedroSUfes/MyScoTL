@@ -26,13 +26,13 @@ public class RegisterWarehouseManagerTest
         (
             new WarehouseManager
             (
-                "1111",
+                "2223",
                 "Fulano Gerente",
                 "0800",
                 "Today",
                  "Tomorrow",
                  "Never",
-                 new Warehouse("1113")
+                 new Warehouse("1114")
             )
         );
 

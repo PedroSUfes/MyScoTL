@@ -1,6 +1,7 @@
 package Policy.Entity;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class Employee
 extends
@@ -21,6 +22,21 @@ extends
     {
         super(cpf, name, cellphone, birthDate);
         
+        m_hiringDate = new String(hiringDate);
+        if(endDate != null)
+        {
+            m_endDate = new String(endDate);
+        }
+    }
+
+    public Employee
+            (
+                    @NotNull Person person,
+                    @NotNull String hiringDate,
+                    @Nullable String endDate
+            )
+    {
+        super(person);
         m_hiringDate = new String(hiringDate);
         if(endDate != null)
         {
