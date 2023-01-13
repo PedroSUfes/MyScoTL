@@ -395,7 +395,17 @@ public class SQLiteDAO
             database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouseManager));
         }
 
-        database.insert(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, null, ManageWarehouseTableQueryHelper.GetContentValue(warehouseId, warehouseManagerCpf, warehouseManager.GetHiringDate()));
+        database.insert
+                (
+                        ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE,
+                        null,
+                        ManageWarehouseTableQueryHelper.GetContentValue
+                                (
+                                        warehouseId,
+                                        warehouseManagerCpf,
+                                        warehouseManager.GetHiringDate()
+                                )
+                );
         database.close();
         return true;
     }
@@ -687,7 +697,8 @@ public class SQLiteDAO
                 continue;
             }
 
-            Warehouse[] warehouseArray = GetWarehouse(e.m_workLocalId, false);
+            Warehouse[] warehouseArray = GetWarehouse(e.m_workLocalId, false); // Lembrar que fecha o banco de dados
+            database = getReadableDatabase(); // !!
             if(warehouseArray == null || warehouseArray.length != 1)
             {
                 continue;
