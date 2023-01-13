@@ -273,7 +273,9 @@ public class SQLiteDAO
             return null;
         }
 
-        return GetWarehouseManagersFromManageWarehouseCursor(manageWarehouseCursor, database);
+        WarehouseManager[] result = GetWarehouseManagersFromManageWarehouseCursor(manageWarehouseCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
@@ -475,7 +477,7 @@ public class SQLiteDAO
             return null;
         }
 
-        Warehouse[] result = GetWarehousesByManagerIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
         database.close();
         return result;
     }
@@ -507,14 +509,24 @@ public class SQLiteDAO
     @Override
     public Warehouse[] GetWarehouse(String id, boolean withPastRegister)
     {
-//        SQLiteDatabase database = getReadableDatabase();
-//        Cursor cursor = database.rawQuery(WarehouseTableQueryHelper.GetSelectQuery(id), null);
-//        if(!cursor.moveToFirst())
-//        {
-//            return null;
-//        }
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdQuery(id) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdEndDateNullQuery(id),
+                        null
+                );
 
-        return null;
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No warehouse with id "+id+" in database");
+            MyLog.LogMessage("Fail to read warehouse");
+            return null;
+        }
+
+        Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
@@ -674,13 +686,17 @@ public class SQLiteDAO
                 continue;
             }
 
-
+            // Construir Warehouse a partir de seu id. Deve-se achar o cpf de seu dono atual
+            String ownerCpf = IsWarehouseOwnerTableQueryHelper.GetOwnerCpfOf(database, e.m_workLocalId);
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(ownerCpf), null);
+            Person owner = PersonTableQueryHelper.GetPersonFromCursor(personCursor);
+//            Warehouse warehouse = GetWarehouse()
         }
 
         return null;
     }
 
-    private Warehouse[] GetWarehousesByManagerIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
+    private Warehouse[] GetWarehousesFromIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
     {
         ArrayList<IsWarehouseOwnerContainer> containerList = new ArrayList<IsWarehouseOwnerContainer>();
         do

@@ -25,7 +25,7 @@ public class RegisterWarehouseTest
         (
             new Warehouse
             (
-                "1115",
+                "1116",
                 "Estado dos Estados",
                 "Cidade das Cidades",
                 "Rua das Ruas",
@@ -34,7 +34,7 @@ public class RegisterWarehouseTest
                 null,
                 new Person
                 (
-                    "1211",
+                    "1111",
                     "Fulano",
                     "0800",
                     "Today"
