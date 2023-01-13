@@ -234,7 +234,9 @@ public class SQLiteDAO
             return null;
         }
 
-        return GetWarehouseManagersFromManageWarehouseCursor(manageWarehouseCursor, database);
+        WarehouseManager[] result = GetWarehouseManagersFromManageWarehouseCursor(manageWarehouseCursor, database);
+        database.close();
+        return result;
     }
 
     @Override
@@ -436,7 +438,7 @@ public class SQLiteDAO
             return null;
         }
 
-        Warehouse[] result = GetWarehousesByManagerIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
         database.close();
         return result;
     }
@@ -628,6 +630,7 @@ public class SQLiteDAO
             return null;
         }
 
+        ArrayList<WarehouseManager> warehouseManagerList = new ArrayList<WarehouseManager>();
         for(EmployeeContainer e : employeeContainerList)
         {
             if(e == null)
@@ -635,13 +638,52 @@ public class SQLiteDAO
                 continue;
             }
 
+            Warehouse[] warehouseArray = GetWarehouse(e.m_workLocalId, false);
+            if(warehouseArray == null || warehouseArray.length != 1)
+            {
+                continue;
+            }
 
+            Cursor personCursor = database.rawQuery(PersonTableQueryHelper.GetSelectQuery(e.m_workerCpf), null);
+            if(!personCursor.moveToFirst())
+            {
+                continue;
+            }
+
+            Person person = PersonTableQueryHelper.GetPersonFromCursor(personCursor);
+            WarehouseManager warehouseManager = new WarehouseManager
+                    (
+                            person,
+                            e.m_hireDate,
+                            e.m_endDate,
+                            warehouseArray[0]
+                    );
+
+            warehouseManagerList.add(warehouseManager);
         }
 
-        return null;
+        if(warehouseManagerList.isEmpty())
+        {
+            return null;
+        }
+
+        WarehouseManager[] toReturn = new WarehouseManager[warehouseManagerList.size()];
+        int index = -1;
+        for(WarehouseManager w : warehouseManagerList)
+        {
+            ++index;
+            if(w == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = warehouseManagerList.get(index);
+        }
+
+        return toReturn;
     }
 
-    private Warehouse[] GetWarehousesByManagerIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
+    private Warehouse[] GetWarehousesFromIsWarehouseOwnerCursor(Cursor isWarehouseOwnerCursor, SQLiteDatabase database)
     {
         ArrayList<IsWarehouseOwnerContainer> containerList = new ArrayList<IsWarehouseOwnerContainer>();
         do

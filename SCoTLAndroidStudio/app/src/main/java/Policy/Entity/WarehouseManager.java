@@ -1,6 +1,11 @@
 package Policy.Entity;
 
-public class WarehouseManager 
+import androidx.annotation.NonNull;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public class WarehouseManager
 extends
     Employee
 {
@@ -23,7 +28,19 @@ extends
         m_warehouse = new Warehouse(warehouse);
         m_hiringDate = new String(hiringDate);
     }
-    
+
+    public WarehouseManager
+            (
+                    @NotNull Person person,
+                    @NotNull String hiringDate,
+                    @Nullable String endDate,
+                    @NotNull Warehouse warehouse
+            )
+    {
+        super(person, hiringDate, endDate);
+        m_warehouse = new Warehouse(warehouse);
+    }
+
     public WarehouseManager(WarehouseManager toCopy)
     {
         super(toCopy);
