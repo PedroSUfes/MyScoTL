@@ -177,6 +177,7 @@ public class SQLiteDAO
     }
 
     @Override
+    /*
     public Boolean TryRemoveBatch(String batchId){
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetDeleteQuery(batchId), null);
@@ -189,8 +190,8 @@ public class SQLiteDAO
             MyLog.LogMessage("Fail to delete batch");
             return false;
         }
-    }
-    /*
+    }*/
+
     public Boolean TryRemoveBatch(String batchId) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -209,7 +210,7 @@ public class SQLiteDAO
         }
         MyLog.LogMessage("Success to delete batch");
         return true;
-    }*/
+    }
 
     @Override
     public CoffeeBag[] GetCoffeeBags() {
