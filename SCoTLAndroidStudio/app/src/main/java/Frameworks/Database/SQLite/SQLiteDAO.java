@@ -177,19 +177,39 @@ public class SQLiteDAO
     }
 
     @Override
+    public Boolean TryRemoveBatch(String batchId){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetDeleteQuery(batchId), null);
+
+        if (cursor.moveToFirst()) {
+            MyLog.LogMessage("Success to delete batch");
+            return true;
+        }
+        else{
+            MyLog.LogMessage("Fail to delete batch");
+            return false;
+        }
+    }
+    /*
     public Boolean TryRemoveBatch(String batchId) {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetDeleteQuery(batchId), null);
+        //System.out.printf(BatchTableQueryHelper.GetDeleteQuery(batchId));
 
-        if (cursor.moveToFirst()) {
-            return true;
-        }
-        else{
+        long result = db.delete(
+                BatchTableQueryHelper.BATCH_TABLE,
+                BatchTableQueryHelper.ID + "=" + batchId,
+                null);
+
+        if(result == 0)
+        {
+            MyLog.LogMessage("Fail to delete batch");
             return false;
         }
-    }
+        MyLog.LogMessage("Success to delete batch");
+        return true;
+    }*/
 
     @Override
     public CoffeeBag[] GetCoffeeBags() {

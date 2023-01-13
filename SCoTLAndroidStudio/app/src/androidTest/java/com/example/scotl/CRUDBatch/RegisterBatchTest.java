@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import org.junit.Test;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
+import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Batch;
 
@@ -20,15 +21,15 @@ public class RegisterBatchTest
         SQLiteDAO database = new SQLiteDAO(appContext);
         DatabaseAccess.batchOperationsInterface = database;
 
-        boolean result = DatabaseAccess.batchOperationsInterface.TryRegisterBatch
+        Boolean result = DatabaseAccess.batchOperationsInterface.TryRegisterBatch
         (
             new Batch
             (
-                "1112",
-                "Today"
+                "123",
+                "Yesterday"
             )
         );
 
-        System.out.println(result);
+        MyLog.LogMessage(result.toString());
     }
 }

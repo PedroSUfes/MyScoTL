@@ -41,7 +41,7 @@ public class BatchTableQueryHelper
     }
 
     public static String GetDeleteQuery(String id){
-        return "DELETE FROM "+BATCH_TABLE+" WHERE "+ID+" =' "+id+"'";
+        return "DELETE FROM "+BATCH_TABLE+" WHERE "+ID+" ='"+id+"'";
     }
 
     public static boolean Exists(SQLiteDatabase database, String id)

@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import org.junit.Test;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
+import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Batch;
 
@@ -20,8 +21,8 @@ public class DeleteBatchTest
 		SQLiteDAO database = new SQLiteDAO(appContext);
 		DatabaseAccess.batchOperationsInterface = database;
 
-		boolean result = DatabaseAccess.batchOperationsInterface.TryRemoveBatch("53");
+		Boolean result = DatabaseAccess.batchOperationsInterface.TryRemoveBatch("123");
 
-		System.out.println(result);
+		MyLog.LogMessage(result.toString());
 	}
 }
