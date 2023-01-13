@@ -93,10 +93,20 @@ public class SQLiteDAO
     @Override
     public Batch GetBatch(String batchId) {
 
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId),null);
 
+        Batch newBatch = new Batch();
+        if(c.moveToFirst()){
+            do{
+                newBatch = new Batch(
+                        c.getString(BatchTableQueryHelper.GetBatchIdIndex()),
+                        c.getString(BatchTableQueryHelper.GetCreationDateIndex())
+                );
+            }while(c.moveToNext());
+        }
 
-
-        return null;
+        return newBatch;
     }
 
     //Teoricamente feita e.e

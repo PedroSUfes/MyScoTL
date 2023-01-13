@@ -30,6 +30,14 @@ public class BatchTableQueryHelper
         return "SELECT * FROM "+BATCH_TABLE+" WHERE "+ID+"='"+id+"'";
     }
 
+    public static int GetBatchIdIndex(){
+        return 0;
+    }
+
+    public static int GetCreationDateIndex(){
+        return 1;
+    }
+
     public static boolean Exists(SQLiteDatabase database, String id)
     {
         Cursor cursor = database.rawQuery(GetSelectQuery(id), null);
