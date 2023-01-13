@@ -178,7 +178,17 @@ public class SQLiteDAO
 
     @Override
     public Boolean TryRemoveBatch(String batchId) {
-        return null;
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetDeleteQuery(batchId), null);
+
+        if (cursor.moveToFirst()) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
