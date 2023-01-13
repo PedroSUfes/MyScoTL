@@ -64,12 +64,13 @@ public class WorksOnTableQueryHelper
         return 3;
     }
 
-    public static ContentValues GetContentValue(String personCpf, String beginDate, String propertyId)
+    public static ContentValues GetContentValue(String personCpf, String propertyId, String beginDate, String endDate)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(PERSON_CPF, personCpf);
         contentValues.put(BEGIN_DATE, beginDate);
         contentValues.put(PROPERTY_ID, propertyId);
+        contentValues.put(END_DATE, endDate);
         return contentValues;
     }
 

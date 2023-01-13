@@ -25,20 +25,21 @@ public class RegisterWarehouseTest
         (
             new Warehouse
             (
-                "1113",
+                "1116",
                 "Estado dos Estados",
                 "Cidade das Cidades",
                 "Rua das Ruas",
                 12,
+                "Begin Date",
+                null,
                 new Person
                 (
-                    "1211",
+                    "1111",
                     "Fulano",
                     "0800",
                     "Today"
                 )
-            ),
-            "Today"
+            )
         );
 
         System.out.println(result);

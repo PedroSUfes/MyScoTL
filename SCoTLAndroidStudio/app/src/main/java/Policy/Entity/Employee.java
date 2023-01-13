@@ -1,6 +1,9 @@
 package Policy.Entity;
 
-public abstract class Employee 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public abstract class Employee
 extends
     Person
 {
@@ -26,12 +29,30 @@ extends
         }
     }
 
+    public Employee
+            (
+                    @NotNull Person person,
+                    @NotNull String hiringDate,
+                    @Nullable String endDate
+            )
+    {
+        super(person);
+        m_hiringDate = new String(hiringDate);
+        if(endDate != null)
+        {
+            m_endDate = new String(endDate);
+        }
+    }
+
     public Employee(Employee toCopy)
     {
         super(toCopy.m_cpf, toCopy.m_name, toCopy.m_cellphone, toCopy.m_birthDate);
 
         m_hiringDate = new String(toCopy.m_hiringDate);
-        m_endDate = new String(toCopy.m_endDate);
+        if(toCopy.m_endDate != null)
+        {
+            m_endDate = new String(toCopy.m_endDate);
+        }
     }
 
     public String GetHiringDate()
@@ -41,7 +62,16 @@ extends
 
     public String GetEndDate()
     {
+        if(m_endDate == null)
+        {
+            return null;
+        }
         return new String(m_endDate);
+    }
+
+    public void SetEndDate(@NotNull String endDate)
+    {
+        m_endDate = new String(endDate);
     }
 
     @Override

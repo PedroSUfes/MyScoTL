@@ -1,35 +1,49 @@
 package Policy.Entity;
 
-public class WarehouseManager 
+import androidx.annotation.NonNull;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public class WarehouseManager
 extends
     Employee
 {
     private Warehouse m_warehouse = null;
-    private String m_hiringDate = null;
     
     public WarehouseManager
     (
-        String cpf, 
-        String name, 
-        String cellphone, 
-        String birthDate, 
-        String hiringDate,
-        String endDate,
-        Warehouse warehouse
+        @NotNull String cpf,
+        @NotNull String name,
+        @NotNull String cellphone,
+        @NotNull String birthDate,
+        @NotNull String hiringDate,
+        @Nullable String endDate,
+        @NotNull Warehouse warehouse
     ) 
     {
         super(cpf, name, cellphone, birthDate, hiringDate, endDate);
     
         m_warehouse = new Warehouse(warehouse);
-        m_hiringDate = new String(hiringDate);
     }
-    
+
+    public WarehouseManager
+            (
+                    @NotNull Person person,
+                    @NotNull String hiringDate,
+                    @Nullable String endDate,
+                    @NotNull Warehouse warehouse
+            )
+    {
+        super(person, hiringDate, endDate);
+        m_warehouse = new Warehouse(warehouse);
+    }
+
     public WarehouseManager(WarehouseManager toCopy)
     {
         super(toCopy);
 
         m_warehouse = new Warehouse(toCopy.m_warehouse);
-        m_hiringDate = new String(toCopy.GetHiringDate());
     }
 
     public Warehouse GetWarehouse()

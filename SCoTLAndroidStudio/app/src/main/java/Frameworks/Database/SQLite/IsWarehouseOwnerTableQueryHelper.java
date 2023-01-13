@@ -30,18 +30,34 @@ public class IsWarehouseOwnerTableQueryHelper
         return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+OWNER_CPF+"='"+cpf+"'";
     }
 
+    public static String GetSelectByWarehouseIdEndDateNullQuery(String warehouseId)
+    {
+        return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+WAREHOUSE_ID+"='"+warehouseId+"' AND "+END_DATE+" IS NULL";
+    }
+
+    public static String GetSelectByWarehouseIdQuery(String id)
+    {
+        return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+WAREHOUSE_ID+"='"+id+"'";
+    }
+    
+    public static String GetSelectAllQuery()
+    {
+        return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE;
+    }
+
     public static boolean PersonExists(SQLiteDatabase database, String personCpf)
     {
         Cursor isWarehouseOwnerCursor = database.rawQuery(GetSelectByOwnerCpfQuery(personCpf), null);
         return isWarehouseOwnerCursor.moveToFirst();
     }
 
-    public static ContentValues GetContentValues(String warehouseId, String ownerCpf, String beginbDate)
+    public static ContentValues GetContentValues(String warehouseId, String ownerCpf, String beginDate, String endDate)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(WAREHOUSE_ID, warehouseId);
         contentValues.put(OWNER_CPF, ownerCpf);
-        contentValues.put(BEGIN_DATE, beginbDate);
+        contentValues.put(BEGIN_DATE, beginDate);
+        contentValues.put(END_DATE, endDate);
         return contentValues;
     }
 
@@ -53,6 +69,26 @@ public class IsWarehouseOwnerTableQueryHelper
             return null;
         }
 
-        return new String(cursor.getString(1));
+        return new String(cursor.getString(GetOwnerCpfIndex()));
+    }
+
+    public static int GetWarehouseIdIndex()
+    {
+        return 0;
+    }
+
+    public static int GetOwnerCpfIndex()
+    {
+        return 1;
+    }
+
+    public static int GetBeginDateIndex()
+    {
+        return 2;
+    }
+
+    public static int GetEndDateIndex()
+    {
+        return 3;
     }
 }

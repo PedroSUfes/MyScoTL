@@ -26,12 +26,12 @@ public class RegisterServantTest
         (
             new Servant
             (
-                "1112",
+                "1111",
                 "Pedro",
                 "0800",
                 "20/06/2001",
                 "Today",
-                "Tomorrow",
+                null,
                 DatabaseAccess.propertyOperationsInterface.GetPropertyById("1111")
 //                new Property("333")
             )

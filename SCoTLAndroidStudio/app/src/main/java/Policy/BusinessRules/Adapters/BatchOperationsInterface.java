@@ -1,5 +1,7 @@
 package Policy.BusinessRules.Adapters;
 
+import java.util.List;
+
 import Policy.Entity.Batch;
 
 public interface BatchOperationsInterface 
