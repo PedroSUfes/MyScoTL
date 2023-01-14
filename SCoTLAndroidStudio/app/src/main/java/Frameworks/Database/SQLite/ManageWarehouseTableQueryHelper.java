@@ -35,6 +35,11 @@ public class ManageWarehouseTableQueryHelper
         return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+PERSON_CPF+"='"+personCpf+"' AND "+END_DATE+" IS NULL";
     }
 
+    public static String GetSelectByWarehouseIdQuery(String warehouseId)
+    {
+        return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+WAREHOUSE_ID+"='"+warehouseId+"'";
+    }
+
     public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE;

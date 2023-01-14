@@ -26,7 +26,7 @@ public class UpdateWarehouseTest
                 (
                         new Warehouse
                                 (
-                                        "1113",
+                                        "1112",
                                         "Estados dos Vales",
                                         "Cidade das Avenidas",
                                         "Rua sem Saida",
@@ -35,7 +35,7 @@ public class UpdateWarehouseTest
                                         null,
                                         new Person
                                                 (
-                                                        "1112",
+                                                        "11111111111",
                                                         "Dono 2",
                                                         "0800",
                                                         "20/09/1988"

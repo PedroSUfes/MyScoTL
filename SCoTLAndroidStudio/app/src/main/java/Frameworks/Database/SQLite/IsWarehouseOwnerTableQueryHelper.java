@@ -21,7 +21,8 @@ public class IsWarehouseOwnerTableQueryHelper
                 +OWNER_CPF+" TEXT,"
                 +BEGIN_DATE+" TEXT,"
                 +END_DATE+" TEXT,"
-                +"PRIMARY KEY("+WAREHOUSE_ID+","+OWNER_CPF+","+BEGIN_DATE+")"
+                +"PRIMARY KEY("+WAREHOUSE_ID+","+OWNER_CPF+","+BEGIN_DATE+"),"
+                +"FOREIGN KEY("+OWNER_CPF+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF+")"
                 +")";
     }
 
@@ -91,6 +92,15 @@ public class IsWarehouseOwnerTableQueryHelper
         }
 
         return new String(cursor.getString(GetOwnerCpfIndex()));
+    }
+
+    public static DBStatamentHelper GetStatementHelper(String warehouseId)
+    {
+        return new DBStatamentHelper
+                (
+                        WAREHOUSE_ID+"=?",
+                        new String[]{warehouseId}
+                );
     }
 
     public static DBStatamentHelper GetStatementHelperEndDateNull(String warehouseId)
