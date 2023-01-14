@@ -1,5 +1,8 @@
 package Frameworks.Database.SQLite;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 public class BuyCoffeeBagTableQueryHelper
 {
     public static final String BUY_COFFEE_BAG_TABLE = "buyCoffeeBagTable";
@@ -16,5 +19,16 @@ public class BuyCoffeeBagTableQueryHelper
                 +"Primary KEY("+BATCH_ID+", "+COFFEE_BAG_ID+"),"
                 +"FOREIGN KEY("+BUYER_CPF+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF +")"
                 +")";
+    }
+
+    public static String GetSelectPersonQuery(String cpf)
+    {
+        return "SELECT * FROM "+BUY_COFFEE_BAG_TABLE+" WHERE "+BUYER_CPF+"='"+cpf+"'";
+    }
+
+    public static boolean Exists(SQLiteDatabase database, String cpf)
+    {
+        Cursor cursor = database.rawQuery(GetSelectPersonQuery(cpf), null);
+        return cursor.moveToFirst();
     }
 }
