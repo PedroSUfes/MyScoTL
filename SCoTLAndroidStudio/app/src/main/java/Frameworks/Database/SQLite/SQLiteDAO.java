@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.hardware.camera2.CameraManager;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,11 @@ import Policy.Entity.Property;
 import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
+import Utility.Func;
+import Utility.Func1;
+import Utility.Func2;
+import Utility.Func3;
+import Utility.Func4;
 
 
 public class SQLiteDAO
@@ -940,7 +946,129 @@ public class SQLiteDAO
     @Override
     public Boolean TryRemoveWarehouse(String id)
     {
-        return null;
+        // Todas as tuplas na tabela de relacionamento entre donos e galpões e entre gerentes e galpões devem ser removidas,
+        // mas se precisa avaliar se as pessoas também serão removidas.
+        // No caso dos donos de galpão, se o dono do galpão removido for dono de outro ou se for comprador, deve permanecer no banco
+        // No caso do gerente do galpão removido, só ficará no banco se for comprador
+        // Pode-se usar a TryRemoveEmployee para remover os gerentes
+
+        Func4<Func1<String, String>, Func<Integer>, String, SQLiteDatabase, ArrayList<String>> getCpfAction =
+                (databaseSearchQueryMethod, getIndexFunc, warehouseId, db) ->
+        {
+            Cursor cursor = null;
+            try
+            {
+                cursor = db.rawQuery(databaseSearchQueryMethod.Invoke(warehouseId), null);
+                if(!cursor.moveToFirst())
+                {
+                    return null;
+                }
+            } catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
+
+            if(cursor == null)
+            {
+                return null;
+            }
+
+            ArrayList<String> toReturn = new ArrayList<String>();
+            do
+            {
+                String cpf = cursor.getString(getIndexFunc.Invoke());
+                if(!toReturn.contains(cpf))
+                {
+                    toReturn.add(cpf);
+                }
+            } while(cursor.moveToNext());
+
+            return toReturn;
+        };
+
+        SQLiteDatabase database = getWritableDatabase();
+        // Tratamento dos donos
+        ArrayList<String> ownerCpfList = getCpfAction.Invoke
+                (
+                        IsWarehouseOwnerTableQueryHelper::GetSelectByWarehouseIdQuery,
+                        IsWarehouseOwnerTableQueryHelper::GetOwnerCpfIndex,
+                        id,
+                        database
+                );
+
+        DBStatamentHelper isWarehouseOwnerDeleteHelper = IsWarehouseOwnerTableQueryHelper.GetStatementHelper(id);
+        database.delete
+                (
+                        IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE,
+                        isWarehouseOwnerDeleteHelper.m_whereClause,
+                        isWarehouseOwnerDeleteHelper.m_args
+                );
+
+        if(ownerCpfList != null)
+        {
+            for (String cpf : ownerCpfList)
+            {
+                if(cpf == null || IsWarehouseOwnerTableQueryHelper.PersonExists(database, cpf) || BuyCoffeeBagTableQueryHelper.Exists(database, cpf) )
+                {
+                    continue;
+                }
+
+                DBStatamentHelper personDeleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
+                database.delete(PersonTableQueryHelper.PERSON_TABLE, personDeleteHelper.m_whereClause, personDeleteHelper.m_args);
+            }
+        }
+        //
+
+        // Tratamento dos gerentes
+        ArrayList<String> managerCpfList = getCpfAction.Invoke
+                (
+                        ManageWarehouseTableQueryHelper::GetSelectByWarehouseIdQuery,
+                        ManageWarehouseTableQueryHelper::GetManagerCpfIndex,
+                        id,
+                        database
+                );
+
+        if(managerCpfList != null)
+        {
+            for(String cpf : managerCpfList)
+            {
+                if(cpf == null)
+                {
+                    continue;
+                }
+
+                TryRemoveEmployee(cpf);
+            }
+        }
+        //
+
+        // Lembrar que o banco está fechado
+        database = getWritableDatabase();
+        DBStatamentHelper warehouseDeleteHelper = WarehouseTableQueryHelper.GetStatementHelper(id);
+        try
+        {
+            int rows = database.delete
+                    (
+                            WarehouseTableQueryHelper.WAREHOUSE_TABLE,
+                            warehouseDeleteHelper.m_whereClause,
+                            warehouseDeleteHelper.m_args
+                    );
+
+            if(rows == 0)
+            {
+                MyLog.LogMessage("Fail to remove warehouse with id "+id+" from database");
+                return false;
+            }
+        } catch (Exception e)
+        {
+            MyLog.LogMessage(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        MyLog.LogMessage("Warehouse with id "+id+" was removed with success");
+        return true;
     }
 
     private Servant[] GetServantsFromWorksOnCursor(Cursor worksOnCursor, SQLiteDatabase database)
