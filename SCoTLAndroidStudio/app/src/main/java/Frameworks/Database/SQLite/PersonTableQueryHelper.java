@@ -96,4 +96,9 @@ public class PersonTableQueryHelper
             property
         );
     }
+
+    public static DBStatamentHelper GetStatementHelper(String cpf)
+    {
+        return new DBStatamentHelper(CPF+"=?", new String[]{cpf});
+    }
 }

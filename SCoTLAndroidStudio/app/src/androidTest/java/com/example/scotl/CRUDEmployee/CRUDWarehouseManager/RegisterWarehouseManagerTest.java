@@ -1,4 +1,4 @@
-package com.example.scotl.CRUDWarehouseManager;
+package com.example.scotl.CRUDEmployee.CRUDWarehouseManager;
 
 import android.content.Context;
 
@@ -26,13 +26,13 @@ public class RegisterWarehouseManagerTest
         (
             new WarehouseManager
             (
-                "2223",
+                "2222",
                 "Fulano Gerente",
                 "0800",
                 "Today",
                  "Tomorrow",
-                 "Never",
-                 new Warehouse("1114")
+                 null,
+                 new Warehouse("1116")
             )
         );
 

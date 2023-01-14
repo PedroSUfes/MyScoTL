@@ -23,14 +23,14 @@ public class Warehouse
 
     public Warehouse
     (
-        @NonNull String id,
-        @NonNull String stateName,
-        @NonNull String cityName,
-        @NonNull String streetName,
+        String id,
+        String stateName,
+        String cityName,
+        String streetName,
         int number,
         String beginDate,
-        @Nullable String endDate,
-        @NonNull Person owner
+        String endDate,
+        Person owner
     )
     {
         m_id = new String(id);
@@ -49,86 +49,43 @@ public class Warehouse
     public Warehouse(Warehouse toCopy)
     {
         m_id = toCopy.GetId();
-        if(toCopy.m_stateName != null)
-        {
-            m_stateName = toCopy.GetStateName();
-        }
-        if(toCopy.m_cityName != null)
-        {
-            m_cityName = toCopy.GetCityName();
-        }
-        if(toCopy.m_streetName != null)
-        {
-            m_streetName = toCopy.GetStreetName();
-        }
-        if(toCopy.m_owner != null)
-        {
-            m_owner = new Person(toCopy.GetOwner());
-        }
-        if(toCopy.GetBeginDate() != null)
-        {
-            m_beginDate = toCopy.GetBeginDate();
-        }
-        if(toCopy.GetEndDate() != null)
-        {
-            m_endDate = toCopy.GetEndDate();
-        }
+        m_stateName = toCopy.GetStateName();
+        m_cityName = toCopy.GetCityName();
+        m_streetName = toCopy.GetStreetName();
+        m_owner = new Person(toCopy.GetOwner());
+        m_beginDate = toCopy.GetBeginDate();
+        m_endDate = toCopy.GetEndDate();
         m_number = toCopy.m_number;
     }
 
     public String GetId() 
     {
-        if(m_id == null)
-        {
-            return null;
-        }
-
-        return new String(m_id);
+        return m_id == null ? null : new String(m_id);
     }
 
     public String GetStateName() 
     {
-        if(m_stateName == null)
-        {
-            return null;
-        }
-        return new String(m_stateName);
+        return m_stateName == null ? null : new String(m_stateName);
     }
 
     public String GetCityName()
     {
-        if(m_cityName == null)
-        {
-            return null;
-        }
-        return new String(m_cityName);
+        return m_cityName == null ? null : new String(m_cityName);
     }
 
     public String GetStreetName() 
     {
-        if(m_streetName == null)
-        {
-            return null;
-        }
-        return new String(m_streetName);
+        return m_streetName == null ? null : new String(m_streetName);
     }
 
     public String GetBeginDate()
     {
-        if(m_beginDate == null)
-        {
-            return null;
-        }
-        return new String(m_beginDate);
+        return m_beginDate == null ? null : new String(m_beginDate);
     }
 
     public String GetEndDate()
     {
-        if(m_endDate == null)
-        {
-            return null;
-        }
-        return new String(m_endDate);
+        return m_endDate == null ? null : new String(m_endDate);
     }
 
     public int GetNumber() 
@@ -138,24 +95,20 @@ public class Warehouse
 
     public Person GetOwner() 
     {
-        if(m_owner == null)
-        {
-            return null;
-        }
-        return new Person(m_owner);
+        return m_owner == null ? null : new Person(m_owner);
     }
 
-    public void SetStateName(@NonNull String stateName)
+    public void SetStateName(String stateName)
     {
         m_stateName = String.copyValueOf(stateName.toCharArray());
     }
 
-    public void SetCityName(@NonNull String cityName)
+    public void SetCityName(String cityName)
     {
         m_cityName = String.copyValueOf(cityName.toCharArray());
     }
 
-    public void SetStreetName(@NonNull String streetName)
+    public void SetStreetName(String streetName)
     {
         m_streetName = String.copyValueOf(streetName.toCharArray());
     }
@@ -165,7 +118,7 @@ public class Warehouse
         m_number = number;
     }
 
-    public void SetOwner(@NonNull Person owner)
+    public void SetOwner(Person owner)
     {
         if(m_owner == null)
         {
@@ -175,42 +128,26 @@ public class Warehouse
         m_owner.CopyValuesOf(owner);
     }
     
-    public void CopyAttributesOf(@NonNull Warehouse toCopy)
+    public void CopyAttributesOf(Warehouse toCopy)
     {
         m_id = toCopy.GetId();
-        if(toCopy.m_stateName != null)
-        {
-            m_stateName = toCopy.GetStateName();
-        }
-        if(toCopy.m_cityName != null)
-        {
-            m_streetName = toCopy.GetStreetName();
-        }
-        if(toCopy.m_streetName != null)
-        {
-            m_streetName = toCopy.GetStreetName();
-        }
+        m_stateName = toCopy.GetStateName();
+        m_streetName = toCopy.GetStreetName();
+        m_streetName = toCopy.GetStreetName();
+
         m_number = toCopy.GetNumber();
-        if(toCopy.m_owner != null)
-        {
-            m_owner = toCopy.GetOwner();
-        }
+        m_owner = toCopy.GetOwner();
     }
 
     @Override
     public boolean equals(Object o)
     {
-        if(o == null)
-        {
-            return false;
-        }
-
         if(o == this)
         {
             return true;
         }
 
-        if(o.getClass() != Warehouse.class)
+        if(o == null || o.getClass() != Warehouse.class)
         {
             return false;
         }

@@ -6,33 +6,23 @@ import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Test;
 
+import Frameworks.Database.SQLite.ManageWarehouseTableQueryHelper;
 import Frameworks.Database.SQLite.SQLiteDAO;
+import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
-import Policy.Entity.Property;
 
-public class ResgisterPropertyTest
+public class RemovePropertyTest
 {
     @Test
-    public void ExecuteRegisterPropertyTest()
+    public void ExecuteRemovePropertyTest()
     {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         SQLiteDAO database = new SQLiteDAO(appContext);
 
         DatabaseAccess.propertyOperationsInterface = database;
 
-        boolean result = DatabaseAccess.propertyOperationsInterface.TryRegisterProperty
-        (
-            new Property
-            (
-                "1111",
-                "Vila das Vilas",
-                "Espirito Santo",
-                "Vitoria",
-                "Rua das Ruas",
-                2
-            )
-        );
+        Boolean result = DatabaseAccess.propertyOperationsInterface.TryRemoveProperty("1111");
 
-        System.out.println(result);
+        MyLog.LogMessage(result.toString());
     }
 }

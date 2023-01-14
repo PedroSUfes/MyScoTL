@@ -25,7 +25,7 @@ public class RegisterWarehouseTest
         (
             new Warehouse
             (
-                "1116",
+                "1117",
                 "Estado dos Estados",
                 "Cidade das Cidades",
                 "Rua das Ruas",
