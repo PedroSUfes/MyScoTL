@@ -416,7 +416,8 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager, String date) {
+    public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager, String date)
+    {
         return null;
     }
 
