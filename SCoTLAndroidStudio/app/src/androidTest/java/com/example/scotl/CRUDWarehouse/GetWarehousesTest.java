@@ -1,4 +1,4 @@
-package com.example.scotl.CRUDEmployee.CRUDWarehouse;
+package com.example.scotl.CRUDWarehouse;
 
 import android.content.Context;
 

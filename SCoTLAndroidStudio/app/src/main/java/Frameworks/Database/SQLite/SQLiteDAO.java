@@ -163,7 +163,14 @@ public class SQLiteDAO
     public Boolean TryRegisterBatch(Batch batch)
     {
         SQLiteDatabase database = getWritableDatabase();
-        long result = database.insert(BatchTableQueryHelper.BATCH_TABLE, null, BatchTableQueryHelper.GetContentValues(batch));
+        long result = -1;
+        try
+        {
+            result = database.insert(BatchTableQueryHelper.BATCH_TABLE, null, BatchTableQueryHelper.GetContentValues(batch));
+        }catch (Exception e)
+        {
+            MyLog.LogMessage(e.getMessage());
+        }
         if(result < 0)
         {
             MyLog.LogMessage("There's a batch with id "+batch.GetId()+" already in database");
@@ -325,13 +332,27 @@ public class SQLiteDAO
 
         if(!personExists)
         {
-            database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(servant));
+            try
+            {
+                database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(servant));
+            }catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
         }
-        database.insert
-                (
-                        WorksOnTableQueryHelper.WORKS_ON_TABLE,
-                        null,
-                        WorksOnTableQueryHelper.GetContentValue(servantCpf, property.GetId(), servant.GetHiringDate(), servant.GetEndDate()));
+        try
+        {
+            database.insert
+                    (
+                            WorksOnTableQueryHelper.WORKS_ON_TABLE,
+                            null,
+                            WorksOnTableQueryHelper.GetContentValue(servantCpf, property.GetId(), servant.GetHiringDate(), servant.GetEndDate())
+                    );
+        }catch (Exception e)
+        {
+            MyLog.LogMessage(e.getMessage());
+        }
+
         database.close();
         return true;
     }
@@ -389,20 +410,34 @@ public class SQLiteDAO
         database = getWritableDatabase();
         if(!personExists)
         {
-            database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouseManager));
+            try
+            {
+                database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouseManager));
+            }catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
         }
 
-        database.insert
-                (
-                        ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE,
-                        null,
-                        ManageWarehouseTableQueryHelper.GetContentValue
-                                (
-                                        warehouseId,
-                                        warehouseManagerCpf,
-                                        warehouseManager.GetHiringDate()
-                                )
-                );
+        try
+        {
+            database.insert
+                    (
+                            ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE,
+                            null,
+                            ManageWarehouseTableQueryHelper.GetContentValue
+                                    (
+                                            warehouseId,
+                                            warehouseManagerCpf,
+                                            warehouseManager.GetHiringDate()
+                                    )
+                    );
+
+        }catch (Exception e)
+        {
+            MyLog.LogMessage(e.getMessage());
+        }
+
         database.close();
         return true;
     }
@@ -428,6 +463,8 @@ public class SQLiteDAO
             return false;
         }
 
+        database.close();
+        database = getWritableDatabase();
         String currentPropertyId = worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex());
         if(!currentPropertyId.equals(newPropertyId))
         {
@@ -448,28 +485,84 @@ public class SQLiteDAO
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex())
-                            );
+                    );
 
-            Integer rows1 = database.update(WorksOnTableQueryHelper.WORKS_ON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
-            MyLog.LogMessage(rows1.toString());
+            database.update(WorksOnTableQueryHelper.WORKS_ON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
 
             ContentValues newWorksOnValues = WorksOnTableQueryHelper.GetContentValue(servantCpf, newPropertyId, date, null);
-            database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, newWorksOnValues);
+            try
+            {
+                database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, newWorksOnValues);
+            }catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
         }
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(PersonTableQueryHelper.NAME, servant.GetName());
-        contentValues.put(PersonTableQueryHelper.CELLPHONE, servant.GetCellphone());
-        contentValues.put(PersonTableQueryHelper.BIRTH_DATE, servant.GetBirthDate());
-        DBStatamentHelper updateHelper = PersonTableQueryHelper.GetStatementHelper(servantCpf);
-        database.update(PersonTableQueryHelper.PERSON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
+        boolean result = UpdatePerson(database, servant);
         database.close();
-        return true;
+        return result;
     }
 
     @Override
-    public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager, String date) {
-        return null;
+    public Boolean TryUpdateWarehouseManager(WarehouseManager warehouseManager, String date)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        String warehouseManagerCpf = warehouseManager.GetCpf();
+        if(!ManageWarehouseTableQueryHelper.PersonExists(database, warehouseManagerCpf))
+        {
+            MyLog.LogMessage("There's no warehouse manager with cpf "+warehouseManagerCpf+" in database");
+            MyLog.LogMessage("Fail to remove warehouse manager");
+            database.close();
+            return false;
+        }
+
+        Cursor manageWarehouseCursor = database.rawQuery(ManageWarehouseTableQueryHelper.GetSelectByPersonCpfNoPastRegister(warehouseManagerCpf), null);
+        if(!manageWarehouseCursor.moveToFirst())
+        {
+            database.close();
+            return false;
+        }
+
+        String currentWarehouseId = manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetWarehouseIdIndex());
+        String newWarehouseId = warehouseManager.GetWarehouse().GetId();
+        database.close();
+        database = getWritableDatabase();
+        if(!currentWarehouseId.equals(newWarehouseId))
+        {
+            // O novo galpão está cadastrado?
+            if(!WarehouseTableQueryHelper.Exists(database, newWarehouseId))
+            {
+                MyLog.LogMessage("The warehouse with id "+newWarehouseId+" is not in database");
+                MyLog.LogMessage("Fail to update warehouse manager");
+                database.close();
+                return false;
+            }
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ManageWarehouseTableQueryHelper.END_DATE, date);
+            DBStatamentHelper updateHelper = ManageWarehouseTableQueryHelper.GetStatementHelper
+                    (
+                            manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetManagerCpfIndex()),
+                            manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetWarehouseIdIndex()),
+                            manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetBeginDateIndex())
+                    );
+
+            database.update(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
+
+            ContentValues newManageWarehouseValue = ManageWarehouseTableQueryHelper.GetContentValue(newWarehouseId, warehouseManagerCpf, date);
+            try
+            {
+                database.insert(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, null, newManageWarehouseValue);
+            } catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
+        }
+
+        boolean result = UpdatePerson(database, warehouseManager);
+        database.close();
+        return result;
     }
 
     @Override
@@ -542,10 +635,20 @@ public class SQLiteDAO
     public Boolean TryRegisterProperty(Property property)
     {
         SQLiteDatabase database = getWritableDatabase();
-        long result = database.insert(PropertyTableQueryHelper.PROPERTY_TABLE, null, PropertyTableQueryHelper.GetContentValues(property));
+        long result = 0;
+        try
+        {
+            result = database.insert(PropertyTableQueryHelper.PROPERTY_TABLE, null, PropertyTableQueryHelper.GetContentValues(property));
+        }
+        catch (Exception e)
+        {
+            MyLog.LogMessage(e.getMessage());
+        }
         database.close();
         if(result < 0)
         {
+            MyLog.LogMessage("Fail to add property with id "+property.GetId());
+            database.close();
             return false;
         }
         return true;
@@ -659,14 +762,21 @@ public class SQLiteDAO
 
         database.close();
         database = getWritableDatabase();
-        database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouse.GetOwner()));
-        database.insert(WarehouseTableQueryHelper.WAREHOUSE_TABLE, null, WarehouseTableQueryHelper.GetContentValue(warehouse));
-        database.insert
-                (
-                        IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE,
-                        null,
-                        IsWarehouseOwnerTableQueryHelper.GetContentValues(warehouseId, ownerCpf, warehouse.GetBeginDate(), warehouse.GetEndDate())
-                );
+        try
+        {
+            database.insert(PersonTableQueryHelper.PERSON_TABLE, null, PersonTableQueryHelper.GetContentValue(warehouse.GetOwner()));
+            database.insert(WarehouseTableQueryHelper.WAREHOUSE_TABLE, null, WarehouseTableQueryHelper.GetContentValue(warehouse));
+            database.insert
+                    (
+                            IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE,
+                            null,
+                            IsWarehouseOwnerTableQueryHelper.GetContentValues(warehouseId, ownerCpf, warehouse.GetBeginDate(), warehouse.GetEndDate())
+                    );
+        } catch (Exception e)
+        {
+            MyLog.LogMessage(e.getMessage());
+        }
+
         database.close();
         return true;
     }
@@ -913,5 +1023,16 @@ public class SQLiteDAO
         }
 
         return toReturn;
+    }
+
+    private boolean UpdatePerson(SQLiteDatabase database, Person person)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PersonTableQueryHelper.NAME, person.GetName());
+        contentValues.put(PersonTableQueryHelper.CELLPHONE, person.GetCellphone());
+        contentValues.put(PersonTableQueryHelper.BIRTH_DATE, person.GetBirthDate());
+        DBStatamentHelper updateHelper = PersonTableQueryHelper.GetStatementHelper(person.GetCpf());
+        int rows = database.update(PersonTableQueryHelper.PERSON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
+        return rows > 0;
     }
 }

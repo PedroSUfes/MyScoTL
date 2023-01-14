@@ -18,7 +18,7 @@ extends
         String cellphone,
         String birthDate,
         String hiringDate,
-         String endDate,
+        String endDate,
         Warehouse warehouse
     ) 
     {
@@ -44,6 +44,20 @@ extends
         super(toCopy);
 
         m_warehouse = new Warehouse(toCopy.m_warehouse);
+    }
+
+    public WarehouseManager
+            (
+                    String cpf,
+                    String name,
+                    String cellphone,
+                    String birthDate,
+                    Warehouse warehouse
+            )
+    {
+        super(cpf, name, cellphone, birthDate);
+
+        m_warehouse = new Warehouse(warehouse);
     }
 
     public Warehouse GetWarehouse()

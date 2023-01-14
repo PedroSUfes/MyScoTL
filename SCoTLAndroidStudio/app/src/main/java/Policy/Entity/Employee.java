@@ -31,9 +31,9 @@ extends
 
     public Employee
             (
-                    @NotNull Person person,
-                    @NotNull String hiringDate,
-                    @Nullable String endDate
+                    Person person,
+                    String hiringDate,
+                    String endDate
             )
     {
         super(person);
