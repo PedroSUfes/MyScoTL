@@ -666,6 +666,8 @@ public class SQLiteDAO
             database.close();
             return false;
         }
+        database.close();
+        database = getWritableDatabase();
 
         ContentValues newValues = PropertyTableQueryHelper.GetContentValues(property);
         DBStatamentHelper updateHelper = PropertyTableQueryHelper.GetStatementHelper(propertyId);
