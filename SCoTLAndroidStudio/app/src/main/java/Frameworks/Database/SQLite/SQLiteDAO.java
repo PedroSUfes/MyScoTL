@@ -137,25 +137,45 @@ public class SQLiteDAO
 			return null;
 		}
 
-		Batch[] batchesReturn = new Batch[batchList.size()];
-		int index = -1;
-		for(Batch b : batchList){
-			++index;
-			if(b == null){
-                continue;
-			}
+	  Batch[] batchesReturn = new Batch[batchList.size()];
+		  int index = -1;
+		  for(Batch b : batchList){
+			  ++index;
+			  if(b == null){
+          continue;
+			  }
+        batchesReturn[index] = batchList.get(index);
+		  }
+      db.close();
 
-            batchesReturn[index] = batchList.get(index);
-		}
-        db.close();
-
-        return batchesReturn;
+      return batchesReturn;
     }
 
     @Override
     public Batch GetBatch(String batchId) {
+        Cursor c = null;
+        String newBatchId = null;
+        String newBatchCreationDate = null;
 
-        return null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+             c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId), null);
+
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                newBatchId = c.getString(BatchTableQueryHelper.GetBatchIdIndex());
+                newBatchCreationDate = c.getString(BatchTableQueryHelper.GetCreationDateIndex());
+            }
+
+            if (newBatchId != null) {
+                return new Batch(newBatchId, newBatchCreationDate);
+            } else {
+                MyLog.LogMessage("Id não encontrado");
+                return null;
+            }
+        } finally {
+            c.close();
+        }
     }
 
     //Teoricamente feita e.e

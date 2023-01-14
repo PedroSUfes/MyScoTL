@@ -39,7 +39,6 @@ public class BatchTableQueryHelper
     {
         return "SELECT * FROM "+BATCH_TABLE+" WHERE "+ID+"='"+id+"'";
     }
-
     public static boolean Exists(SQLiteDatabase database, String id)
     {
         Cursor cursor = database.rawQuery(GetSelectQuery(id), null);
