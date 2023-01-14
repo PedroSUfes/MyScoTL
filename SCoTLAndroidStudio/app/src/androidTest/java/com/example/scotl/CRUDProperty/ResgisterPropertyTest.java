@@ -25,7 +25,7 @@ public class ResgisterPropertyTest
             new Property
             (
                 "1111",
-                "Vila das Flores",
+                "Vila das Vilas",
                 "Espirito Santo",
                 "Vitoria",
                 "Rua das Ruas",
