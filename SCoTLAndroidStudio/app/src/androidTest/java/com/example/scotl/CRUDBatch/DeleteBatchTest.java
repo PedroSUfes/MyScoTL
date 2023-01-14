@@ -21,7 +21,7 @@ public class DeleteBatchTest
 		SQLiteDAO database = new SQLiteDAO(appContext);
 		DatabaseAccess.batchOperationsInterface = database;
 
-		Boolean result = DatabaseAccess.batchOperationsInterface.TryRemoveBatch("123");
+		Boolean result = DatabaseAccess.batchOperationsInterface.TryRemoveBatch("111");
 
 		MyLog.LogMessage(result.toString());
 	}
