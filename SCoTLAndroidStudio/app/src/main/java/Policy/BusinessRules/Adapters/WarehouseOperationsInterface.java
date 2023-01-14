@@ -11,6 +11,6 @@ public interface WarehouseOperationsInterface
     public Warehouse[] GetWarehouse(String id, boolean withPastRegister);
     public Warehouse GetWarehouse(String stateName, String streetName, int number);
     public Boolean TryRegisterWarehouse(Warehouse warehouse);
-    public Boolean TryUpdateWarehouse(Warehouse warehouse, String date);
+    public Boolean TryUpdateWarehouse(Warehouse warehouse);
     public Boolean TryRemoveWarehouse(String id);
 }
