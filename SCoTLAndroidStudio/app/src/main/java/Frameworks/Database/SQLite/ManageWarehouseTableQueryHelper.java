@@ -30,6 +30,11 @@ public class ManageWarehouseTableQueryHelper
         return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+PERSON_CPF+"='"+personCpf+"'";
     }
 
+    public static String GetSelectByPersonCpfNoPastRegister(String personCpf)
+    {
+        return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE+" WHERE "+PERSON_CPF+"='"+personCpf+"' AND "+END_DATE+" IS NULL";
+    }
+
     public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE;
@@ -62,6 +67,15 @@ public class ManageWarehouseTableQueryHelper
                 (
                         PERSON_CPF+"=?",
                         new String[] {workerCpf}
+                );
+    }
+
+    public static DBStatamentHelper GetStatementHelper(String workerCpf, String warehouseId, String beginDate)
+    {
+        return new DBStatamentHelper
+                (
+                        PERSON_CPF+"=? AND "+WAREHOUSE_ID+"=? AND "+BEGIN_DATE+"=?",
+                        new String[]{workerCpf, warehouseId, beginDate}
                 );
     }
 

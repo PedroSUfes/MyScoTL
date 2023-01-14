@@ -23,30 +23,34 @@ public class Person
 
     public Person(Person toCopy)
     {
-        m_cpf = new String(toCopy.m_cpf);
-        m_name = new String(toCopy.m_name);
-        m_cellphone = new String(toCopy.m_cellphone);
-        m_birthDate = new String(toCopy.m_birthDate);
+        if(toCopy == null)
+        {
+            return;
+        }
+        m_cpf = toCopy.GetCpf();
+        m_name = toCopy.GetName();
+        m_cellphone = toCopy.GetCellphone();
+        m_birthDate = toCopy.GetBirthDate();
     }
 
     public String GetCpf()
     {
-        return new String(m_cpf);
+        return m_cpf == null ? null : new String(m_cpf);
     }
 
     public String GetName()
     {
-        return new String(m_name);
+        return m_name == null ? null : new String(m_name);
     }
 
     public String GetCellphone()
     {
-        return new String(m_cellphone);
+        return m_name == null ? null : new String(m_cellphone);
     }
 
     public String GetBirthDate()
     {
-        return new String(m_birthDate);
+        return m_birthDate == null ? null : new String(m_birthDate);
     }
 
     public void SetCpf(String cpf)
