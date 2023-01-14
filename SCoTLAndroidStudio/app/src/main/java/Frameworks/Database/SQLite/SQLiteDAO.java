@@ -655,8 +655,29 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryUpdateProperty(Property property) {
-        return null;
+    public Boolean TryUpdateProperty(Property property)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        String propertyId = property.GetId();
+        if(!PropertyTableQueryHelper.Exists(database, propertyId))
+        {
+            MyLog.LogMessage("There's no property with id "+propertyId+" in database");
+            MyLog.LogMessage("Fail to update property");
+            database.close();
+            return false;
+        }
+
+        ContentValues newValues = PropertyTableQueryHelper.GetContentValues(property);
+        DBStatamentHelper updateHelper = PropertyTableQueryHelper.GetStatementHelper(propertyId);
+
+        int rows = database.update(PropertyTableQueryHelper.PROPERTY_TABLE, newValues, updateHelper.m_whereClause, updateHelper.m_args);
+        if(rows == 0)
+        {
+            MyLog.LogMessage("Fail to update property with id "+propertyId);
+            database.close();
+            return false;
+        }
+        return true;
     }
 
     @Override

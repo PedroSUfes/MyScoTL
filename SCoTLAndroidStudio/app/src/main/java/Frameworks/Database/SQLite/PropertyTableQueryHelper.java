@@ -64,6 +64,15 @@ public class PropertyTableQueryHelper
         );
     }
 
+    public static DBStatamentHelper GetStatementHelper(String id)
+    {
+        return new DBStatamentHelper
+                (
+                        ID+"=?",
+                        new String[]{id}
+                );
+    }
+
     public static int GetIdIndex()
     {
         return 0;
