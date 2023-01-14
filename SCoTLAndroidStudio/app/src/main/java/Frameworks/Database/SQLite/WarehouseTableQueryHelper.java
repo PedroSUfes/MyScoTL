@@ -64,6 +64,15 @@ public class WarehouseTableQueryHelper
         );
     }
 
+    public static DBStatamentHelper GetStatementHelper(String warehouseId)
+    {
+        return new DBStatamentHelper
+                (
+                        ID+"=?",
+                        new String[]{warehouseId}
+                );
+    }
+
     public static int GetIdIndex()
     {
         return 0;

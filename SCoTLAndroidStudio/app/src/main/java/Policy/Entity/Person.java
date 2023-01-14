@@ -7,6 +7,11 @@ public class Person
     protected String m_cellphone = null;
     protected String m_birthDate = null;
 
+    public Person(String cpf)
+    {
+        m_cpf = cpf;
+    }
+
     public Person
     (
         String cpf,
@@ -27,6 +32,7 @@ public class Person
         {
             return;
         }
+
         m_cpf = toCopy.GetCpf();
         m_name = toCopy.GetName();
         m_cellphone = toCopy.GetCellphone();

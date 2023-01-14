@@ -818,8 +818,95 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryUpdateWarehouse(Warehouse warehouse, String date) {
-        return null;
+    public Boolean TryUpdateWarehouse(Warehouse warehouse)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        String warehouseId = warehouse.GetId();
+        if(!WarehouseTableQueryHelper.Exists(database, warehouseId))
+        {
+            MyLog.LogMessage("There's no warehouse with id "+warehouseId+" in database");
+            MyLog.LogMessage("Fail to update warehouse");
+            database.close();
+            return false;
+        }
+
+        Cursor isWarehouseOwnerCursor = database.rawQuery(IsWarehouseOwnerTableQueryHelper.GetSelectByWarehouseIdEndDateNullQuery(warehouseId), null);
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to update warehouse with id "+warehouseId);
+            database.close();
+            return false;
+        }
+
+        String currentWarehouseOwnerCpf = isWarehouseOwnerCursor.getString(IsWarehouseOwnerTableQueryHelper.GetOwnerCpfIndex());
+        String newWarehouseOwnerCpf = warehouse.GetOwner().GetCpf();
+        database.close();
+        database = getWritableDatabase();
+        if(!currentWarehouseOwnerCpf.equals(newWarehouseOwnerCpf))
+        {
+            ContentValues newPersonValue = PersonTableQueryHelper.GetContentValue(warehouse.GetOwner());
+            try
+            {
+                database.insert(PersonTableQueryHelper.PERSON_TABLE, null, newPersonValue);
+            }catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
+
+            // Setar a data de fim na tabela de relacionamento de donos
+            // Incerir o novo relacionamento
+
+            DBStatamentHelper updateHelper = IsWarehouseOwnerTableQueryHelper.GetStatementHelperEndDateNull(warehouseId);
+            ContentValues newIsWarehouseOwnerValues = new ContentValues();
+            newIsWarehouseOwnerValues.put(IsWarehouseOwnerTableQueryHelper.END_DATE, warehouse.GetBeginDate());
+            database.update
+                    (
+                            IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE,
+                            newIsWarehouseOwnerValues,
+                            updateHelper.m_whereClause,
+                            updateHelper.m_args
+                    );
+
+            ContentValues toInsertValues = IsWarehouseOwnerTableQueryHelper.GetContentValues
+                    (
+                            warehouseId,
+                            newWarehouseOwnerCpf,
+                            warehouse.GetBeginDate(),
+                            null
+                    );
+            try
+            {
+                database.insert(IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE, null, toInsertValues);
+            }catch (Exception e)
+            {
+                MyLog.LogMessage(e.getMessage());
+            }
+
+        }
+
+        ContentValues newWarehouseValues = new ContentValues();
+        newWarehouseValues.put(WarehouseTableQueryHelper.STATE_NAME, warehouse.GetStateName());
+        newWarehouseValues.put(WarehouseTableQueryHelper.CITY_NAME, warehouse.GetCityName());
+        newWarehouseValues.put(WarehouseTableQueryHelper.STREET_NAME, warehouse.GetStreetName());
+        newWarehouseValues.put(WarehouseTableQueryHelper.RESIDENTIAL_NUMBER, warehouse.GetNumber());
+        DBStatamentHelper warehouseUpdateHelper = WarehouseTableQueryHelper.GetStatementHelper(warehouseId);
+        int rows = database.update
+                (
+                        WarehouseTableQueryHelper.WAREHOUSE_TABLE,
+                        newWarehouseValues,
+                        warehouseUpdateHelper.m_whereClause,
+                        warehouseUpdateHelper.m_args
+                );
+
+        database.close();
+        if(rows == 0)
+        {
+            MyLog.LogMessage("Fail to update warehouse with id "+warehouseId);
+            return false;
+        }
+
+        MyLog.LogMessage("The warehouse with id "+warehouseId+" was updated with success");
+        return true;
     }
 
     @Override
