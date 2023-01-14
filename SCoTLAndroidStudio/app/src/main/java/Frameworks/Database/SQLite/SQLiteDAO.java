@@ -1059,6 +1059,9 @@ public class SQLiteDAO
                 MyLog.LogMessage("Fail to remove warehouse with id "+id+" from database");
                 return false;
             }
+
+            MyLog.LogMessage("Warehouse with id "+id+" was removed with success");
+            return true;
         } catch (Exception e)
         {
             MyLog.LogMessage(e.getMessage());
@@ -1067,8 +1070,8 @@ public class SQLiteDAO
             database.close();
         }
 
-        MyLog.LogMessage("Warehouse with id "+id+" was removed with success");
-        return true;
+        MyLog.LogMessage("Problem trying to remove warehouse with id "+id);
+        return false;
     }
 
     private Servant[] GetServantsFromWorksOnCursor(Cursor worksOnCursor, SQLiteDatabase database)
