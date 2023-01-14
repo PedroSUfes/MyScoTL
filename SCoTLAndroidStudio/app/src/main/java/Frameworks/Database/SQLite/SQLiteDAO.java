@@ -918,7 +918,8 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryRemoveWarehouse(String id) {
+    public Boolean TryRemoveWarehouse(String id)
+    {
         return null;
     }
 
