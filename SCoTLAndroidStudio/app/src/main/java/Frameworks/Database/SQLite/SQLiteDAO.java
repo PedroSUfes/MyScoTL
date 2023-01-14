@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.Adapters.*;
@@ -19,10 +18,6 @@ import Policy.Entity.Property;
 import Policy.Entity.Servant;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
-
-import Policy.Entity.Person;
-import kotlin.Pair;
-import kotlin.Triple;
 
 
 public class SQLiteDAO
@@ -448,7 +443,7 @@ public class SQLiteDAO
             // Sertar a data de fim na tupla em worksOnCursor
             ContentValues contentValues = new ContentValues();
             contentValues.put(WorksOnTableQueryHelper.END_DATE, date);
-            DBUpdateHelper updateHelper = WorksOnTableQueryHelper.GetUpdateHelper
+            DBStatamentHelper updateHelper = WorksOnTableQueryHelper.GetStatementHelper
                     (
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
@@ -466,7 +461,7 @@ public class SQLiteDAO
         contentValues.put(PersonTableQueryHelper.NAME, servant.GetName());
         contentValues.put(PersonTableQueryHelper.CELLPHONE, servant.GetCellphone());
         contentValues.put(PersonTableQueryHelper.BIRTH_DATE, servant.GetBirthDate());
-        DBUpdateHelper updateHelper = PersonTableQueryHelper.GetUpdateHelper(servantCpf);
+        DBStatamentHelper updateHelper = PersonTableQueryHelper.GetStatementHelper(servantCpf);
         database.update(PersonTableQueryHelper.PERSON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
         database.close();
         return true;
@@ -478,8 +473,42 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryRemoveEmployee(String cpf) {
-        return null;
+    public Boolean TryRemoveEmployee(String cpf)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        boolean isServant = WorksOnTableQueryHelper.PersonExists(database, cpf);
+        if
+        (
+                !PersonTableQueryHelper.Exists(database, cpf) &&
+                !isServant &&
+                !ManageWarehouseTableQueryHelper.PersonExists(database, cpf)
+        )
+        {
+            MyLog.LogMessage("There's no employee with cpf "+cpf+" in database");
+            MyLog.LogMessage("Fail to remove servant");
+            database.close();
+            return false;
+        }
+
+        if(isServant)
+        {
+            DBStatamentHelper deleteHelper = WorksOnTableQueryHelper.GetStatementHelper(cpf);
+            database.delete(WorksOnTableQueryHelper.WORKS_ON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        }
+        else
+        {
+            DBStatamentHelper deleteHelper = ManageWarehouseTableQueryHelper.GetStatementHelper(cpf);
+            database.delete(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        }
+
+        if(!BuyCoffeeBagTableQueryHelper.Exists(database, cpf))
+        {
+
+            DBStatamentHelper deleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
+            database.delete(PersonTableQueryHelper.PERSON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        }
+        database.close();
+        return true;
     }
 
     @Override

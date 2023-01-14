@@ -56,6 +56,15 @@ public class ManageWarehouseTableQueryHelper
         return contentValues;
     }
 
+    public static DBStatamentHelper GetStatementHelper(String workerCpf)
+    {
+        return new DBStatamentHelper
+                (
+                        PERSON_CPF+"=?",
+                        new String[] {workerCpf}
+                );
+    }
+
     public static int GetWarehouseIdIndex()
     {
         return 0;
