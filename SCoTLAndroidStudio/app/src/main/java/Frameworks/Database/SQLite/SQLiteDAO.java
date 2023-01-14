@@ -160,17 +160,15 @@ public class SQLiteDAO
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId),null);
 
-        Batch newBatch = new Batch();
-        if(c.moveToFirst()){
-            do{
-                newBatch = new Batch(
-                        c.getString(BatchTableQueryHelper.GetBatchIdIndex()),
-                        c.getString(BatchTableQueryHelper.GetCreationDateIndex())
-                );
-            }while(c.moveToNext());
-        }
+        if(c != null){
+            c.moveToFirst();
+            Batch newBatch = new Batch(
+                    c.getString(BatchTableQueryHelper.GetBatchIdIndex()),
+                    c.getString(BatchTableQueryHelper.GetCreationDateIndex()));
 
-        return newBatch;
+            return newBatch;
+        }
+        return null;
     }
 
     //Teoricamente feita e.e
