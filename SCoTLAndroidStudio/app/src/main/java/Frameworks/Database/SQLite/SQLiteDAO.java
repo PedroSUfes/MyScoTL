@@ -167,11 +167,10 @@ public class SQLiteDAO
                 newBatchCreationDate = c.getString(BatchTableQueryHelper.GetCreationDateIndex());
             }
 
-
-
             if (newBatchId != null) {
                 return new Batch(newBatchId, newBatchCreationDate);
             } else {
+                MyLog.LogMessage("Id não encontrado");
                 return null;
             }
         } finally {
