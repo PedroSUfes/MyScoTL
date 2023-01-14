@@ -68,7 +68,7 @@ public class PropertyTableQueryHelper
     {
         return new DBStatamentHelper
                 (
-                    ID+"=?",
+                        ID+"=?",
                         new String[]{id}
                 );
     }
