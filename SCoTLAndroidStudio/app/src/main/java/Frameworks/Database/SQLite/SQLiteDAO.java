@@ -1,11 +1,13 @@
 package Frameworks.Database.SQLite;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.Adapters.*;
@@ -293,7 +295,7 @@ public class SQLiteDAO
         Property property = servant.GetProperty();
         String servantCpf = servant.GetCpf();
 
-        // Caso já estejacadastrado
+        // Caso já esteja cadastrado
         if(WorksOnTableQueryHelper.PersonExists(database, servantCpf))
         {
             MyLog.LogMessage("There's a servant with cpf "+servantCpf+" already in database");
@@ -411,8 +413,63 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryUpdateServant(Servant servant, String date) {
-        return null;
+    public Boolean TryUpdateServant(Servant servant, String date)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        String servantCpf = servant.GetCpf();
+        if(!WorksOnTableQueryHelper.PersonExists(database, servantCpf))
+        {
+            MyLog.LogMessage("There's servant with cpf "+servantCpf+" in database");
+            MyLog.LogMessage("Fail to update servant");
+            database.close();
+            return false;
+        }
+
+        String newPropertyId = servant.GetProperty().GetId();
+        Cursor worksOnCursor = database.rawQuery(WorksOnTableQueryHelper.GetSelectQueryNoPastRegisters(servantCpf), null);
+        if(!worksOnCursor.moveToFirst())
+        {
+            database.close();
+            return false;
+        }
+
+        String currentPropertyId = worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex());
+        if(!currentPropertyId.equals(newPropertyId))
+        {
+            // Proprieadade está cadastrada?
+            if(!PropertyTableQueryHelper.Exists(database, newPropertyId))
+            {
+                MyLog.LogMessage("Property with id "+newPropertyId+" is not in database");
+                MyLog.LogMessage("Fail to update servant");
+                database.close();
+                return false;
+            }
+
+            // Sertar a data de fim na tupla em worksOnCursor
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(WorksOnTableQueryHelper.END_DATE, date);
+            DBUpdateHelper updateHelper = WorksOnTableQueryHelper.GetUpdateHelper
+                    (
+                            worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
+                            worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
+                            worksOnCursor.getString(WorksOnTableQueryHelper.GetBeginDateIndex())
+                            );
+
+            Integer rows1 = database.update(WorksOnTableQueryHelper.WORKS_ON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
+            MyLog.LogMessage(rows1.toString());
+
+            ContentValues newWorksOnValues = WorksOnTableQueryHelper.GetContentValue(servantCpf, newPropertyId, date, null);
+            database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, newWorksOnValues);
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PersonTableQueryHelper.NAME, servant.GetName());
+        contentValues.put(PersonTableQueryHelper.CELLPHONE, servant.GetCellphone());
+        contentValues.put(PersonTableQueryHelper.BIRTH_DATE, servant.GetBirthDate());
+        DBUpdateHelper updateHelper = PersonTableQueryHelper.GetUpdateHelper(servantCpf);
+        database.update(PersonTableQueryHelper.PERSON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
+        database.close();
+        return true;
     }
 
     @Override

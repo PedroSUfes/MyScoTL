@@ -853,7 +853,7 @@ implements
             if(!propertyListHelper.Exists(m_propertyList, (e) -> e.equals(servant.GetProperty())))
             {
                 System.out.println("Property with id "+servant.GetProperty().GetId()+" is not in register");
-                System.out.println("Fail to add servant");
+                System.out.println("Fail to update servant");
                 return false;
             }
 

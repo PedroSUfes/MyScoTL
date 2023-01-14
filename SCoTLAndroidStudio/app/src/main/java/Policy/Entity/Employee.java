@@ -12,12 +12,12 @@ extends
         
     public Employee
     (
-        String cpf, 
-        String name, 
-        String cellphone, 
-        String birthDate,
-        String hiringDate,
-        String endDate
+        @NotNull String cpf,
+        @NotNull String name,
+        @NotNull String cellphone,
+        @NotNull String birthDate,
+        @NotNull String hiringDate,
+        @Nullable String endDate
     ) 
     {
         super(cpf, name, cellphone, birthDate);
@@ -38,35 +38,36 @@ extends
     {
         super(person);
         m_hiringDate = new String(hiringDate);
-        if(endDate != null)
-        {
-            m_endDate = new String(endDate);
-        }
+        m_endDate = endDate == null ? null : new String(endDate);
     }
 
     public Employee(Employee toCopy)
     {
         super(toCopy.m_cpf, toCopy.m_name, toCopy.m_cellphone, toCopy.m_birthDate);
 
-        m_hiringDate = new String(toCopy.m_hiringDate);
-        if(toCopy.m_endDate != null)
-        {
-            m_endDate = new String(toCopy.m_endDate);
-        }
+        m_hiringDate = toCopy.GetHiringDate();
+        m_endDate = toCopy.GetEndDate();
+    }
+
+    public Employee
+            (
+                    @NotNull String cpf,
+                    @NotNull String name,
+                    @NotNull String cellphone,
+                    @NotNull String birthDate
+            )
+    {
+        super(cpf, name, cellphone, birthDate);
     }
 
     public String GetHiringDate()
     {
-        return new String(m_hiringDate);
+        return m_hiringDate == null ? null : new String(m_hiringDate);
     }
 
     public String GetEndDate()
     {
-        if(m_endDate == null)
-        {
-            return null;
-        }
-        return new String(m_endDate);
+        return m_endDate == null ? null : new String(m_endDate);
     }
 
     public void SetEndDate(@NotNull String endDate)
@@ -87,7 +88,7 @@ extends
 
     public abstract EmployeeType GetEmployeeType();
 
-    public static Employee GetEmployeeCopy(Employee toCopy)
+    public static Employee GetEmployeeCopy(@NotNull Employee toCopy)
     {
         if(toCopy.GetEmployeeType() == EmployeeType.SERVANT)
         {

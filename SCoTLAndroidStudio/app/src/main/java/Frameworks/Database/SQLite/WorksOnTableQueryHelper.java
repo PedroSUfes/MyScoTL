@@ -8,7 +8,7 @@ public class WorksOnTableQueryHelper
 {
     public static String WORKS_ON_TABLE = "worksOnTable";
     public static String PERSON_CPF = "personCpf";
-    public static String BEGIN_DATE = "beginDate";
+    public static String HIRING_DATE = "beginDate";
     public static String PROPERTY_ID = "propertyId";
     public static String END_DATE = "endDate";
 
@@ -16,10 +16,10 @@ public class WorksOnTableQueryHelper
     {
         return "CREATE TABLE "+WORKS_ON_TABLE+" ("
                 +PERSON_CPF +" TEXT,"
-                +BEGIN_DATE + " TEXT,"
+                +HIRING_DATE + " TEXT,"
                 +PROPERTY_ID+" TEXT,"
                 +END_DATE + " TEXT,"
-                +"PRIMARY KEY("+PERSON_CPF+","+BEGIN_DATE+"),"
+                +"PRIMARY KEY("+PERSON_CPF+","+HIRING_DATE +","+PROPERTY_ID+"),"
                 +"FOREIGN KEY("+PROPERTY_ID+") REFERENCES "+PropertyTableQueryHelper.PROPERTY_TABLE+"("+PropertyTableQueryHelper.ID+")"
                 +")";
     }
@@ -68,7 +68,7 @@ public class WorksOnTableQueryHelper
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(PERSON_CPF, personCpf);
-        contentValues.put(BEGIN_DATE, beginDate);
+        contentValues.put(HIRING_DATE, beginDate);
         contentValues.put(PROPERTY_ID, propertyId);
         contentValues.put(END_DATE, endDate);
         return contentValues;
@@ -78,5 +78,14 @@ public class WorksOnTableQueryHelper
     {
         Cursor worksOnCursor = database.rawQuery(GetSelectQuery(personCpf), null);
         return worksOnCursor.moveToFirst();
+    }
+
+    public static DBUpdateHelper GetUpdateHelper(String workerCpf, String propertyId, String beginDate)
+    {
+        return new DBUpdateHelper
+                (
+                        PERSON_CPF+"=?"+" AND "+PROPERTY_ID+"=? AND "+ HIRING_DATE +"=?",
+                        new String[] {workerCpf, propertyId, beginDate}
+                );
     }
 }

@@ -96,4 +96,9 @@ public class PersonTableQueryHelper
             property
         );
     }
+
+    public static DBUpdateHelper GetUpdateHelper(String cpf)
+    {
+        return new DBUpdateHelper(CPF+"=?", new String[]{cpf});
+    }
 }
