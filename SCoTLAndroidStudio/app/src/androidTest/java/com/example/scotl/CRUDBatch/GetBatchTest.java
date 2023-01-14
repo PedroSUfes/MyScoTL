@@ -20,8 +20,14 @@ public class GetBatchTest
 		SQLiteDAO database = new SQLiteDAO(appContext);
 		DatabaseAccess.batchOperationsInterface = database;
 
-		Batch result = DatabaseAccess.batchOperationsInterface.GetBatch("23");
+		Batch result = DatabaseAccess.batchOperationsInterface.GetBatch("112");
 
-		System.out.println(result);
+		if(result != null){
+			System.out.println("Id encontrado\n"+result);
+		}
+		else{
+			System.out.println("Id não encontrado.");
+		}
+
 	}
 }

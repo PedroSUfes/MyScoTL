@@ -153,19 +153,30 @@ public class SQLiteDAO
 
     @Override
     public Batch GetBatch(String batchId) {
-    
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId),null);
+        Cursor c = null;
+        String newBatchId = null;
+        String newBatchCreationDate = null;
 
-        if(c != null){
-            c.moveToFirst();
-            Batch newBatch = new Batch(
-                    c.getString(BatchTableQueryHelper.GetBatchIdIndex()),
-                    c.getString(BatchTableQueryHelper.GetCreationDateIndex()));
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+             c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId), null);
 
-            return newBatch;
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                newBatchId = c.getString(BatchTableQueryHelper.GetBatchIdIndex());
+                newBatchCreationDate = c.getString(BatchTableQueryHelper.GetCreationDateIndex());
+            }
+
+
+
+            if (newBatchId != null) {
+                return new Batch(newBatchId, newBatchCreationDate);
+            } else {
+                return null;
+            }
+        } finally {
+            c.close();
         }
-        return null;
     }
 
     //Teoricamente feita e.e
