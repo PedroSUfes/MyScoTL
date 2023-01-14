@@ -718,17 +718,25 @@ public class SQLiteDAO
     }
 
     @Override
-    public Warehouse[] GetWarehouses(String stateName)
+    public Warehouse[] GetWarehouses(String stateName, boolean withPastRegister)
     {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor iSWarehouseOwnerCursor = database.rawQuery(IsWarehouseOwnerTableQueryHelper.GetSelectAllQuery(), null);
-        if(!iSWarehouseOwnerCursor.moveToFirst())
+        Cursor cursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateJoinedWithWarehouseTable(stateName) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateJoinedWithWarehouseTableNoPastRegister(stateName),
+                        null
+                );
+        if(!cursor.moveToFirst())
         {
-            MyLog.LogMessage("No warehouses in database");
+            MyLog.LogMessage("There's no warehouses in state "+stateName+" that are in the database register");
             database.close();
             return null;
         }
-        return null;
+
+        Warehouse[] toReturn = GetWarehousesFromIsWarehouseOwnerCursor(cursor, database);
+        database.close();
+        return toReturn;
     }
 
     @Override
