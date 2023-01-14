@@ -32,7 +32,7 @@ public class RegisterWarehouseManagerTest
                 "Today",
                  "Tomorrow",
                  null,
-                 new Warehouse("1115")
+                 new Warehouse("1116")
             )
         );
 

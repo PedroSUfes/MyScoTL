@@ -476,20 +476,36 @@ public class SQLiteDAO
     public Boolean TryRemoveEmployee(String cpf)
     {
         SQLiteDatabase database = getReadableDatabase();
-        if(!PersonTableQueryHelper.Exists(database, cpf))
+        boolean isServant = WorksOnTableQueryHelper.PersonExists(database, cpf);
+        if
+        (
+                !PersonTableQueryHelper.Exists(database, cpf) &&
+                !isServant &&
+                !ManageWarehouseTableQueryHelper.PersonExists(database, cpf)
+        )
         {
-            MyLog.LogMessage("There's no person with cpf "+cpf+" in database");
+            MyLog.LogMessage("There's no employee with cpf "+cpf+" in database");
             MyLog.LogMessage("Fail to remove servant");
             database.close();
             return false;
         }
 
-        DBStatamentHelper deleteHelper = WorksOnTableQueryHelper.GetStatementHelper(cpf);
-        database.delete(WorksOnTableQueryHelper.WORKS_ON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
-        database.delete(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        if(isServant)
+        {
+            DBStatamentHelper deleteHelper = WorksOnTableQueryHelper.GetStatementHelper(cpf);
+            database.delete(WorksOnTableQueryHelper.WORKS_ON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        }
+        else
+        {
+            DBStatamentHelper deleteHelper = ManageWarehouseTableQueryHelper.GetStatementHelper(cpf);
+            database.delete(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        }
+
         if(!BuyCoffeeBagTableQueryHelper.Exists(database, cpf))
         {
-            database.delete(BuyCoffeeBagTableQueryHelper.BUY_COFFEE_BAG_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+
+            DBStatamentHelper deleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
+            database.delete(PersonTableQueryHelper.PERSON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
         }
         database.close();
         return true;
