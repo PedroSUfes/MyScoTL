@@ -206,8 +206,8 @@ public class SQLiteDAO
 
         long result = db.delete(
                 BatchTableQueryHelper.GetStatmentHelper(),
-                DBStatamentHelper.getM_whereClause(),
-                DBStatamentHelper.getM_args());
+                whereCause.m_whereClause,
+                whereCause.m_args);
 
         if(result == 0)
         {
