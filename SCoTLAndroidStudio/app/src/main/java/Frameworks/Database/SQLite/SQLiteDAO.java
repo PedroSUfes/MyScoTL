@@ -202,10 +202,12 @@ public class SQLiteDAO
 
         //System.out.printf(BatchTableQueryHelper.GetDeleteQuery(batchId));
 
+        DBStatamentHelper whereCause = new DBStatamentHelper(BatchTableQueryHelper.ID + "=?", new String[]{batchId});
+
         long result = db.delete(
-                BatchTableQueryHelper.BATCH_TABLE,
-                BatchTableQueryHelper.ID + "=" + batchId,
-                null);
+                BatchTableQueryHelper.GetStatmentHelper(),
+                DBStatamentHelper.getM_whereClause(),
+                DBStatamentHelper.getM_args());
 
         if(result == 0)
         {

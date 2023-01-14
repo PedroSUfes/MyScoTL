@@ -20,6 +20,10 @@ public class BatchTableQueryHelper
                 +")";
     }
 
+    public static String GetStatmentHelper(){
+        return BATCH_TABLE;
+    }
+
     public static int GetBatchIdIndex()
     {
         return 0;
