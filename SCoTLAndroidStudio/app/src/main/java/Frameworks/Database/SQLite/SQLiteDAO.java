@@ -683,8 +683,21 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryRemoveProperty(String id) {
-        return null;
+    public Boolean TryRemoveProperty(String id)
+    {
+        SQLiteDatabase database = getWritableDatabase();
+
+        DBStatamentHelper deleteHelper = PropertyTableQueryHelper.GetStatementHelper(id);
+        int rows = database.delete(PropertyTableQueryHelper.PROPERTY_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        database.close();
+        if(rows == 0)
+        {
+            MyLog.LogMessage("Fail to delete property with id "+id);
+            return false;
+        }
+
+        MyLog.LogMessage("Property with id "+id+" was deleted with success");
+        return true;
     }
 
     @Override
