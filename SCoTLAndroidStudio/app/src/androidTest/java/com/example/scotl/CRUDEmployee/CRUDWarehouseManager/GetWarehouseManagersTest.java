@@ -1,4 +1,4 @@
-package com.example.scotl.CRUDServant;
+package com.example.scotl.CRUDEmployee.CRUDWarehouseManager;
 
 import android.content.Context;
 
@@ -9,31 +9,32 @@ import org.junit.Test;
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
-import Policy.Entity.Servant;
+import Policy.Entity.WarehouseManager;
 
-public class GetAllServantsTest
+public class GetWarehouseManagersTest
 {
     @Test
-    public void ExecuteGetAllServantsTest()
+    public void ExecuteGetWarehouseManagersTest()
     {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         SQLiteDAO database = new SQLiteDAO(appContext);
 
         DatabaseAccess.employeeOperationsInterface = database;
 
-        Servant[] servants = DatabaseAccess.employeeOperationsInterface.GetServants(true);
-        if(servants == null)
+        WarehouseManager[] result = DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers();
+        if(result == null)
         {
             return;
         }
-        for(Servant s : servants)
+
+        for(WarehouseManager w : result)
         {
-            if(s == null)
+            if(w == null)
             {
                 continue;
             }
 
-            MyLog.LogMessage(s.toString());
+            MyLog.LogMessage(w.toString());
         }
     }
 }

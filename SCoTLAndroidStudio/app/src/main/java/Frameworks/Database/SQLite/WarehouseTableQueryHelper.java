@@ -32,6 +32,11 @@ public class WarehouseTableQueryHelper
         return "SELECT * FROM "+WAREHOUSE_TABLE+" WHERE "+ID+"='"+id+"'";
     }
 
+    public static String GetSelectAllFromState(String stateName)
+    {
+        return "SELECT * FROM "+WAREHOUSE_TABLE+" WHERE "+STATE_NAME+"='"+stateName+"'";
+    }
+
     public static boolean Exists(SQLiteDatabase database, String id)
     {
         Cursor cursor = database.rawQuery(GetSelectQuery(id), null);
@@ -62,6 +67,15 @@ public class WarehouseTableQueryHelper
             endDate,
             owner
         );
+    }
+
+    public static DBStatamentHelper GetStatementHelper(String warehouseId)
+    {
+        return new DBStatamentHelper
+                (
+                        ID+"=?",
+                        new String[]{warehouseId}
+                );
     }
 
     public static int GetIdIndex()

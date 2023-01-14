@@ -45,6 +45,27 @@ public class IsWarehouseOwnerTableQueryHelper
         return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE;
     }
 
+    public static String GetSelectAllFromStateJoinedWithWarehouseTable(String stateName)
+    {
+        final String warehouseTable = WarehouseTableQueryHelper.WAREHOUSE_TABLE;
+        final String warehouseTableId = WarehouseTableQueryHelper.ID;
+        final String warehouseTableStateName = WarehouseTableQueryHelper.STATE_NAME;
+
+        return "SELECT "+WAREHOUSE_ID+","+OWNER_CPF+","+BEGIN_DATE+","+END_DATE+
+                " FROM "+warehouseTable+
+                " JOIN "+IS_WAREHOUSE_OWNER_TABLE+
+                " ON "+warehouseTable+"."+warehouseTableId+"="+IS_WAREHOUSE_OWNER_TABLE+"."+WAREHOUSE_ID+
+                " WHERE "+warehouseTable+"."+warehouseTableStateName+"='"+stateName+"'";
+    }
+
+    public static String GetSelectAllFromStateJoinedWithWarehouseTableNoPastRegister(String stateName)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllFromStateJoinedWithWarehouseTable(stateName));
+        stringBuilder.append(" AND "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
+    }
+
     public static boolean PersonExists(SQLiteDatabase database, String personCpf)
     {
         Cursor isWarehouseOwnerCursor = database.rawQuery(GetSelectByOwnerCpfQuery(personCpf), null);
@@ -70,6 +91,15 @@ public class IsWarehouseOwnerTableQueryHelper
         }
 
         return new String(cursor.getString(GetOwnerCpfIndex()));
+    }
+
+    public static DBStatamentHelper GetStatementHelperEndDateNull(String warehouseId)
+    {
+        return new DBStatamentHelper
+                (
+                        WAREHOUSE_ID+"=? AND "+END_DATE+" IS NULL",
+                        new String[]{warehouseId}
+                );
     }
 
     public static int GetWarehouseIdIndex()

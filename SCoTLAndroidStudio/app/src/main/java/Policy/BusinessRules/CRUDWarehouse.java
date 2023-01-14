@@ -9,9 +9,9 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.GetWarehouses();
     }
 
-    public static Warehouse[] GetWarehouses(String stateName)
+    public static Warehouse[] GetWarehouses(String stateName, boolean withPastRegister)
     {
-        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName);
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, withPastRegister);
     }
 
     public static Warehouse[] GetWarehouses(String stateName, String streetName)
@@ -39,9 +39,9 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.TryRegisterWarehouse(warehouse);
     }
 
-    public static Boolean TryUpdateWarehouse(Warehouse warehouse, String date)
+    public static Boolean TryUpdateWarehouse(Warehouse warehouse)
     {
-        return DatabaseAccess.warehouseOperationsInterface.TryUpdateWarehouse(warehouse, date);
+        return DatabaseAccess.warehouseOperationsInterface.TryUpdateWarehouse(warehouse);
     }
     
     public static Boolean TryRemoveWarehouse(String id)

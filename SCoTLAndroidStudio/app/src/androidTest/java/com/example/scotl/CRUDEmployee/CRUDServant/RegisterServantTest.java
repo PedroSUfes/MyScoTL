@@ -1,4 +1,4 @@
-package com.example.scotl.CRUDServant;
+package com.example.scotl.CRUDEmployee.CRUDServant;
 
 import android.content.Context;
 
@@ -32,8 +32,8 @@ public class RegisterServantTest
                 "20/06/2001",
                 "Today",
                 null,
-                DatabaseAccess.propertyOperationsInterface.GetPropertyById("1111")
-//                new Property("333")
+//                DatabaseAccess.propertyOperationsInterface.GetPropertyById("1111")
+                new Property("1111")
             )
         );
 

@@ -1,6 +1,6 @@
 package Policy.Entity;
 
-public class Property 
+public class Property
 {
     private String m_id;
     private String m_propertyName;
@@ -86,17 +86,17 @@ public class Property
 
     public void SetPropertyName(String name)
     {
-        m_propertyName = String.copyValueOf(name.toCharArray());
+        m_propertyName = name == null ? null : String.copyValueOf(name.toCharArray());
     }
 
-    public void SetStateNAme(String name)
+    public void SetStateName(String name)
     {
-        m_stateName = String.copyValueOf(name.toCharArray());
+        m_stateName = name == null ? null : String.copyValueOf(name.toCharArray());
     }
 
     public void SetStreetName(String name)
     {
-        m_streetName = String.copyValueOf(name.toCharArray());
+        m_streetName = name == null ? name : String.copyValueOf(name.toCharArray());
     }
 
     public void SetNumber(int number)
