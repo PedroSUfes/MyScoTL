@@ -13,13 +13,13 @@ extends
     
     public WarehouseManager
     (
-        @NotNull String cpf,
-        @NotNull String name,
-        @NotNull String cellphone,
-        @NotNull String birthDate,
-        @NotNull String hiringDate,
-        @Nullable String endDate,
-        @NotNull Warehouse warehouse
+        String cpf,
+        String name,
+        String cellphone,
+        String birthDate,
+        String hiringDate,
+         String endDate,
+        Warehouse warehouse
     ) 
     {
         super(cpf, name, cellphone, birthDate, hiringDate, endDate);
@@ -29,10 +29,10 @@ extends
 
     public WarehouseManager
             (
-                    @NotNull Person person,
-                    @NotNull String hiringDate,
-                    @Nullable String endDate,
-                    @NotNull Warehouse warehouse
+                    Person person,
+                    String hiringDate,
+                     String endDate,
+                    Warehouse warehouse
             )
     {
         super(person, hiringDate, endDate);

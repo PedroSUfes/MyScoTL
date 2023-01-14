@@ -13,13 +13,13 @@ extends
     
     public Servant
     (
-        @NotNull String cpf,
-        @NotNull String name,
-        @NotNull String cellphone,
-        @NotNull String birthDate,
-        @NotNull String hiringDate,
-        @Nullable String endDate,
-        @NotNull Property property
+        String cpf,
+        String name,
+        String cellphone,
+        String birthDate,
+        String hiringDate,
+         String endDate,
+        Property property
     ) 
     {
         super(cpf, name, cellphone, birthDate, hiringDate, endDate);
@@ -32,6 +32,20 @@ extends
         super(toCopy);
 
         m_property = new Property(toCopy.m_property);
+    }
+
+    public Servant
+            (
+                    String cpf,
+                    String name,
+                    String cellphone,
+                    String birthDate,
+                    Property property
+            )
+    {
+        super(cpf, name, cellphone, birthDate);
+
+        m_property = new Property(property);
     }
 
     public Property GetProperty()
