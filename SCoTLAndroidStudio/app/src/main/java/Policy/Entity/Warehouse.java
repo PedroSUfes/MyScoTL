@@ -38,7 +38,7 @@ public class Warehouse
         m_cityName = new String(cityName);
         m_streetName = new String(streetName);
         m_beginDate = new String(beginDate);
-        if(m_endDate != null)
+        if(endDate != null)
         {
             m_endDate = new String(endDate);
         }

@@ -21,7 +21,7 @@ public class GetWarehouseByIdTest
 
         DatabaseAccess.warehouseOperationsInterface = database;
 
-        Warehouse[] result = DatabaseAccess.warehouseOperationsInterface.GetWarehouse("1116", false);
+        Warehouse[] result = DatabaseAccess.warehouseOperationsInterface.GetWarehouse("1113", false);
         if(result == null)
         {
             return;

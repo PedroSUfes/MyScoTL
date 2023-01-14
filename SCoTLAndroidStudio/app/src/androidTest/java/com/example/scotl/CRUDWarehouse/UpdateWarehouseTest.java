@@ -26,14 +26,20 @@ public class UpdateWarehouseTest
                 (
                         new Warehouse
                                 (
-                                        "1116",
+                                        "1113",
                                         "Estados dos Vales",
                                         "Cidade das Avenidas",
                                         "Rua sem Saida",
                                         16,
                                         "Today",
                                         null,
-                                        new Person("1113")
+                                        new Person
+                                                (
+                                                        "1112",
+                                                        "Dono 2",
+                                                        "0800",
+                                                        "20/09/1988"
+                                                )
                                 )
                 );
 

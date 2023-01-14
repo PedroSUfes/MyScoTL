@@ -32,6 +32,7 @@ public class Person
         {
             return;
         }
+
         m_cpf = toCopy.GetCpf();
         m_name = toCopy.GetName();
         m_cellphone = toCopy.GetCellphone();
