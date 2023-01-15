@@ -7,32 +7,33 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import org.junit.Test;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
+import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Property;
 
-public class ResgisterPropertyTest
+public class GetPropertiesTest
 {
     @Test
-    public void ExecuteRegisterPropertyTest()
+    public void ExecuteGetPropertiesTest()
     {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         SQLiteDAO database = new SQLiteDAO(appContext);
-
         DatabaseAccess.propertyOperationsInterface = database;
 
-        boolean result = DatabaseAccess.propertyOperationsInterface.TryRegisterProperty
-        (
-            new Property
-            (
-                "1113",
-                "Vila das Vilas",
-                "Espirito Santo",
-                "Vitoria",
-                "Rua das Ruas",
-                2
-            )
-        );
+        Property[] result = DatabaseAccess.propertyOperationsInterface.GetProperties();
+        if(result == null)
+        {
+            return;
+        }
 
-        System.out.println(result);
+        for (Property p : result)
+        {
+            if(p == null)
+            {
+                continue;
+            }
+
+            MyLog.LogMessage(p.toString());
+        }
     }
 }
