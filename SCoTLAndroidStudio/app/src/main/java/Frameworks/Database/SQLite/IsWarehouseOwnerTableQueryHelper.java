@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import Policy.Entity.Warehouse;
-
 public class IsWarehouseOwnerTableQueryHelper
 {
     public static final String IS_WAREHOUSE_OWNER_TABLE = "isWarehouseOwner";
@@ -22,13 +20,22 @@ public class IsWarehouseOwnerTableQueryHelper
                 +BEGIN_DATE+" TEXT,"
                 +END_DATE+" TEXT,"
                 +"PRIMARY KEY("+WAREHOUSE_ID+","+OWNER_CPF+","+BEGIN_DATE+"),"
+                +"FOREIGN KEY("+WAREHOUSE_ID+") REFERENCES "+WarehouseTableQueryHelper.WAREHOUSE_TABLE+"("+WarehouseTableQueryHelper.ID+"),"
                 +"FOREIGN KEY("+OWNER_CPF+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF+")"
                 +")";
     }
 
-    public static String GetSelectByOwnerCpfQuery(String cpf)
+    public static String GetSelectWithOwnerCpfQuery(String cpf)
     {
         return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE+" WHERE "+OWNER_CPF+"='"+cpf+"'";
+    }
+
+    public static String GetSelectWithOwnerCpfNoPastRegisterQuery(String cpf)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectWithOwnerCpfQuery(cpf));
+        stringBuilder.append(" AND "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
     }
 
     public static String GetSelectByWarehouseIdEndDateNullQuery(String warehouseId)
@@ -54,7 +61,7 @@ public class IsWarehouseOwnerTableQueryHelper
         return stringBuilder.toString();
     }
 
-    public static String GetSelectAllFromStateJoinedWithWarehouseTable(String stateName)
+    public static String GetSelectAllFromStateJoinedWithWarehouseTableQuery(String stateName)
     {
         final String warehouseTable = WarehouseTableQueryHelper.WAREHOUSE_TABLE;
         final String warehouseTableId = WarehouseTableQueryHelper.ID;
@@ -67,17 +74,74 @@ public class IsWarehouseOwnerTableQueryHelper
                 " WHERE "+warehouseTable+"."+warehouseTableStateName+"='"+stateName+"'";
     }
 
-    public static String GetSelectAllFromStateJoinedWithWarehouseTableNoPastRegister(String stateName)
+    public static String GetSelectAllFromStateCityAndStreetJoinedWithWarehouseTableQuery(String stateName, String cityName, String streetName)
+    {
+        final String warehouseTable = WarehouseTableQueryHelper.WAREHOUSE_TABLE;
+        final String warehouseStreetName = WarehouseTableQueryHelper.STREET_NAME;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllFromStateAndCityJoinedWithWarehouseTableQuery(stateName, cityName));
+        stringBuilder.append(" AND "+warehouseTable+"."+warehouseStreetName+"='"+streetName+"'");
+        return  stringBuilder.toString();
+    }
+
+    public static String GetSelectAllFromStateCityAndStreetJoinedWithWarehouseTableNoPastRegisterQuery(String stateName, String cityName, String streetName)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(GetSelectAllFromStateJoinedWithWarehouseTable(stateName));
+        stringBuilder.append(GetSelectAllFromStateCityAndStreetJoinedWithWarehouseTableQuery(stateName, cityName, streetName));
+        stringBuilder.append(" AND "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
+    }
+
+    public static String GetSelectWarehouseFromAddressQuery(String stateName, String cityName, String streetName, int number)
+    {
+        final String warehouseTable = WarehouseTableQueryHelper.WAREHOUSE_TABLE;
+        final String warehouseNumber = WarehouseTableQueryHelper.RESIDENTIAL_NUMBER;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllFromStateCityAndStreetJoinedWithWarehouseTableQuery(stateName, cityName, streetName));
+        stringBuilder.append(" AND "+warehouseTable+"."+warehouseNumber+"="+number);
+        return stringBuilder.toString();
+    }
+
+    public static String GetSelectWarehouseFromAddressNoPastRegisterQuery(String stateName, String cityName, String streetName, int number)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectWarehouseFromAddressQuery(stateName, cityName, streetName, number));
+        stringBuilder.append(" AND "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
+    }
+
+    public static String GetSelectAllFromStateAndCityJoinedWithWarehouseTableQuery(String stateName, String cityName)
+    {
+        final String warehouseTable = WarehouseTableQueryHelper.WAREHOUSE_TABLE;
+        final String warehouseCityName = WarehouseTableQueryHelper.CITY_NAME;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllFromStateJoinedWithWarehouseTableQuery(stateName));
+        stringBuilder.append(" AND "+warehouseTable+"."+warehouseCityName+"='"+cityName+"'");
+        return stringBuilder.toString();
+    }
+
+    public static String GetSelectAllFromStateAndCityJoinedWithWarehouseTableNoPastRegisterQuery(String stateName, String cityName)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllFromStateAndCityJoinedWithWarehouseTableQuery(stateName, cityName));
+        stringBuilder.append(" AND "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
+    }
+
+    public static String GetSelectAllFromStateJoinedWithWarehouseTableNoPastRegisterQuery(String stateName)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllFromStateJoinedWithWarehouseTableQuery(stateName));
         stringBuilder.append(" AND "+END_DATE+" IS NULL");
         return stringBuilder.toString();
     }
 
     public static boolean PersonExists(SQLiteDatabase database, String personCpf)
     {
-        Cursor isWarehouseOwnerCursor = database.rawQuery(GetSelectByOwnerCpfQuery(personCpf), null);
+        Cursor isWarehouseOwnerCursor = database.rawQuery(GetSelectWithOwnerCpfQuery(personCpf), null);
         return isWarehouseOwnerCursor.moveToFirst();
     }
 

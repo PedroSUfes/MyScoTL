@@ -11,20 +11,19 @@ import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Warehouse;
 
-public class GetWarehouseFromStateNameTest
+public class GetWarehousesFromOwnerCpfTest
 {
     @Test
-    public void ExecuteGetWarehouseFromStateNameTest()
+    public void ExecuteGetWarehousesFromOwnerCpfTest()
     {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         SQLiteDAO database = new SQLiteDAO(appContext);
-
         DatabaseAccess.warehouseOperationsInterface = database;
 
-        Warehouse[] result = DatabaseAccess.warehouseOperationsInterface.GetWarehouses
+        Warehouse[] result = DatabaseAccess.warehouseOperationsInterface.GetWarehousesByOwnerCpf
                 (
-                        "Estados dos Vales",
-                        true
+                        "22222222222",
+                        false
                 );
 
         if(result == null)
@@ -32,7 +31,7 @@ public class GetWarehouseFromStateNameTest
             return;
         }
 
-        for (Warehouse w : result)
+        for(Warehouse w : result)
         {
             if(w == null)
             {
