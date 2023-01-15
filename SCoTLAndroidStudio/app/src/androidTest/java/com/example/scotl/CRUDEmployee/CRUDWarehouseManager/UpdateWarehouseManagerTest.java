@@ -27,11 +27,11 @@ public class UpdateWarehouseManagerTest
                 (
                     new WarehouseManager
                             (
-                                    "2222",
+                                    "1111",
                                     "Gerente 1",
                                     "0800",
                                     "11/08/1991",
-                                    new Warehouse("1117")
+                                    new Warehouse("1112")
                             ),
                         "Today"
                 );
