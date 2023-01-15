@@ -691,15 +691,10 @@ public class SQLiteDAO
     public Property GetPropertyById(String id)
     {
         SQLiteDatabase database = getReadableDatabase();
-        if(!PropertyTableQueryHelper.Exists(database, id))
-        {
-            database.close();
-            return null;
-        }
-
         Cursor cursor = database.rawQuery(PropertyTableQueryHelper.GetSelectQuery(id), null);
         if(!cursor.moveToFirst())
         {
+            MyLog.LogMessage("There's no property with id "+id+" in database");
             database.close();
             return null;
         }
@@ -720,7 +715,7 @@ public class SQLiteDAO
         }
         catch (Exception e)
         {
-            MyLog.LogMessage(e.getMessage());
+            System.out.println(e.getMessage());
         }
         database.close();
         if(result < 0)
