@@ -10,12 +10,15 @@ import java.util.ArrayList;
 
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.Adapters.*;
+import Policy.BusinessRules.LoginManager;
+import Policy.BusinessRules.UserType;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
 import Policy.Entity.Person;
 import Policy.Entity.Property;
 import Policy.Entity.Servant;
+import Policy.Entity.User;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 import Utility.Func;
@@ -106,14 +109,52 @@ public class SQLiteDAO
 
     }
 
-    // Queries
+    public Boolean TryRegisterUser(String login, String password)
+    {
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues newUserValues = UserTableQueryHelper.GetContentValues(login, password);
+
+        long result = -1;
+        try
+        {
+            result = database.insert(UserTableQueryHelper.USER_TABLE, null, newUserValues);
+            if(result == -1)
+            {
+                MyLog.LogMessage("Fail to add user with login "+login+" and password "+password+" in database");
+                return false;
+            }
+
+            MyLog.LogMessage("User registration with login "+login+" and password "+password+" made qith success");
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        MyLog.LogMessage("Problem in user registration");
+        return false;
+    }
+
     @Override
     public Boolean TryLogin(String login, String password)
     {
-        return null;
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor cursor = database.rawQuery(UserTableQueryHelper.GetSelectQuery(login, password), null);
+        if(!cursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to login. Check user name and password");
+            database.close();
+            return false;
+        }
+
+        LoginManager.SetUserType(UserType.values()[cursor.getInt(UserTableQueryHelper.GetUserTypeIndex())]);
+        database.close();
+        return true;
     }
 
-    //
     @Override
     public Batch[] GetBatches()
     {
