@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.hardware.camera2.CameraManager;
 
 import java.util.ArrayList;
 
@@ -21,8 +20,6 @@ import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 import Utility.Func;
 import Utility.Func1;
-import Utility.Func2;
-import Utility.Func3;
 import Utility.Func4;
 
 
@@ -773,8 +770,8 @@ public class SQLiteDAO
         SQLiteDatabase database = getReadableDatabase();
         Cursor cursor = database.rawQuery
                 (
-                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateJoinedWithWarehouseTable(stateName) :
-                                IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateJoinedWithWarehouseTableNoPastRegister(stateName),
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateJoinedWithWarehouseTableQuery(stateName) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateJoinedWithWarehouseTableNoPastRegisterQuery(stateName),
                         null
                 );
         if(!cursor.moveToFirst())
@@ -790,13 +787,95 @@ public class SQLiteDAO
     }
 
     @Override
-    public Warehouse[] GetWarehouses(String stateName, String streetName) {
-        return new Warehouse[0];
+    public Warehouse[] GetWarehouses(String stateName, String cityName, boolean withPastRegister)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                    withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateAndCityJoinedWithWarehouseTableQuery(stateName, cityName) :
+                            IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateAndCityJoinedWithWarehouseTableNoPastRegisterQuery(stateName, cityName),
+                        null
+                );
+
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to get warehouses from state "+stateName+" and city "+cityName);
+            database.close();
+            return null;
+        }
+
+        Warehouse[] toReturn = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return toReturn;
     }
 
     @Override
-    public Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf) {
-        return new Warehouse[0];
+    public Warehouse[] GetWarehouses(String stateName, String cityName, String streetName, boolean withPastRegister)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateCityAndStreetJoinedWithWarehouseTableQuery(stateName, cityName, streetName) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectAllFromStateCityAndStreetJoinedWithWarehouseTableNoPastRegisterQuery(stateName, cityName, streetName),
+                        null
+                );
+
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to get warehouses from state "+stateName+", city "+cityName+", and street "+streetName);
+            database.close();
+            return null;
+        }
+
+        Warehouse[] toReturn = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return toReturn;
+    }
+
+    @Override
+    public Warehouse[] GetWarehouses(String stateName, String cityName, String streetName, int residentialNumber, boolean withPastRegister)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectWarehouseFromAddressQuery(stateName, cityName, streetName, residentialNumber) :
+                                IsWarehouseOwnerTableQueryHelper.GetSelectWarehouseFromAddressNoPastRegisterQuery(stateName, cityName, streetName, residentialNumber),
+                        null
+                );
+
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to get warehouses from state "+stateName+", city "+cityName+", street "+streetName+" and number "+residentialNumber);
+            database.close();
+            return null;
+        }
+
+        Warehouse[] toReturn = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return toReturn;
+    }
+
+    @Override
+    public Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf, boolean withPastRegister)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectWithOwnerCpfQuery(ownerCpf) :
+                            IsWarehouseOwnerTableQueryHelper.GetSelectWithOwnerCpfNoPastRegisterQuery(ownerCpf),
+                        null
+                );
+
+        if(!isWarehouseOwnerCursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to get warehouses with owner with cpf "+ownerCpf);
+            database.close();
+            return null;
+        }
+
+        Warehouse[] toReturn = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
+        database.close();
+        return toReturn;
     }
 
     @Override
@@ -820,11 +899,6 @@ public class SQLiteDAO
         Warehouse[] result = GetWarehousesFromIsWarehouseOwnerCursor(isWarehouseOwnerCursor, database);
         database.close();
         return result;
-    }
-
-    @Override
-    public Warehouse GetWarehouse(String stateName, String streetName, int number) {
-        return null;
     }
 
     @Override

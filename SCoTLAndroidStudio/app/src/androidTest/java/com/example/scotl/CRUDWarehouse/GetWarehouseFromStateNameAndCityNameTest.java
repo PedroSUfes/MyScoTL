@@ -11,10 +11,10 @@ import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Warehouse;
 
-public class GetWarehouseFromStateNameTest
+public class GetWarehouseFromStateNameAndCityNameTest
 {
     @Test
-    public void ExecuteGetWarehouseFromStateNameTest()
+    public void ExecuteGetWarehouseFromStateNameAndCityNameTest()
     {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         SQLiteDAO database = new SQLiteDAO(appContext);
@@ -24,7 +24,8 @@ public class GetWarehouseFromStateNameTest
         Warehouse[] result = DatabaseAccess.warehouseOperationsInterface.GetWarehouses
                 (
                         "Estados dos Vales",
-                        true
+                        "Cidade das Avenidas",
+                        false
                 );
 
         if(result == null)

@@ -14,14 +14,14 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, withPastRegister);
     }
 
-    public static Warehouse[] GetWarehouses(String stateName, String streetName)
+    public static Warehouse[] GetWarehouses(String stateName, String cityName, boolean withPastRegister)
     {
-        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, streetName);
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, cityName, withPastRegister);
     }
 
-    public static Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf)
+    public static Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf, boolean withPastRegister)
     {
-        return DatabaseAccess.warehouseOperationsInterface.GetWarehousesByOwnerCpf(ownerCpf);
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehousesByOwnerCpf(ownerCpf, withPastRegister);
     }
 
     public static Warehouse[] GetWarehouse(String id, boolean withPastRegister)
@@ -29,9 +29,9 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.GetWarehouse(id, withPastRegister);
     }
 
-    public static Warehouse GetWarehouse(String stateName, String streetName, int number)
+    public static Warehouse[] GetWarehouses(String stateName, String cityName, String streetName, boolean withPastRegister)
     {
-        return DatabaseAccess.warehouseOperationsInterface.GetWarehouse(stateName, streetName, number);
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, cityName, streetName, withPastRegister);
     }
 
     public static Boolean TryRegisterWarehouse(Warehouse warehouse)
