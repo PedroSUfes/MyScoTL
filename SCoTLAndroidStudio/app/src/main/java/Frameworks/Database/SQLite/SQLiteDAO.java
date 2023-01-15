@@ -124,7 +124,7 @@ public class SQLiteDAO
                 return false;
             }
 
-            MyLog.LogMessage("User registration with login "+login+" and password "+password+" made qith success");
+            MyLog.LogMessage("User registration with login "+login+" and password "+password+" made with success");
             return true;
         } catch (Exception e)
         {
