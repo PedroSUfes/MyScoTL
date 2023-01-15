@@ -4,5 +4,5 @@ public enum UserType
 {
     NULL,
     SYSTEM_CLIENT,
-    WAREHOUSE_MANAGER    
+    WAREHOUSE_MANAGER
 }

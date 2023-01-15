@@ -1,5 +1,7 @@
 package Frameworks.Database.SQLite;
 
+import android.content.ContentValues;
+
 public class UserTableQueryHelper
 {
     public static final String USER_TABLE = "user";
@@ -22,5 +24,26 @@ public class UserTableQueryHelper
     public static String GetSelectAllQuery()
     {
         return "SELECT * FROM "+USER_TABLE;
+    }
+
+    public static String GetSelectQuery(String login, String password)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllQuery());
+        stringBuilder.append(" WHERE "+LOGIN+"='"+login+"' AND "+PASSWORD+"='"+password+"'");
+        return  stringBuilder.toString();
+    }
+
+    public static ContentValues GetContentValues(String login, String password)
+    {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(LOGIN, login);
+        contentValues.put(PASSWORD, password);
+        return contentValues;
+    }
+
+    public static int GetUserTypeIndex()
+    {
+        return 3;
     }
 }
