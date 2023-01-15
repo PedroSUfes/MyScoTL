@@ -118,7 +118,8 @@ public class SQLiteDAO
 
     //
     @Override
-    public Batch[] GetBatches() {
+    public Batch[] GetBatches()
+    {
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllQuery(), null);
@@ -158,7 +159,8 @@ public class SQLiteDAO
     }
 
     @Override
-    public Batch GetBatch(String batchId) {
+    public Batch GetBatch(String batchId)
+    {
         Cursor c = null;
         String newBatchId = null;
         String newBatchCreationDate = null;
@@ -184,7 +186,6 @@ public class SQLiteDAO
         }
     }
 
-    //Teoricamente feita e.e
     @Override
     public Boolean TryRegisterBatch(Batch batch)
     {
@@ -193,9 +194,12 @@ public class SQLiteDAO
         try
         {
             result = database.insert(BatchTableQueryHelper.BATCH_TABLE, null, BatchTableQueryHelper.GetContentValues(batch));
-        }catch (Exception e)
+        } catch (Exception e)
         {
             MyLog.LogMessage(e.getMessage());
+        } finally
+        {
+            database.close();
         }
         if(result < 0)
         {
