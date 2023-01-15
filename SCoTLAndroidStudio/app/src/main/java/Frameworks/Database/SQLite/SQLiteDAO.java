@@ -973,7 +973,7 @@ public class SQLiteDAO
                     );
         } catch (Exception e)
         {
-            MyLog.LogMessage(e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         database.close();
