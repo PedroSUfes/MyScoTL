@@ -21,7 +21,7 @@ public class GetWarehousesTest
 
         DatabaseAccess.warehouseOperationsInterface = database;
 
-        Warehouse[] warehouses = DatabaseAccess.warehouseOperationsInterface.GetWarehouses();
+        Warehouse[] warehouses = DatabaseAccess.warehouseOperationsInterface.GetWarehouses(false);
         if(warehouses == null)
         {
             return;

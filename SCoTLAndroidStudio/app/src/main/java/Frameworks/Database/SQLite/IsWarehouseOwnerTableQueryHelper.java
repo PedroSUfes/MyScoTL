@@ -46,6 +46,14 @@ public class IsWarehouseOwnerTableQueryHelper
         return "SELECT * FROM "+IS_WAREHOUSE_OWNER_TABLE;
     }
 
+    public static String GetSelectAllNoPastRegister()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllQuery());
+        stringBuilder.append(" WHERE "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
+    }
+
     public static String GetSelectAllFromStateJoinedWithWarehouseTable(String stateName)
     {
         final String warehouseTable = WarehouseTableQueryHelper.WAREHOUSE_TABLE;
