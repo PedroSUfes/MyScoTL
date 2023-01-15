@@ -28,9 +28,17 @@ public class PropertyTableQueryHelper
                 +")";
     }
 
+    public static String GetSelectAllQuery()
+    {
+        return "SELECT * FROM "+PROPERTY_TABLE;
+    }
+
     public static String GetSelectQuery(String id)
     {
-        return "SELECT * FROM "+PROPERTY_TABLE+" WHERE "+ID+"='"+id+"'";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllQuery());
+        stringBuilder.append(" WHERE "+ID+"='"+id+"'");
+        return stringBuilder.toString();
     }
 
     public static boolean Exists(SQLiteDatabase database, String propertyId)

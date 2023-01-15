@@ -647,8 +647,44 @@ public class SQLiteDAO
     }
 
     @Override
-    public Property[] GetProperties() {
-        return new Property[0];
+    public Property[] GetProperties()
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor propertyCursor = database.rawQuery(PropertyTableQueryHelper.GetSelectAllQuery(), null);
+        if(!propertyCursor.moveToFirst())
+        {
+            MyLog.LogMessage("No properties in database");
+            database.close();
+            return null;
+        }
+
+        ArrayList<Property> propertyList = new ArrayList<Property>();
+        do
+        {
+            propertyList.add(PropertyTableQueryHelper.GetPropertyFromCursor(propertyCursor));
+        } while(propertyCursor.moveToNext());
+
+        if(propertyList.isEmpty())
+        {
+            MyLog.LogMessage("Fail to get properties");
+            database.close();
+            return null;
+        }
+
+        Property[] toReturn = new Property[propertyList.size()];
+        int index = -1;
+        for (Property p : propertyList)
+        {
+            ++index;
+            if(p == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = propertyList.get(index);
+        }
+
+        return toReturn;
     }
 
     @Override
