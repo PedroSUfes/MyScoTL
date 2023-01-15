@@ -4,9 +4,9 @@ import Policy.Entity.Warehouse;
 
 public class CRUDWarehouse 
 {
-    public static Warehouse[] GetWarehouses()
+    public static Warehouse[] GetWarehouses(boolean withPastRegister)
     {
-        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses();
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(withPastRegister);
     }
 
     public static Warehouse[] GetWarehouses(String stateName, boolean withPastRegister)

@@ -746,10 +746,15 @@ public class SQLiteDAO
     }
 
     @Override
-    public Warehouse[] GetWarehouses()
+    public Warehouse[] GetWarehouses(boolean withPastRegister)
     {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor isWarehouseOwnerCursor = database.rawQuery(IsWarehouseOwnerTableQueryHelper.GetSelectAllQuery(), null);
+        Cursor isWarehouseOwnerCursor = database.rawQuery
+                (
+                        withPastRegister ? IsWarehouseOwnerTableQueryHelper.GetSelectAllQuery() :
+                        IsWarehouseOwnerTableQueryHelper.GetSelectAllNoPastRegister(),
+                        null
+                );
         if(!isWarehouseOwnerCursor.moveToFirst())
         {
             MyLog.LogMessage("No warehouses in database");

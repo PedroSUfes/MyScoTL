@@ -4,7 +4,7 @@ import Policy.Entity.Warehouse;
 
 public interface WarehouseOperationsInterface 
 {
-    public Warehouse[] GetWarehouses();
+    public Warehouse[] GetWarehouses(boolean withPastRegister);
     public Warehouse[] GetWarehouses(String stateName, boolean withPastRegister);
     public Warehouse[] GetWarehouses(String stateName, String streetName);
     public Warehouse[] GetWarehousesByOwnerCpf(String ownerCpf);
