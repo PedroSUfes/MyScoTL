@@ -315,9 +315,24 @@ public class SQLiteDAO
     @Override
     public WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister)
     {
-//        SQLiteDatabase database = getReadableDatabase();
-//        Cursor manageWarehouseCursor = database.rawQuery(ManageWarehouseTableQueryHelper.)
-        return null;
+        SQLiteDatabase database = getReadableDatabase();
+        Cursor manageWarehouseCursor = database.rawQuery
+                (
+                        withPastRegister ? ManageWarehouseTableQueryHelper.GetSelectByPersonCpfQuery(cpf) :
+                                ManageWarehouseTableQueryHelper.GetSelectByPersonCpfNoPastRegister(cpf),
+                        null
+                );
+
+        if(!manageWarehouseCursor.moveToFirst())
+        {
+            MyLog.LogMessage("Fail to get warehouse manager with cpf "+cpf);
+            database.close();
+            return null;
+        }
+
+        WarehouseManager[] toReturn = GetWarehouseManagersFromManageWarehouseCursor(manageWarehouseCursor, database);
+        database.close();
+        return toReturn;
     }
 
     @Override
