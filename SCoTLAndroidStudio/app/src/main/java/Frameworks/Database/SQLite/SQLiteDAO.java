@@ -235,8 +235,8 @@ public class SQLiteDAO
         String newBatchId = null;
         String newBatchCreationDate = null;
 
+        SQLiteDatabase db = getReadableDatabase();
         try {
-            SQLiteDatabase db = getReadableDatabase();
              c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId), null);
 
             if (c.getCount() > 0) {
@@ -248,12 +248,18 @@ public class SQLiteDAO
             if (newBatchId != null) {
                 return new Batch(newBatchId, newBatchCreationDate);
             } else {
-                MyLog.LogMessage("Id não encontrado");
+                MyLog.LogMessage("there's no batch with id "+batchId+" in database");
                 return null;
             }
-        } finally {
-            c.close();
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            db.close();
         }
+
+        return null;
     }
 
     @Override
