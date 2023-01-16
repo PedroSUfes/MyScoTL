@@ -265,17 +265,73 @@ public class SQLiteDAO
     }
 
     @Override
-    public CoffeeBag[] GetCoffeeBags() {
+    public CoffeeBag[] GetCoffeeBags()
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        try
+        {
+            Cursor coffeeBagCursor = database.rawQuery(CoffeeBagTableQueryHelper.GetSelectAllQuery(), null);
+            if(!coffeeBagCursor.moveToFirst())
+            {
+                MyLog.LogMessage("No coffee bags in database");
+                return null;
+            }
+
+            ArrayList<CoffeeBag> coffeeBagList = new ArrayList<CoffeeBag>();
+            do
+            {
+                Batch batch = GetBatch(coffeeBagCursor.getString(CoffeeBagTableQueryHelper.GetBatchIndex()));
+                Warehouse warehouse = GetWarehouse(coffeeBagCursor.getString(CoffeeBagTableQueryHelper.GetWarehouseIndex()), false)[0];
+                if(batch == null || warehouse == null)
+                {
+                    MyLog.LogMessage("Problem retrieving coffee bags from database");
+                    continue;
+                }
+
+                coffeeBagList.add(CoffeeBagTableQueryHelper.GetCoffeeBagFromCoffeeBagCursor(coffeeBagCursor, batch, warehouse));
+            } while(coffeeBagCursor.moveToNext());
+
+            if(coffeeBagList.isEmpty())
+            {
+                MyLog.LogMessage("Problem retrieving coffee bags from database");
+                return null;
+            }
+
+            CoffeeBag[] toReturn = new CoffeeBag[coffeeBagList.size()];
+            int index = -1;
+            for(CoffeeBag c : coffeeBagList)
+            {
+                ++index;
+                if(c == null)
+                {
+                    continue;
+                }
+
+                toReturn[index] = c;
+            }
+
+            return toReturn;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        MyLog.LogMessage("Problem retrieving coffee bags from database");
+        return null;
+    }
+
+    @Override
+    public CoffeeBag[] GetCoffeeBags(String batchId)
+    {
         return new CoffeeBag[0];
     }
 
     @Override
-    public CoffeeBag[] GetCoffeeBags(String batchId) {
-        return new CoffeeBag[0];
-    }
-
-    @Override
-    public CoffeeBag GetCoffeeBag(String batchId, String coffeeBagId) {
+    public CoffeeBag GetCoffeeBag(String batchId, String coffeeBagId)
+    {
         return null;
     }
 
@@ -287,30 +343,6 @@ public class SQLiteDAO
         String warehouseId = coffeeBag.GetBatch().GetId();
 
         SQLiteDatabase database = getReadableDatabase();
-
-//        Func4<SQLiteDatabase, String, Func2<SQLiteDatabase, String, Boolean>, String, Boolean> checkIfExistsFunc =
-//                (db, id, existsFunc, entityName) ->
-//                {
-//                    if(!existsFunc.Invoke(db, id))
-//                    {
-//                        MyLog.LogMessage("There's no "+entityName+" with id "+id+" in database");
-//                        MyLog.LogMessage("Fail to add coffee bag with id "+coffeeBagId);
-//                        return false;
-//                    }
-//
-//                    return true;
-//                };
-//
-//        if(!checkIfExistsFunc.Invoke(database, batchId, BatchTableQueryHelper::Exists, "batch"))
-//        {
-//            database.close();
-//            return false;
-//        }
-//        if(!checkIfExistsFunc.Invoke(database, warehouseId, WarehouseTableQueryHelper::Exists, "warehouse"))
-//        {
-//            database.close();
-//            return false;
-//        }
 
         database.close();
         database = getWritableDatabase();
