@@ -122,10 +122,10 @@ public class SQLiteDAO
         db.setForeignKeyConstraintsEnabled(true);
     }
 
-    public Boolean TryRegisterUser(String login, String password)
+    public Boolean TryRegisterUser(String login, String password, String personCpf, UserType userType)
     {
         SQLiteDatabase database = getWritableDatabase();
-        ContentValues newUserValues = UserTableQueryHelper.GetContentValues(login, password);
+        ContentValues newUserValues = UserTableQueryHelper.GetContentValues(login, password, personCpf, userType);
 
         long result = -1;
         try
@@ -149,6 +149,32 @@ public class SQLiteDAO
 
         MyLog.LogMessage("Problem in user registration");
         return false;
+    }
+
+    public Boolean TryRemoveUser(String login)
+    {
+        SQLiteDatabase database = getWritableDatabase();
+        int rows = 0;
+        DBStatamentHelper deleteHelper = UserTableQueryHelper.GetStatementHelper(login);
+        try
+        {
+            rows = database.delete(UserTableQueryHelper.USER_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        if(rows == 0)
+        {
+            MyLog.LogMessage("Fail to delete user with login "+login);
+            return false;
+        }
+
+        MyLog.LogMessage("User with login "+login+" deleted with success");
+        return true;
     }
 
     @Override

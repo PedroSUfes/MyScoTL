@@ -9,17 +9,16 @@ import org.junit.Test;
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
-import Policy.BusinessRules.UserType;
 
-public class RegisterUserTest
+public class RemoveUserTest
 {
     @Test
-    public void ExecuteRegisterUserTest()
+    public void ExecuteRemoveUserTest()
     {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         SQLiteDAO database = new SQLiteDAO(appContext);
 
-        Boolean result = database.TryRegisterUser("Pedro2", "123", "11111111111",UserType.WAREHOUSE_MANAGER);
+        Boolean result = database.TryRemoveUser("Pedro");
         MyLog.LogMessage(result.toString());
     }
 }

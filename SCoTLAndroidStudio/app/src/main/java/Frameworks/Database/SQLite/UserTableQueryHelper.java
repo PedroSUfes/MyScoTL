@@ -2,6 +2,8 @@ package Frameworks.Database.SQLite;
 
 import android.content.ContentValues;
 
+import Policy.BusinessRules.UserType;
+
 public class UserTableQueryHelper
 {
     public static final String USER_TABLE = "user";
@@ -34,12 +36,23 @@ public class UserTableQueryHelper
         return  stringBuilder.toString();
     }
 
-    public static ContentValues GetContentValues(String login, String password)
+    public static ContentValues GetContentValues(String login, String password, String personCpf, UserType userType)
     {
         ContentValues contentValues = new ContentValues();
         contentValues.put(LOGIN, login);
         contentValues.put(PASSWORD, password);
+        contentValues.put(CPF_PERSON, personCpf);
+        contentValues.put(USER_TYPE, userType.ordinal());
         return contentValues;
+    }
+
+    public static DBStatamentHelper GetStatementHelper(String login)
+    {
+        return new DBStatamentHelper
+                (
+                        LOGIN+"=?",
+                        new String[]{login}
+                );
     }
 
     public static int GetUserTypeIndex()
