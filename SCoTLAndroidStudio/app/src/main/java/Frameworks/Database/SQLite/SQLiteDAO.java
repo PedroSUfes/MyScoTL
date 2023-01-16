@@ -201,20 +201,30 @@ public class SQLiteDAO
         SQLiteDatabase db = getWritableDatabase();
 
         //System.out.printf(BatchTableQueryHelper.GetDeleteQuery(batchId));
-
         DBStatamentHelper whereCause = new DBStatamentHelper(BatchTableQueryHelper.ID + "=?", new String[]{batchId});
 
-        long result = db.delete(
-                BatchTableQueryHelper.GetStatmentHelper(),
-                whereCause.m_whereClause,
-                whereCause.m_args);
+        int result = 0;
+
+        try{
+            result = db.delete(
+                    BatchTableQueryHelper.GetStatmentHelper(),
+                    whereCause.m_whereClause,
+                    whereCause.m_args
+            );
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            db.close();
+        }
 
         if(result == 0)
         {
-            MyLog.LogMessage("Fail to delete batch");
+            MyLog.LogMessage("Fail to delete batch with batchId "+batchId);
             return false;
         }
-        MyLog.LogMessage("Success to delete batch");
+        MyLog.LogMessage("Batch "+batchId+" deleted successfully");
         return true;
     }
 
