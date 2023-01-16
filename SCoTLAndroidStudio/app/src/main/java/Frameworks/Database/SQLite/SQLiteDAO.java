@@ -283,6 +283,8 @@ public class SQLiteDAO
             MyLog.LogMessage("Fail to register batch");
             return false;
         }
+
+        MyLog.LogMessage("Batch with id "+batch.GetId()+" was successfully registered");
         return true;
     }
 
