@@ -23,7 +23,11 @@ import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 import Utility.Func;
 import Utility.Func1;
+import Utility.Func2;
+import Utility.Func3;
 import Utility.Func4;
+import Utility.Func5;
+import kotlin.jvm.functions.Function5;
 
 
 public class SQLiteDAO
@@ -107,6 +111,13 @@ public class SQLiteDAO
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
 
+    }
+
+    @Override
+    public void onConfigure(SQLiteDatabase db)
+    {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     public Boolean TryRegisterUser(String login, String password)
@@ -234,7 +245,7 @@ public class SQLiteDAO
             result = database.insert(BatchTableQueryHelper.BATCH_TABLE, null, BatchTableQueryHelper.GetContentValues(batch));
         } catch (Exception e)
         {
-            MyLog.LogMessage(e.getMessage());
+            System.out.println(e.getMessage());
         } finally
         {
             database.close();
@@ -269,8 +280,62 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryRegisterCoffeeBag(CoffeeBag coffeeBag) {
-        return null;
+    public Boolean TryRegisterCoffeeBag(CoffeeBag coffeeBag)
+    {
+        String coffeeBagId = coffeeBag.GetId();
+        String batchId = coffeeBag.GetBatch().GetId();
+        String warehouseId = coffeeBag.GetBatch().GetId();
+
+        SQLiteDatabase database = getReadableDatabase();
+
+//        Func4<SQLiteDatabase, String, Func2<SQLiteDatabase, String, Boolean>, String, Boolean> checkIfExistsFunc =
+//                (db, id, existsFunc, entityName) ->
+//                {
+//                    if(!existsFunc.Invoke(db, id))
+//                    {
+//                        MyLog.LogMessage("There's no "+entityName+" with id "+id+" in database");
+//                        MyLog.LogMessage("Fail to add coffee bag with id "+coffeeBagId);
+//                        return false;
+//                    }
+//
+//                    return true;
+//                };
+//
+//        if(!checkIfExistsFunc.Invoke(database, batchId, BatchTableQueryHelper::Exists, "batch"))
+//        {
+//            database.close();
+//            return false;
+//        }
+//        if(!checkIfExistsFunc.Invoke(database, warehouseId, WarehouseTableQueryHelper::Exists, "warehouse"))
+//        {
+//            database.close();
+//            return false;
+//        }
+
+        database.close();
+        database = getWritableDatabase();
+        try
+        {
+            ContentValues newValues = CoffeeBagTableQueryHelper.GetContentValues(coffeeBag);
+            long result = database.insert(CoffeeBagTableQueryHelper.COFFEE_BAG_TABLE, null, newValues);
+            if(result == -1)
+            {
+                MyLog.LogMessage("Fail to add coffee bag with id "+coffeeBagId);
+                return false;
+            }
+
+            MyLog.LogMessage("Coffee bag with id "+coffeeBagId+" added with success");
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        MyLog.LogMessage("Problem to add coffee bag with id "+coffeeBagId);
+        return false;
     }
 
     @Override
