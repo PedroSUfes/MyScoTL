@@ -344,30 +344,6 @@ public class SQLiteDAO
 
         SQLiteDatabase database = getReadableDatabase();
 
-//        Func4<SQLiteDatabase, String, Func2<SQLiteDatabase, String, Boolean>, String, Boolean> checkIfExistsFunc =
-//                (db, id, existsFunc, entityName) ->
-//                {
-//                    if(!existsFunc.Invoke(db, id))
-//                    {
-//                        MyLog.LogMessage("There's no "+entityName+" with id "+id+" in database");
-//                        MyLog.LogMessage("Fail to add coffee bag with id "+coffeeBagId);
-//                        return false;
-//                    }
-//
-//                    return true;
-//                };
-//
-//        if(!checkIfExistsFunc.Invoke(database, batchId, BatchTableQueryHelper::Exists, "batch"))
-//        {
-//            database.close();
-//            return false;
-//        }
-//        if(!checkIfExistsFunc.Invoke(database, warehouseId, WarehouseTableQueryHelper::Exists, "warehouse"))
-//        {
-//            database.close();
-//            return false;
-//        }
-
         database.close();
         database = getWritableDatabase();
         try
