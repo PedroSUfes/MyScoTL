@@ -389,8 +389,35 @@ public class SQLiteDAO
     }
 
     @Override
-    public Boolean TryRemoveCoffeeBag(String batchId, String coffeeBagId) {
-        return null;
+    public Boolean TryRemoveCoffeeBag(String batchId, String coffeeBagId)
+    {
+        SQLiteDatabase database = getReadableDatabase();
+        int rows = 0;
+        try
+        {
+            DBStatamentHelper deleteHelper = CoffeeBagTableQueryHelper.GetStatementHelper(batchId, coffeeBagId);
+            rows = database.delete
+                    (
+                            CoffeeBagTableQueryHelper.COFFEE_BAG_TABLE,
+                            deleteHelper.m_whereClause,
+                            deleteHelper.m_args
+                    );
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        if(rows < 1)
+        {
+            MyLog.LogMessage("Fail to delete coffee bag with id "+coffeeBagId+" and batch id "+batchId);
+            return false;
+        }
+
+        MyLog.LogMessage("Coffee bag with id "+coffeeBagId+" and batch id "+batchId+" deleted with success");
+        return true;
     }
 
     @Override
