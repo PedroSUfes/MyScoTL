@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import Policy.Adapters.MyLog;
@@ -325,6 +326,32 @@ public class SQLiteDAO
     @Override
     public CoffeeBag GetCoffeeBag(String batchId, String coffeeBagId)
     {
+        SQLiteDatabase database = getReadableDatabase();
+        try
+        {
+            Cursor coffeeBagCursor = database.rawQuery(CoffeeBagTableQueryHelper.GetSelectQuery(batchId, coffeeBagId), null);
+            if(!coffeeBagCursor.moveToFirst())
+            {
+                MyLog.LogMessage("There's no coffee bag with id "+coffeeBagId+" and batch id "+batchId);
+                return null;
+            }
+
+            CoffeeBag[] result = GetCoffeeBagsFromCoffeeBagCursor(coffeeBagCursor);
+            if(result == null || result.length == 0)
+            {
+                MyLog.LogMessage("Problem trying to read coffee bag with id "+coffeeBagId+" and batch id "+batchId);
+                return null;
+            }
+
+            return result[0];
+        } catch (Exception e)
+        {
+
+        } finally
+        {
+            database.close();
+        }
+
         return null;
     }
 
@@ -332,8 +359,6 @@ public class SQLiteDAO
     public Boolean TryRegisterCoffeeBag(CoffeeBag coffeeBag)
     {
         String coffeeBagId = coffeeBag.GetId();
-        String batchId = coffeeBag.GetBatch().GetId();
-        String warehouseId = coffeeBag.GetBatch().GetId();
 
         SQLiteDatabase database = getReadableDatabase();
 
