@@ -37,6 +37,14 @@ public class CoffeeBagTableQueryHelper
         return "SELECT * FROM "+COFFEE_BAG_TABLE;
     }
 
+    public static String GetSelectQuery(String batchId, String coffeeBagId)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllQuery());
+        stringBuilder.append(" WHERE "+BATCH_ID+"='"+batchId+"' AND "+ID+"='"+coffeeBagId+"'");
+        return stringBuilder.toString();
+    }
+
     public static int GetCoffeeBagIdIndex()
     {
         return 0;
