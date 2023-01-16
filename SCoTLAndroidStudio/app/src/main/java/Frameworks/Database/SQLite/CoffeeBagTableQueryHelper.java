@@ -75,4 +75,9 @@ public class CoffeeBagTableQueryHelper
         contentValues.put(STORAGE_DATE, coffeeBag.GetStorageDate());
         return contentValues;
     }
+
+    public static String GetSelectCoffeeBagsWithBatchId(String batchId)
+    {
+        return "SELECT * FROM "+COFFEE_BAG_TABLE+" WHERE "+BATCH_ID+"='"+batchId+"'";
+    }
 }

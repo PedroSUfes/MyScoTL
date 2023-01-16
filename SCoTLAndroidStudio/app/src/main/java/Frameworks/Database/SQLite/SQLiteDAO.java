@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.Adapters.*;
@@ -277,40 +278,7 @@ public class SQLiteDAO
                 return null;
             }
 
-            ArrayList<CoffeeBag> coffeeBagList = new ArrayList<CoffeeBag>();
-            do
-            {
-                Batch batch = GetBatch(coffeeBagCursor.getString(CoffeeBagTableQueryHelper.GetBatchIndex()));
-                Warehouse warehouse = GetWarehouse(coffeeBagCursor.getString(CoffeeBagTableQueryHelper.GetWarehouseIndex()), false)[0];
-                if(batch == null || warehouse == null)
-                {
-                    MyLog.LogMessage("Problem retrieving coffee bags from database");
-                    continue;
-                }
-
-                coffeeBagList.add(CoffeeBagTableQueryHelper.GetCoffeeBagFromCoffeeBagCursor(coffeeBagCursor, batch, warehouse));
-            } while(coffeeBagCursor.moveToNext());
-
-            if(coffeeBagList.isEmpty())
-            {
-                MyLog.LogMessage("Problem retrieving coffee bags from database");
-                return null;
-            }
-
-            CoffeeBag[] toReturn = new CoffeeBag[coffeeBagList.size()];
-            int index = -1;
-            for(CoffeeBag c : coffeeBagList)
-            {
-                ++index;
-                if(c == null)
-                {
-                    continue;
-                }
-
-                toReturn[index] = c;
-            }
-
-            return toReturn;
+            return GetCoffeeBagsFromCoffeeBagCursor(coffeeBagCursor);
         } catch (Exception e)
         {
             System.out.println(e.getMessage());
@@ -326,7 +294,32 @@ public class SQLiteDAO
     @Override
     public CoffeeBag[] GetCoffeeBags(String batchId)
     {
-        return new CoffeeBag[0];
+        SQLiteDatabase database = getReadableDatabase();
+        try
+        {
+            if(!BatchTableQueryHelper.Exists(database, batchId))
+            {
+                MyLog.LogMessage("There's no batch with id "+batchId);
+                return null;
+            }
+
+            Cursor coffeeBagCursor = database.rawQuery(CoffeeBagTableQueryHelper.GetSelectCoffeeBagsWithBatchId(batchId), null);
+            if(!coffeeBagCursor.moveToFirst())
+            {
+                MyLog.LogMessage("There's no coffee bag in batch "+batchId);
+                return null;
+            }
+
+            return GetCoffeeBagsFromCoffeeBagCursor(coffeeBagCursor);
+        } catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            database.close();
+        }
+
+        return null;
     }
 
     @Override
@@ -1584,5 +1577,43 @@ public class SQLiteDAO
         DBStatamentHelper updateHelper = PersonTableQueryHelper.GetStatementHelper(person.GetCpf());
         int rows = database.update(PersonTableQueryHelper.PERSON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
         return rows > 0;
+    }
+
+    private CoffeeBag[] GetCoffeeBagsFromCoffeeBagCursor(Cursor coffeeBagCursor)
+    {
+        ArrayList<CoffeeBag> coffeeBagList = new ArrayList<CoffeeBag>();
+        do
+        {
+            Batch batch = GetBatch(coffeeBagCursor.getString(CoffeeBagTableQueryHelper.GetBatchIndex()));
+            Warehouse warehouse = GetWarehouse(coffeeBagCursor.getString(CoffeeBagTableQueryHelper.GetWarehouseIndex()), false)[0];
+            if(batch == null || warehouse == null)
+            {
+                MyLog.LogMessage("Problem retrieving coffee bags from database");
+                continue;
+            }
+
+            coffeeBagList.add(CoffeeBagTableQueryHelper.GetCoffeeBagFromCoffeeBagCursor(coffeeBagCursor, batch, warehouse));
+        } while(coffeeBagCursor.moveToNext());
+
+        if(coffeeBagList.isEmpty())
+        {
+            MyLog.LogMessage("Problem retrieving coffee bags from database");
+            return null;
+        }
+
+        CoffeeBag[] toReturn = new CoffeeBag[coffeeBagList.size()];
+        int index = -1;
+        for(CoffeeBag c : coffeeBagList)
+        {
+            ++index;
+            if(c == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = c;
+        }
+
+        return toReturn;
     }
 }
