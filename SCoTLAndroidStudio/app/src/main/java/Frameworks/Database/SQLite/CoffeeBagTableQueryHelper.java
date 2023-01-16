@@ -45,6 +45,15 @@ public class CoffeeBagTableQueryHelper
         return stringBuilder.toString();
     }
 
+    public static DBStatamentHelper GetStatementHelper(String batchId, String coffeeBagId)
+    {
+        return new DBStatamentHelper
+                (
+                    ID+"=? AND "+BATCH_ID+"=?",
+                        new String[]{coffeeBagId, batchId}
+                );
+    }
+
     public static int GetCoffeeBagIdIndex()
     {
         return 0;
