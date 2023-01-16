@@ -8,8 +8,6 @@ import Policy.Entity.CoffeeBag;
 import Policy.Entity.Warehouse;
 import android.content.ContentValues;
 
-import Policy.Entity.CoffeeBag;
-
 
 public class CoffeeBagTableQueryHelper
 {
@@ -45,9 +43,9 @@ public class CoffeeBagTableQueryHelper
         return stringBuilder.toString();
     }
 
-    public static DBStatamentHelper GetStatementHelper(String batchId, String coffeeBagId)
+    public static DBStatementHelper GetStatementHelper(String batchId, String coffeeBagId)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                     ID+"=? AND "+BATCH_ID+"=?",
                         new String[]{coffeeBagId, batchId}

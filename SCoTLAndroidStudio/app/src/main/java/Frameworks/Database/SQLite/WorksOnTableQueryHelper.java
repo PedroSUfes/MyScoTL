@@ -80,18 +80,18 @@ public class WorksOnTableQueryHelper
         return worksOnCursor.moveToFirst();
     }
 
-    public static DBStatamentHelper GetStatementHelper(String workerCpf, String propertyId, String beginDate)
+    public static DBStatementHelper GetStatementHelper(String workerCpf, String propertyId, String beginDate)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         PERSON_CPF+"=?"+" AND "+PROPERTY_ID+"=? AND "+ HIRING_DATE +"=?",
                         new String[] {workerCpf, propertyId, beginDate}
                 );
     }
 
-    public static DBStatamentHelper GetStatementHelper(String workerCpf)
+    public static DBStatementHelper GetStatementHelper(String workerCpf)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         PERSON_CPF+"=?",
                         new String[] {workerCpf}

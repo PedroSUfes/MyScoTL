@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.Adapters.MyLog;
-import Policy.BusinessRules.DatabaseAccess;
 
 public class RemoveUserTest
 {

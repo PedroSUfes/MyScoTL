@@ -166,18 +166,18 @@ public class IsWarehouseOwnerTableQueryHelper
         return new String(cursor.getString(GetOwnerCpfIndex()));
     }
 
-    public static DBStatamentHelper GetStatementHelper(String warehouseId)
+    public static DBStatementHelper GetStatementHelper(String warehouseId)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         WAREHOUSE_ID+"=?",
                         new String[]{warehouseId}
                 );
     }
 
-    public static DBStatamentHelper GetStatementHelperEndDateNull(String warehouseId)
+    public static DBStatementHelper GetStatementHelperEndDateNull(String warehouseId)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         WAREHOUSE_ID+"=? AND "+END_DATE+" IS NULL",
                         new String[]{warehouseId}

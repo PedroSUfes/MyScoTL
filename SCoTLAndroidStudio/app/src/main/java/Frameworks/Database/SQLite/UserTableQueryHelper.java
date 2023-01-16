@@ -46,9 +46,9 @@ public class UserTableQueryHelper
         return contentValues;
     }
 
-    public static DBStatamentHelper GetStatementHelper(String login)
+    public static DBStatementHelper GetStatementHelper(String login)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         LOGIN+"=?",
                         new String[]{login}

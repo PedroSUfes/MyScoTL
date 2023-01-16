@@ -69,9 +69,9 @@ public class WarehouseTableQueryHelper
         );
     }
 
-    public static DBStatamentHelper GetStatementHelper(String warehouseId)
+    public static DBStatementHelper GetStatementHelper(String warehouseId)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         ID+"=?",
                         new String[]{warehouseId}
