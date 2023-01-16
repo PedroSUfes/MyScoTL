@@ -20,7 +20,7 @@ public class BatchTableQueryHelper
                 +")";
     }
 
-    public static String GetStatmentHelper(){
+    public static String GetStatementHelper(){
         return BATCH_TABLE;
     }
 

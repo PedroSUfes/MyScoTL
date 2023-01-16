@@ -301,13 +301,13 @@ public class SQLiteDAO
         SQLiteDatabase db = getWritableDatabase();
 
         //System.out.printf(BatchTableQueryHelper.GetDeleteQuery(batchId));
-        DBStatamentHelper whereCause = new DBStatamentHelper(BatchTableQueryHelper.ID + "=?", new String[]{batchId});
+        DBStatementHelper whereCause = new DBStatementHelper(BatchTableQueryHelper.ID + "=?", new String[]{batchId});
 
         int result = 0;
 
         try{
             result = db.delete(
-                    BatchTableQueryHelper.GetStatmentHelper(),
+                    BatchTableQueryHelper.GetStatementHelper(),
                     whereCause.m_whereClause,
                     whereCause.m_args
             );
