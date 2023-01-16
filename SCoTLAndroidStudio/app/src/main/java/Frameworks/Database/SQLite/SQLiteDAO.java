@@ -281,8 +281,51 @@ public class SQLiteDAO
     }
 
     @Override
+    /*
+    public Boolean TryRemoveBatch(String batchId){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetDeleteQuery(batchId), null);
+
+        if (cursor.moveToFirst()) {
+            MyLog.LogMessage("Success to delete batch");
+            return true;
+        }
+        else{
+            MyLog.LogMessage("Fail to delete batch");
+            return false;
+        }
+    }*/
+
     public Boolean TryRemoveBatch(String batchId) {
-        return null;
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        //System.out.printf(BatchTableQueryHelper.GetDeleteQuery(batchId));
+        DBStatamentHelper whereCause = new DBStatamentHelper(BatchTableQueryHelper.ID + "=?", new String[]{batchId});
+
+        int result = 0;
+
+        try{
+            result = db.delete(
+                    BatchTableQueryHelper.GetStatmentHelper(),
+                    whereCause.m_whereClause,
+                    whereCause.m_args
+            );
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            db.close();
+        }
+
+        if(result == 0)
+        {
+            MyLog.LogMessage("Fail to delete batch with batchId "+batchId);
+            return false;
+        }
+        MyLog.LogMessage("Batch "+batchId+" deleted successfully");
+        return true;
     }
 
     @Override
