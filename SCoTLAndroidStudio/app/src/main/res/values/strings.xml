@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">SCoTL</string>
     <string name="HelloWorld">Hello World</string>
+    <string name="CustomerPassword">Password</string>
+    <string name="CustomerUser">Username</string>
+    <string name="col1">Name</string>
+    <string name="col2">Age</string>
+    <string name="col3">Surname</string>
+    <string name="row1Name">Matheus</string>
+    <string name="row1Age">21</string>
+    <string name="row1Surname">Silva</string>
 </resources>

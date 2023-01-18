@@ -25,6 +25,7 @@ public class GetAllBatchesTest
 		{
 			return;
 		}
+		MyLog.LogMessage("Tudo certo");
 		for(Batch b : batches)
 		{
 			if(b == null)

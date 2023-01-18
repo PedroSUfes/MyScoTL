@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7a630ea9-fafa-4501-809a-ece3702b2f16" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/java/Frameworks/Adapters/TableRowGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/java/com/example/scotl/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/java/com/example/scotl/Teste2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/drawable/gradient.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/drawable/round_text.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/drawable/scotl_background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/drawable/scotl_login_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/layout/activity_teste2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/layout/teste.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/java/com/example/scotl/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/java/com/example/scotl/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SCoTLAndroidStudio/app/src/main/res/values/strings.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2KQ2HAtar0WM9f66GbcBZUTKOZH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/UFES/Programacao Orientada a Objeto/eMentor-Plus MySQL",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7a630ea9-fafa-4501-809a-ece3702b2f16" name="Changes" comment="" />
+      <created>1673892401192</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673892401192</updated>
+      <workItem from="1673892403599" duration="28000" />
+      <workItem from="1673997672416" duration="109000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
