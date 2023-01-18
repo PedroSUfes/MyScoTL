@@ -21,7 +21,7 @@ public class ManageWarehouseTableQueryHelper
                 +END_DATE+" TEXT,"
                 +"PRIMARY KEY("+WAREHOUSE_ID+","+PERSON_CPF+","+BEGIN_DATE+"),"
                 +"FOREIGN KEY("+WAREHOUSE_ID+") REFERENCES "+WarehouseTableQueryHelper.WAREHOUSE_TABLE+"("+WarehouseTableQueryHelper.ID+"),"
-                +"FOREIGN KEY("+PERSON_CPF+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF+"),"
+                +"FOREIGN KEY("+PERSON_CPF+") REFERENCES "+PersonTableQueryHelper.PERSON_TABLE+"("+PersonTableQueryHelper.CPF+")"
                 +")";
     }
 
