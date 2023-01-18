@@ -72,9 +72,9 @@ public class PropertyTableQueryHelper
         );
     }
 
-    public static DBStatamentHelper GetStatementHelper(String id)
+    public static DBStatementHelper GetStatementHelper(String id)
     {
-        return new DBStatamentHelper
+        return new DBStatementHelper
                 (
                         ID+"=?",
                         new String[]{id}

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="aHqZM26ZM8oJ_C4KOD-p" name="Page-1">
-        <mxGraphModel dx="2417" dy="2818" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+        <mxGraphModel dx="2418" dy="2607" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -30,16 +30,16 @@
                 <mxCell id="4" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="144" width="750" height="8" as="geometry"/>
                 </mxCell>
-                <mxCell id="510" value="+ SetarGeradorLinhasTabelaFuncionario(GeradorLinhasTabelaFuncionario): TableRow[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="510" value="+ SetarGeradorLinhasTabelaFuncionario(GeradorLinhasTabelaFuncionario): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="152" width="750" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="550" value="+ SetarGeradorLinhasTabelaGalpao(GeradorLinhasTabelaFuncionario): TableRow[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="550" value="+ SetarGeradorLinhasTabelaGalpao(GeradorLinhasTabelaFuncionario): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="178" width="750" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="551" value="+ SetarGeradorLinhasTabelaLote(GeradorLinhasTabelaFuncionario): TableRow[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="551" value="+ SetarGeradorLinhasTabelaLote(GeradorLinhasTabelaLote): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="204" width="750" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="552" value="+ SetarGeradorLinhasTabelaSaca(GeradorLinhasTabelaFuncionario): TableRow[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
+                <mxCell id="552" value="+ SetarGeradorLinhasTabelaSaca(GeradorLinhasTabelaFuncionario): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
                     <mxGeometry y="230" width="750" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="+ GerarLinhasFuncionarios(): TableRow[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="2" vertex="1">
@@ -500,16 +500,16 @@
                 <mxCell id="293" value="+ RetornarFuncionarios(): Funcionario[]" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="48" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="746" value="+ RetornarGerentesGalpao(cpf: string): GerenteGalpao" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
+                <mxCell id="746" value="+ RetornarGerentesGalpao(cpf: string): GerenteGalpao" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="74" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="747" value="+ RetornarGerenteGalpao(cpf: string): GerenteGalpao" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
+                <mxCell id="747" value="+ RetornarGerenteGalpao(cpf: string): GerenteGalpao" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="100" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="749" value="+ RetornarServentes(): Servente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
+                <mxCell id="749" value="+ RetornarServentes(): Servente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="126" width="530" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="748" value="+ RetornarServente(cpf: string): Servente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="290">
+                <mxCell id="748" value="+ RetornarServente(cpf: string): Servente" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">
                     <mxGeometry y="152" width="530" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="296" value="+ TentarCadastrarServente(Servente, dataComeco: string): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="290" vertex="1">

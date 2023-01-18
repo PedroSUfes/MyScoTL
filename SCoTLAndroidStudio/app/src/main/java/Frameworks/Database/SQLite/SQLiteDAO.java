@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.Adapters.*;
@@ -20,16 +18,11 @@ import Policy.Entity.Employee;
 import Policy.Entity.Person;
 import Policy.Entity.Property;
 import Policy.Entity.Servant;
-import Policy.Entity.User;
 import Policy.Entity.Warehouse;
 import Policy.Entity.WarehouseManager;
 import Utility.Func;
 import Utility.Func1;
-import Utility.Func2;
-import Utility.Func3;
 import Utility.Func4;
-import Utility.Func5;
-import kotlin.jvm.functions.Function5;
 
 
 public class SQLiteDAO
@@ -122,14 +115,22 @@ public class SQLiteDAO
         db.setForeignKeyConstraintsEnabled(true);
     }
 
-    public Boolean TryRegisterUser(String login, String password, String personCpf, UserType userType)
+    public Boolean TryRegisterUser(String login, String password, Person person, UserType userType)
     {
         SQLiteDatabase database = getWritableDatabase();
+        String personCpf = person.GetCpf();
+
         ContentValues newUserValues = UserTableQueryHelper.GetContentValues(login, password, personCpf, userType);
 
         long result = -1;
         try
         {
+            if(!PersonTableQueryHelper.Exists(database, personCpf))
+            {
+                ContentValues newPersonValues = PersonTableQueryHelper.GetContentValue(person);
+                database.insert(PersonTableQueryHelper.PERSON_TABLE, null, newPersonValues);
+            }
+
             result = database.insert(UserTableQueryHelper.USER_TABLE, null, newUserValues);
             if(result == -1)
             {
@@ -155,7 +156,7 @@ public class SQLiteDAO
     {
         SQLiteDatabase database = getWritableDatabase();
         int rows = 0;
-        DBStatamentHelper deleteHelper = UserTableQueryHelper.GetStatementHelper(login);
+        DBStatementHelper deleteHelper = UserTableQueryHelper.GetStatementHelper(login);
         try
         {
             rows = database.delete(UserTableQueryHelper.USER_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
@@ -242,8 +243,8 @@ public class SQLiteDAO
         String newBatchId = null;
         String newBatchCreationDate = null;
 
+        SQLiteDatabase db = getReadableDatabase();
         try {
-            SQLiteDatabase db = getReadableDatabase();
              c = db.rawQuery(BatchTableQueryHelper.GetSelectQuery(batchId), null);
 
             if (c.getCount() > 0) {
@@ -255,12 +256,18 @@ public class SQLiteDAO
             if (newBatchId != null) {
                 return new Batch(newBatchId, newBatchCreationDate);
             } else {
-                MyLog.LogMessage("Id não encontrado");
+                MyLog.LogMessage("there's no batch with id "+batchId+" in database");
                 return null;
             }
-        } finally {
-            c.close();
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        } finally
+        {
+            db.close();
         }
+
+        return null;
     }
 
     @Override
@@ -284,12 +291,57 @@ public class SQLiteDAO
             MyLog.LogMessage("Fail to register batch");
             return false;
         }
+
+        MyLog.LogMessage("Batch with id "+batch.GetId()+" was successfully registered");
         return true;
     }
 
     @Override
+    /*
+    public Boolean TryRemoveBatch(String batchId){
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetDeleteQuery(batchId), null);
+
+        if (cursor.moveToFirst()) {
+            MyLog.LogMessage("Success to delete batch");
+            return true;
+        }
+        else{
+            MyLog.LogMessage("Fail to delete batch");
+            return false;
+        }
+    }*/
+
     public Boolean TryRemoveBatch(String batchId) {
-        return null;
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        //System.out.printf(BatchTableQueryHelper.GetDeleteQuery(batchId));
+        DBStatementHelper whereCause = new DBStatementHelper(BatchTableQueryHelper.ID + "=?", new String[]{batchId});
+
+        int result = 0;
+
+        try{
+            result = db.delete(
+                    BatchTableQueryHelper.GetStatementHelper(),
+                    whereCause.m_whereClause,
+                    whereCause.m_args
+            );
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally {
+            db.close();
+        }
+
+        if(result == 0)
+        {
+            MyLog.LogMessage("Fail to delete batch with batchId "+batchId);
+            return false;
+        }
+        MyLog.LogMessage("Batch "+batchId+" deleted successfully");
+        return true;
     }
 
     @Override
@@ -421,7 +473,7 @@ public class SQLiteDAO
         int rows = 0;
         try
         {
-            DBStatamentHelper deleteHelper = CoffeeBagTableQueryHelper.GetStatementHelper(batchId, coffeeBagId);
+            DBStatementHelper deleteHelper = CoffeeBagTableQueryHelper.GetStatementHelper(batchId, coffeeBagId);
             rows = database.delete
                     (
                             CoffeeBagTableQueryHelper.COFFEE_BAG_TABLE,
@@ -731,7 +783,7 @@ public class SQLiteDAO
             // Sertar a data de fim na tupla em worksOnCursor
             ContentValues contentValues = new ContentValues();
             contentValues.put(WorksOnTableQueryHelper.END_DATE, date);
-            DBStatamentHelper updateHelper = WorksOnTableQueryHelper.GetStatementHelper
+            DBStatementHelper updateHelper = WorksOnTableQueryHelper.GetStatementHelper
                     (
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetPersonCpfIndex()),
                             worksOnCursor.getString(WorksOnTableQueryHelper.GetPropertyIdIndex()),
@@ -792,7 +844,7 @@ public class SQLiteDAO
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(ManageWarehouseTableQueryHelper.END_DATE, date);
-            DBStatamentHelper updateHelper = ManageWarehouseTableQueryHelper.GetStatementHelper
+            DBStatementHelper updateHelper = ManageWarehouseTableQueryHelper.GetStatementHelper
                     (
                             manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetManagerCpfIndex()),
                             manageWarehouseCursor.getString(ManageWarehouseTableQueryHelper.GetWarehouseIdIndex()),
@@ -836,19 +888,19 @@ public class SQLiteDAO
 
         if(isServant)
         {
-            DBStatamentHelper deleteHelper = WorksOnTableQueryHelper.GetStatementHelper(cpf);
+            DBStatementHelper deleteHelper = WorksOnTableQueryHelper.GetStatementHelper(cpf);
             database.delete(WorksOnTableQueryHelper.WORKS_ON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
         }
         else
         {
-            DBStatamentHelper deleteHelper = ManageWarehouseTableQueryHelper.GetStatementHelper(cpf);
+            DBStatementHelper deleteHelper = ManageWarehouseTableQueryHelper.GetStatementHelper(cpf);
             database.delete(ManageWarehouseTableQueryHelper.MANAGE_WAREHOUSE_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
         }
 
         if(!BuyCoffeeBagTableQueryHelper.Exists(database, cpf))
         {
 
-            DBStatamentHelper deleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
+            DBStatementHelper deleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
             database.delete(PersonTableQueryHelper.PERSON_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
         }
         database.close();
@@ -952,7 +1004,7 @@ public class SQLiteDAO
         database = getWritableDatabase();
 
         ContentValues newValues = PropertyTableQueryHelper.GetContentValues(property);
-        DBStatamentHelper updateHelper = PropertyTableQueryHelper.GetStatementHelper(propertyId);
+        DBStatementHelper updateHelper = PropertyTableQueryHelper.GetStatementHelper(propertyId);
 
         int rows = database.update(PropertyTableQueryHelper.PROPERTY_TABLE, newValues, updateHelper.m_whereClause, updateHelper.m_args);
         if(rows == 0)
@@ -969,7 +1021,7 @@ public class SQLiteDAO
     {
         SQLiteDatabase database = getWritableDatabase();
 
-        DBStatamentHelper deleteHelper = PropertyTableQueryHelper.GetStatementHelper(id);
+        DBStatementHelper deleteHelper = PropertyTableQueryHelper.GetStatementHelper(id);
         int rows = database.delete(PropertyTableQueryHelper.PROPERTY_TABLE, deleteHelper.m_whereClause, deleteHelper.m_args);
         database.close();
         if(rows == 0)
@@ -1228,7 +1280,7 @@ public class SQLiteDAO
             // Setar a data de fim na tabela de relacionamento de donos
             // Incerir o novo relacionamento
 
-            DBStatamentHelper updateHelper = IsWarehouseOwnerTableQueryHelper.GetStatementHelperEndDateNull(warehouseId);
+            DBStatementHelper updateHelper = IsWarehouseOwnerTableQueryHelper.GetStatementHelperEndDateNull(warehouseId);
             ContentValues newIsWarehouseOwnerValues = new ContentValues();
             newIsWarehouseOwnerValues.put(IsWarehouseOwnerTableQueryHelper.END_DATE, warehouse.GetBeginDate());
             database.update
@@ -1261,7 +1313,7 @@ public class SQLiteDAO
         newWarehouseValues.put(WarehouseTableQueryHelper.CITY_NAME, warehouse.GetCityName());
         newWarehouseValues.put(WarehouseTableQueryHelper.STREET_NAME, warehouse.GetStreetName());
         newWarehouseValues.put(WarehouseTableQueryHelper.RESIDENTIAL_NUMBER, warehouse.GetNumber());
-        DBStatamentHelper warehouseUpdateHelper = WarehouseTableQueryHelper.GetStatementHelper(warehouseId);
+        DBStatementHelper warehouseUpdateHelper = WarehouseTableQueryHelper.GetStatementHelper(warehouseId);
         int rows = database.update
                 (
                         WarehouseTableQueryHelper.WAREHOUSE_TABLE,
@@ -1334,7 +1386,7 @@ public class SQLiteDAO
                         database
                 );
 
-        DBStatamentHelper isWarehouseOwnerDeleteHelper = IsWarehouseOwnerTableQueryHelper.GetStatementHelper(id);
+        DBStatementHelper isWarehouseOwnerDeleteHelper = IsWarehouseOwnerTableQueryHelper.GetStatementHelper(id);
         database.delete
                 (
                         IsWarehouseOwnerTableQueryHelper.IS_WAREHOUSE_OWNER_TABLE,
@@ -1351,7 +1403,7 @@ public class SQLiteDAO
                     continue;
                 }
 
-                DBStatamentHelper personDeleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
+                DBStatementHelper personDeleteHelper = PersonTableQueryHelper.GetStatementHelper(cpf);
                 database.delete(PersonTableQueryHelper.PERSON_TABLE, personDeleteHelper.m_whereClause, personDeleteHelper.m_args);
             }
         }
@@ -1382,7 +1434,7 @@ public class SQLiteDAO
 
         // Lembrar que o banco está fechado
         database = getWritableDatabase();
-        DBStatamentHelper warehouseDeleteHelper = WarehouseTableQueryHelper.GetStatementHelper(id);
+        DBStatementHelper warehouseDeleteHelper = WarehouseTableQueryHelper.GetStatementHelper(id);
         try
         {
             int rows = database.delete
@@ -1652,7 +1704,7 @@ public class SQLiteDAO
         contentValues.put(PersonTableQueryHelper.NAME, person.GetName());
         contentValues.put(PersonTableQueryHelper.CELLPHONE, person.GetCellphone());
         contentValues.put(PersonTableQueryHelper.BIRTH_DATE, person.GetBirthDate());
-        DBStatamentHelper updateHelper = PersonTableQueryHelper.GetStatementHelper(person.GetCpf());
+        DBStatementHelper updateHelper = PersonTableQueryHelper.GetStatementHelper(person.GetCpf());
         int rows = database.update(PersonTableQueryHelper.PERSON_TABLE, contentValues, updateHelper.m_whereClause, updateHelper.m_args);
         return rows > 0;
     }
