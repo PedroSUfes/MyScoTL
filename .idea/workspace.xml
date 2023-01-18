@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b983ffd0-22d5-4304-ba6b-e59335c94015" name="Changes" comment="" />
+    <list default="true" id="b983ffd0-22d5-4304-ba6b-e59335c94015" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/java/com/example/scotl/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/drawable/gradient.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/drawable/round_text.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/drawable/scotl_background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/drawable/scotl_login_button.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SCoTLAndroidStudio/app/src/main/res/values/strings.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
