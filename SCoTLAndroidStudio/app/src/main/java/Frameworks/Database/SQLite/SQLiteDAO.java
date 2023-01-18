@@ -115,14 +115,22 @@ public class SQLiteDAO
         db.setForeignKeyConstraintsEnabled(true);
     }
 
-    public Boolean TryRegisterUser(String login, String password, String personCpf, UserType userType)
+    public Boolean TryRegisterUser(String login, String password, Person person, UserType userType)
     {
         SQLiteDatabase database = getWritableDatabase();
+        String personCpf = person.GetCpf();
+
         ContentValues newUserValues = UserTableQueryHelper.GetContentValues(login, password, personCpf, userType);
 
         long result = -1;
         try
         {
+            if(!PersonTableQueryHelper.Exists(database, personCpf))
+            {
+                ContentValues newPersonValues = PersonTableQueryHelper.GetContentValue(person);
+                database.insert(PersonTableQueryHelper.PERSON_TABLE, null, newPersonValues);
+            }
+
             result = database.insert(UserTableQueryHelper.USER_TABLE, null, newUserValues);
             if(result == -1)
             {
