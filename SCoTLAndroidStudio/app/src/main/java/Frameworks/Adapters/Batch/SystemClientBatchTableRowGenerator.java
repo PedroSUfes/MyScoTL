@@ -1,4 +1,4 @@
-package Frameworks.Adapters;
+package Frameworks.Adapters.Batch;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,7 +18,7 @@ public class SystemClientBatchTableRowGenerator implements BatchTableRowGenerato
 	public TableRow[] GeneratorLines(Context context){
 
 		Batch[] batches = CRUDBatch.GetBatches();
-		ArrayList<TableRow> tableRowList = new ArrayList<TableRow>();
+		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
 
 		if(batches != null){
 			for(int i = 0; i < batches.length; i++){
@@ -38,18 +38,18 @@ public class SystemClientBatchTableRowGenerator implements BatchTableRowGenerato
 				t2v.setTextSize(18);
 				tbrow.addView(t2v);
 
-				tableRowList.add(tbrow);
+				tableRowArrayList.add(tbrow);
 
 			}
 		}
 
-		if(tableRowList.isEmpty()){
+		if(tableRowArrayList.isEmpty()){
 			return null;
 		}
 
-		TableRow[] tableRows = new TableRow[tableRowList.size()];
+		TableRow[] tableRows = new TableRow[tableRowArrayList.size()];
 		int index = -1;
-		for(TableRow t: tableRowList){
+		for(TableRow t: tableRowArrayList){
 			if(t != null){
 				continue;
 			}
