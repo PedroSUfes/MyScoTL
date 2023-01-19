@@ -7,6 +7,10 @@ import Frameworks.Adapters.Batch.BatchTableRowGenerator;
 import Frameworks.Adapters.CoffeeBag.CoffeeBagTableRowGenerator;
 import Frameworks.Adapters.Employee.EmployeeTableRowGenerator;
 import Frameworks.Adapters.Warehouse.WarehouseTableRowGenerator;
+import Policy.Entity.Batch;
+import Policy.Entity.CoffeeBag;
+import Policy.Entity.Employee;
+import Policy.Entity.Warehouse;
 
 public class TableRowGenerator {
 	private static EmployeeTableRowGenerator tableRowGeneratorEmployee;
@@ -22,23 +26,13 @@ public class TableRowGenerator {
 	//----------------------Employee Lines-----------------------------
 
 	//Teoricamente Feita
-	public static TableRow[] getTableRowGeneratorEmployee(Context context) {
+	public static TableRow[] GeneratorEmployeeLines(Context context, Employee[] employees) {
 
 		if(tableRowGeneratorEmployee == null){
 			System.out.println("table Row Generator Employee null");
 			return null;
 		}
-		return tableRowGeneratorEmployee.GeneratorLines(context);
-	}
-
-	//Implementar
-	public static TableRow[] getTableRowGeneratorEmployeeByName(Context context, String nome) {
-		return tableRowGeneratorEmployee.GeneratorLines(context);
-	}
-
-	//Implementar
-	public static TableRow[] getTableRowGeneratorEmployeeByCpf(Context context, String cpf) {
-		return tableRowGeneratorEmployee.GeneratorLines(context);
+		return tableRowGeneratorEmployee.GeneratorLines(context, employees);
 	}
 
 	//Implementar
@@ -49,14 +43,15 @@ public class TableRowGenerator {
 	//----------------------Warehouse Lines-----------------------------
 
 	//Implementar
-	public static TableRow[] getTableRowGeneratorWarehouse(Context context, String owner_cpf, String state, String city, String street, String number) {
-		return tableRowGeneratorWarehouse.GeneratorLines(context);
+	public static TableRow[] GeneratorWarehouseLines(Context context, Warehouse[] warehouses) {
+		if(tableRowGeneratorWarehouse == null){
+			System.out.printf("table row generator warehouse null");
+			return null;
+		}
+
+		return tableRowGeneratorWarehouse.GeneratorLines(context, warehouses);
 	}
 
-	//Obs olhar essa função sobre os parametros.
-	public static TableRow[] getTableRowGeneratorWarehouse(Context context) {
-		return tableRowGeneratorWarehouse.GeneratorLines(context);
-	}
 	//Implementar
 	public static void setTableRowGeneratorWarehouse(WarehouseTableRowGenerator m_tableRowGeneratorWarehouse) {
 		tableRowGeneratorWarehouse = m_tableRowGeneratorWarehouse;
@@ -65,19 +60,13 @@ public class TableRowGenerator {
 	//----------------------Batch Lines-----------------------------
 
 	//Teoricamente feita
-	public static TableRow[] GeneratorBatchLines(Context context) {
+	public static TableRow[] GeneratorBatchLines(Context context, Batch[] batches) {
 
 		if(tableRowGeneratorBatch == null){
 			System.out.println("table Row Generator Batch null");
 			return null;
 		}
-		return tableRowGeneratorBatch.GeneratorLines(context);
-	}
-
-	//Implementar
-	public static TableRow[] GeneratorBatchLines(Context context,String id, String creationDate) {
-
-		return tableRowGeneratorBatch.GeneratorLines(context);
+		return tableRowGeneratorBatch.GeneratorLines(context, batches);
 	}
 
 	//Implementar
@@ -89,18 +78,13 @@ public class TableRowGenerator {
 	//----------------------Coffee Bags Lines-----------------------------
 
 	//Teoricamente feita
-	public static TableRow[] GeneratorCoffeeBagLines(Context context) {
+	public static TableRow[] GeneratorCoffeeBagLines(Context context, CoffeeBag[] coffeeBags) {
 
 		if(tableRowGeneratorCoffeeBag == null){
 			System.out.println("table row generator coffee bag null");
 			return null;
 		}
-		return tableRowGeneratorCoffeeBag.GeneratorLines(context);
-	}
-
-	//Implementar
-	public static TableRow[] getTableRowGeneratorCoffeeBag(Context context, String id, String batch_Id, String warehouse_State, String warehouse_Street, String warehouse_Num){
-		return tableRowGeneratorCoffeeBag.GeneratorLines(context);
+		return tableRowGeneratorCoffeeBag.GeneratorLines(context, coffeeBags);
 	}
 
 	//Implementar

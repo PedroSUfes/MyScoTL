@@ -3,6 +3,7 @@ package Frameworks.Adapters.Employee;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -12,9 +13,8 @@ import Policy.BusinessRules.CRUDEmployee;
 import Policy.Entity.Employee;
 
 public class WarehouseManagerEmployeeTableRowGenerator {
-	public TableRow[] GeneratorLines(Context context){
+	public TableRow[] GeneratorLines(Context context,  Employee[] employees){
 
-		Employee[] employees = CRUDEmployee.GetEmployees();
 		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
 
 		if(employees != null){

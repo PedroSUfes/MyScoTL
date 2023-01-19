@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
 
 import Frameworks.Adapters.TableRowGenerator;
 import Frameworks.Database.SQLite.SQLiteDAO;
@@ -17,18 +19,22 @@ import Policy.Entity.Batch;
 
 public class BatchTabletest extends AppCompatActivity {
 
-	private TableLayout tableLayout;
+	TableLayout stk;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teste);
 
-		init();
+		TableInit();
+
 	}
 
-	public void init(){
-		TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+	public void TableInit(){
+		stk = (TableLayout) findViewById(R.id.table_main);
+
+		//-------- Table Header ----------
+
 		TableRow tbrow0 = new TableRow(this);
 
 		TextView tv0 = new TextView(this);
@@ -45,8 +51,11 @@ public class BatchTabletest extends AppCompatActivity {
 
 		stk.addView(tbrow0);
 
+		//---------- Table Rows -----------
+
 		TableRowGenerator tableRowGenerator = new TableRowGenerator();
 
+		//tableRowGenerator;
 
 		//stk.addView(tbrow);
 

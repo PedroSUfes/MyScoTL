@@ -13,8 +13,8 @@ import Policy.Entity.CoffeeBag;
 
 public class SystemClientCoffeeBagTableRowGenerator implements CoffeeBagTableRowGenerator{
 
-	public TableRow[] GeneratorLines(Context context){
-		CoffeeBag[] coffeeBags = CRUDCoffeeBag.GetCoffeeBags();
+	public TableRow[] GeneratorLines(Context context, CoffeeBag[] coffeeBags){
+
 		ArrayList<TableRow> tableRowList = new ArrayList<TableRow>();
 
 		if(coffeeBags != null){

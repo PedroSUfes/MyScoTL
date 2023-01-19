@@ -3,6 +3,7 @@ package Frameworks.Adapters.Batch;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -15,10 +16,10 @@ import Policy.Entity.Batch;
 
 public class SystemClientBatchTableRowGenerator implements BatchTableRowGenerator{
 
-	public TableRow[] GeneratorLines(Context context){
+	public TableRow[] GeneratorLines(Context context, Batch[] batches){
 
-		Batch[] batches = CRUDBatch.GetBatches();
 		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
+
 
 		if(batches != null){
 			for(int i = 0; i < batches.length; i++){

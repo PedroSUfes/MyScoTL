@@ -13,8 +13,8 @@ import Policy.Entity.Warehouse;
 
 public class SystemClientWarehouseTableRowGenerator implements WarehouseTableRowGenerator{
 
-	public TableRow[] GeneratorLines(Context context){
-		Warehouse[] warehouses = CRUDWarehouse.GetWarehouses(true);
+	public TableRow[] GeneratorLines(Context context, Warehouse[] warehouses){
+
 		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
 
 		if(warehouses != null){

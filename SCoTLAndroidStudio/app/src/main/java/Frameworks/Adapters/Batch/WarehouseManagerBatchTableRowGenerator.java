@@ -13,8 +13,8 @@ import Policy.Entity.Batch;
 
 public class WarehouseManagerBatchTableRowGenerator implements BatchTableRowGenerator{
 
-	public TableRow[] GeneratorLines(Context context){
-		Batch[] batches = CRUDBatch.GetBatches();
+	public TableRow[] GeneratorLines(Context context, Batch[] batches){
+
 		ArrayList<TableRow> tableRowList = new ArrayList<TableRow>();
 
 		if(batches != null){

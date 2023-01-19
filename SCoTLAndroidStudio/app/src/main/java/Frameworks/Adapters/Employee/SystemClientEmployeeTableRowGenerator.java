@@ -1,8 +1,10 @@
 package Frameworks.Adapters.Employee;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -13,9 +15,8 @@ import Policy.Entity.Employee;
 
 public class SystemClientEmployeeTableRowGenerator implements EmployeeTableRowGenerator{
 
-	public TableRow[] GeneratorLines(Context context){
+	public TableRow[] GeneratorLines(Context context, Employee[] employees){
 
-		Employee[] employees = CRUDEmployee.GetEmployees();
 		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
 
 		if(employees != null){
@@ -70,6 +71,15 @@ public class SystemClientEmployeeTableRowGenerator implements EmployeeTableRowGe
 				t6v.setTextSize(18);
 				tbrow.addView(t6v);
 
+				tbrow.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+
+						//Abrir uma Activity para a edição da TableRow
+						OpenActivityEditEmployee(context);
+					}
+				});
+
 				tableRowArrayList.add(tbrow);
 			}
 		}
@@ -89,6 +99,12 @@ public class SystemClientEmployeeTableRowGenerator implements EmployeeTableRowGe
 
 		return tableRows;
 
+	}
+
+	public void OpenActivityEditEmployee(Context context){
+
+		//Intent intent = new Intent(context, /*EditEmployee_Activity*/);
+		//startActivity(intent);
 	}
 
 }

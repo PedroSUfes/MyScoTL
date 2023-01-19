@@ -1,8 +1,10 @@
 package Frameworks.Adapters.Warehouse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -12,8 +14,8 @@ import Policy.BusinessRules.CRUDWarehouse;
 import Policy.Entity.Warehouse;
 
 public class WarehouseManagerWarehouseTableRowGenerator {
-	public TableRow[] GeneratorLines(Context context){
-		Warehouse[] warehouses = CRUDWarehouse.GetWarehouses(true);
+	public TableRow[] GeneratorLines(Context context,  Warehouse[] warehouses){
+
 		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
 
 		if(warehouses != null){
@@ -93,6 +95,15 @@ public class WarehouseManagerWarehouseTableRowGenerator {
 				t8v.setTextSize(18);
 				tbrow.addView(t8v);
 
+				tbrow.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+
+						//Abrir uma Activity para a edição da TableRow
+						OpenActivityEditWarehouse(context);
+					}
+				});
+
 				tableRowArrayList.add(tbrow);
 			}
 		}
@@ -111,5 +122,12 @@ public class WarehouseManagerWarehouseTableRowGenerator {
 		}
 
 		return tableRows;
+	}
+
+
+	public void OpenActivityEditWarehouse(Context context){
+
+		//Intent intent= new Intent(Context context, /*EditWarehouse_Activity.class*/);
+		//startActivity(intent);
 	}
 }
