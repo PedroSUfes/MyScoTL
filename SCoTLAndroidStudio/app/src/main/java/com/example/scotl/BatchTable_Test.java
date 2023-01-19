@@ -4,20 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 
 import Frameworks.Adapters.TableRowGenerator;
-import Frameworks.Database.SQLite.SQLiteDAO;
-import Policy.BusinessRules.CRUDBatch;
-import Policy.BusinessRules.DatabaseAccess;
-import Policy.Entity.Batch;
 
-public class BatchTabletest extends AppCompatActivity {
+public class BatchTable_Test extends AppCompatActivity {
 
 	TableLayout stk;
 
@@ -53,11 +47,17 @@ public class BatchTabletest extends AppCompatActivity {
 
 		//---------- Table Rows -----------
 
-		TableRowGenerator tableRowGenerator = new TableRowGenerator();
-
-		//tableRowGenerator;
-
-		//stk.addView(tbrow);
+		/*
+		* Fazer a chamada da função de GetAll
+		* Guardar o retorno em um Array
+		* setar TableRowGenerator com esse array
+		* Guardar o retorno de TableRowGenerator
+		* e fazer um for para percorrer o array de tableRows fazendo a inserção
+		*
+		* for(int i = 0; i < tbrows.length; i++){
+		*     stk.addView(tbrows[i]);
+		* }
+		* */
 
 
 	}

@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".BatchTabletest"
+            android:name=".BatchTable_Test"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

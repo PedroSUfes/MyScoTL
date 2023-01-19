@@ -17,44 +17,47 @@ public class WarehouseManagerCoffeeBagTableRowGenerator implements CoffeeBagTabl
 
 		ArrayList<TableRow> tableRowList = new ArrayList<TableRow>();
 
-		if(coffeeBags != null){
-			for(int i = 0; i < coffeeBags.length; i++){
-				TableRow tbrow = new TableRow(context);
+		if(coffeeBags == null) {
+			return null;
+		}
 
-				//Coffee ID
-				TextView t1v = new TextView(context);
-				t1v.setText(coffeeBags[i].GetId());
-				t1v.setTextColor(Color.BLACK);
-				t1v.setGravity(Gravity.CENTER);
-				t1v.setTextSize(18);
-				tbrow.addView(t1v);
+		for(int i = 0; i < coffeeBags.length; i++){
+			TableRow tbrow = new TableRow(context);
 
-				//Coffee Batch ID
-				TextView t2v = new TextView(context);
-				t2v.setText(coffeeBags[i].GetBatch().GetId());
-				t2v.setTextColor(Color.BLACK);
-				t2v.setGravity(Gravity.CENTER);
-				t2v.setTextSize(18);
-				tbrow.addView(t1v);
+			//Coffee ID
+			TextView t1v = new TextView(context);
+			t1v.setText(coffeeBags[i].GetId());
+			t1v.setTextColor(Color.BLACK);
+			t1v.setGravity(Gravity.CENTER);
+			t1v.setTextSize(18);
+			tbrow.addView(t1v);
 
-				//Coffee Warehouse ID
-				TextView t3v = new TextView(context);
-				t3v.setText(coffeeBags[i].GetWarehouse().GetId());
-				t3v.setTextColor(Color.BLACK);
-				t3v.setGravity(Gravity.CENTER);
-				t3v.setTextSize(18);
-				tbrow.addView(t3v);
+			//Coffee Batch ID
+			TextView t2v = new TextView(context);
+			t2v.setText(coffeeBags[i].GetBatch().GetId());
+			t2v.setTextColor(Color.BLACK);
+			t2v.setGravity(Gravity.CENTER);
+			t2v.setTextSize(18);
+			tbrow.addView(t1v);
 
-				//Coffee StorageDate
-				TextView t4v = new TextView(context);
-				t4v.setText(coffeeBags[i].GetStorageDate());
-				t4v.setTextColor(Color.BLACK);
-				t4v.setGravity(Gravity.CENTER);
-				t4v.setTextSize(18);
-				tbrow.addView(t4v);
+			//Coffee Warehouse ID
+			TextView t3v = new TextView(context);
+			t3v.setText(coffeeBags[i].GetWarehouse().GetId());
+			t3v.setTextColor(Color.BLACK);
+			t3v.setGravity(Gravity.CENTER);
+			t3v.setTextSize(18);
+			tbrow.addView(t3v);
 
-				tableRowList.add(tbrow);
-			}
+			//Coffee StorageDate
+			TextView t4v = new TextView(context);
+			t4v.setText(coffeeBags[i].GetStorageDate());
+			t4v.setTextColor(Color.BLACK);
+			t4v.setGravity(Gravity.CENTER);
+			t4v.setTextSize(18);
+			tbrow.addView(t4v);
+
+			tableRowList.add(tbrow);
+
 		}
 
 		if(tableRowList.isEmpty()){

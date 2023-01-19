@@ -21,27 +21,28 @@ public class SystemClientBatchTableRowGenerator implements BatchTableRowGenerato
 		ArrayList<TableRow> tableRowArrayList = new ArrayList<TableRow>();
 
 
-		if(batches != null){
-			for(int i = 0; i < batches.length; i++){
-				TableRow tbrow = new TableRow(context);
+		if(batches == null) {
+			return null;
+		}
 
-				TextView t1v = new TextView(context);
-				t1v.setText(batches[i].GetId());
-				t1v.setTextColor(Color.BLACK);
-				t1v.setGravity(Gravity.CENTER);
-				t1v.setTextSize(18);
-				tbrow.addView(t1v);
+		for(int i = 0; i < batches.length; i++){
+			TableRow tbrow = new TableRow(context);
 
-				TextView t2v = new TextView(context);
-				t2v.setText(batches[i].GetCreationDate());
-				t2v.setTextColor(Color.BLACK);
-				t2v.setGravity(Gravity.CENTER);
-				t2v.setTextSize(18);
-				tbrow.addView(t2v);
+			TextView t1v = new TextView(context);
+			t1v.setText(batches[i].GetId());
+			t1v.setTextColor(Color.BLACK);
+			t1v.setGravity(Gravity.CENTER);
+			t1v.setTextSize(18);
+			tbrow.addView(t1v);
 
-				tableRowArrayList.add(tbrow);
+			TextView t2v = new TextView(context);
+			t2v.setText(batches[i].GetCreationDate());
+			t2v.setTextColor(Color.BLACK);
+			t2v.setGravity(Gravity.CENTER);
+			t2v.setTextSize(18);
+			tbrow.addView(t2v);
 
-			}
+			tableRowArrayList.add(tbrow);
 		}
 
 		if(tableRowArrayList.isEmpty()){
