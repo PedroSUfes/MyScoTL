@@ -6,14 +6,102 @@
     android:layout_height="match_parent"
     tools:context=".WarehouseMenu">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MENU DONO DO GALPÃO"
+    <Button
+        android:id="@+id/button_Cadastrar"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:text="Cadastrar"
+        tools:layout_editor_absoluteX="14dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <Switch
+        android:id="@+id/switch_props"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
+        android:text="Adicionar antigos proprietários"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="136dp" />
+
+    <EditText
+        android:id="@+id/editText_Cidade"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:text="Cidade"
+        android:textSize="13dp"
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+
+
+    <EditText
+        android:id="@+id/editText_CPF_Proprietário"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="CPF Proprietário"
+        android:textSize="13dp"
+        tools:layout_editor_absoluteX="155dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <Button
+        android:id="@+id/button_Listar"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="Listar"
+        tools:layout_editor_absoluteX="296dp"
+        tools:layout_editor_absoluteY="136dp" />
+
+    <EditText
+        android:id="@+id/editText_Num"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Num"
+        android:textSize="13dp"
+        tools:layout_editor_absoluteX="345dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <EditText
+        android:id="@+id/editText_Bairro"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:text="Bairro"
+        android:textSize="13dp"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <EditText
+        android:id="@+id/editText_Rua"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:text="Rua"
+        android:textSize="13dp"
+        tools:layout_editor_absoluteX="235dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <ScrollView
+        android:layout_width="382dp"
+        android:layout_height="494dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.86">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
