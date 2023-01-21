@@ -46,13 +46,24 @@ public class BatchListMenu extends AppCompatActivity {
 		add_button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(BatchListMenu.this, "TESTE", Toast.LENGTH_SHORT).show();
+
+				Batch batch;
+
+				try{
+					batch = new Batch(id_batch_txt.getText().toString(), creation_date_txt.getText().toString());
+					Toast.makeText(BatchListMenu.this, batch.toString(), Toast.LENGTH_SHORT).show();
+
+				}catch(Exception e){
+					Toast.makeText(BatchListMenu.this, "Erro ", Toast.LENGTH_SHORT).show();
+				}
+
 			}
 		});
 
 		list_button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+
 				stk.removeAllViews();
 				Toast.makeText(BatchListMenu.this, "TESTE2", Toast.LENGTH_SHORT).show();
 				Table();
