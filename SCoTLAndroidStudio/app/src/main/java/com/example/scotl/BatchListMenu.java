@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.BusinessRules.CRUDBatch;
@@ -19,6 +23,11 @@ import Policy.Entity.Batch;
 public class BatchListMenu extends AppCompatActivity {
 
 	private TableLayout stk;
+	private EditText id_batch_txt;
+	private EditText creation_date_txt;
+	private Button add_button;
+	private Button list_button;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +36,28 @@ public class BatchListMenu extends AppCompatActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.setContentView(R.layout.activity_batch_list_menu);
 
+		id_batch_txt = findViewById(R.id.Id_Batch_text);
+		creation_date_txt = findViewById(R.id.creation_Date_text);
+		add_button = findViewById(R.id.add_button);
+		list_button = findViewById(R.id.list_button);
+
 		Table();
+
+		add_button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Toast.makeText(BatchListMenu.this, "TESTE", Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		list_button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				stk.removeAllViews();
+				Toast.makeText(BatchListMenu.this, "TESTE2", Toast.LENGTH_SHORT).show();
+				Table();
+			}
+		});
 	}
 
 	public void Table(){
