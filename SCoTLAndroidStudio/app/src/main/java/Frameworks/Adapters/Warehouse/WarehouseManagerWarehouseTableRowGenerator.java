@@ -98,6 +98,14 @@ public class WarehouseManagerWarehouseTableRowGenerator {
 			t8v.setTextSize(18);
 			tbrow.addView(t8v);
 
+			//Warehouse Owner's CPF
+			TextView t9v = new TextView(context);
+			t9v.setText(warehouses[i].GetOwner().GetCpf());
+			t9v.setTextColor(Color.BLACK);
+			t9v.setGravity(Gravity.CENTER);
+			t9v.setTextSize(18);
+			tbrow.addView(t9v);
+
 			tbrow.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {

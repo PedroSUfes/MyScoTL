@@ -74,6 +74,14 @@ public class SystemClientEmployeeTableRowGenerator implements EmployeeTableRowGe
 			t6v.setTextSize(18);
 			tbrow.addView(t6v);
 
+			//Employee Profession
+			TextView t7v = new TextView(context);
+			t7v.setText(employees[i].GetEmployeeType().toString());
+			t7v.setTextColor(Color.BLACK);
+			t7v.setGravity(Gravity.CENTER);
+			t7v.setTextSize(18);
+			tbrow.addView(t7v);
+
 			tbrow.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
