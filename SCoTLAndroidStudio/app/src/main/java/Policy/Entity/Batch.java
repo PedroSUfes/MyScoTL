@@ -49,7 +49,7 @@ public class Batch
     {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("Bach ID: "+m_id+"\n");
+        stringBuilder.append("Batch ID: "+m_id+"\n");
         stringBuilder.append("Created on: "+m_creationDate+"\n");
 
         return stringBuilder.toString();
