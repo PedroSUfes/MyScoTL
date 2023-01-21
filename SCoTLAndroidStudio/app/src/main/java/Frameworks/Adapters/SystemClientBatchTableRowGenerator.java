@@ -7,6 +7,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.scotl.MainActivity;
+import com.example.scotl.R;
 
 import java.util.ArrayList;
 

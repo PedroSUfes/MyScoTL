@@ -198,7 +198,6 @@ public class SQLiteDAO
     @Override
     public Batch[] GetBatches()
     {
-
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllQuery(), null);
 
@@ -213,7 +212,7 @@ public class SQLiteDAO
 						cursor.getString(BatchTableQueryHelper.GetCreationDateIndex())
 					)
 				);
-			}while(cursor.moveToNext());
+			} while(cursor.moveToNext());
 		}
 
 		if(batchList.isEmpty()){
@@ -554,13 +553,18 @@ public class SQLiteDAO
     }
 
     @Override
-    public WarehouseManager[] GetWarehouseManagers()
+    public WarehouseManager[] GetWarehouseManagers(boolean withPastRegister)
     {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor manageWarehouseCursor = database.rawQuery(ManageWarehouseTableQueryHelper.GetSelectAllQuery(), null);
+        Cursor manageWarehouseCursor = database.rawQuery
+                (
+                        withPastRegister ? ManageWarehouseTableQueryHelper.GetSelectAllQuery() :
+                                ManageWarehouseTableQueryHelper.GetSelectAllWithNoPastRegister()
+                        , null
+                );
         if(!manageWarehouseCursor.moveToFirst())
         {
-            MyLog.LogMessage("No warehouse managers in database");
+//            MyLog.LogMessage("No warehouse managers in database");
             database.close();
             return null;
         }

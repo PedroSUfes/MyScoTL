@@ -26,9 +26,9 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetServant(cpf, withPastRegister);
     }
 
-    public static WarehouseManager[] GetWarehouseManagers()
+    public static WarehouseManager[] GetWarehouseManagers(boolean withPastRegister)
     {
-        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers();
+        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers(withPastRegister);
     }
 
     public static WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister)
