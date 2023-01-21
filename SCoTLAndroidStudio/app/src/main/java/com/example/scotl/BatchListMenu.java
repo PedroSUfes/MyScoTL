@@ -15,6 +15,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.BusinessRules.CRUDBatch;
 import Policy.BusinessRules.DatabaseAccess;
@@ -40,6 +44,7 @@ public class BatchListMenu extends AppCompatActivity {
 		creation_date_txt = findViewById(R.id.creation_Date_text);
 		add_button = findViewById(R.id.add_button);
 		list_button = findViewById(R.id.list_button);
+		stk = (TableLayout) findViewById(R.id.table_list);
 
 		Table();
 
@@ -52,6 +57,17 @@ public class BatchListMenu extends AppCompatActivity {
 				try{
 					batch = new Batch(id_batch_txt.getText().toString(), creation_date_txt.getText().toString());
 					Toast.makeText(BatchListMenu.this, batch.toString(), Toast.LENGTH_SHORT).show();
+
+
+					//Adicionando o novo Lote no banco
+
+					SQLiteDAO database = new SQLiteDAO(BatchListMenu.this);
+					DatabaseAccess.batchOperationsInterface = database;
+					Boolean result = DatabaseAccess.batchOperationsInterface.TryRegisterBatch(batch);
+
+					Toast.makeText(BatchListMenu.this, result.toString(), Toast.LENGTH_SHORT).show();
+
+					Table();
 
 				}catch(Exception e){
 					Toast.makeText(BatchListMenu.this, "Erro ", Toast.LENGTH_SHORT).show();
@@ -72,7 +88,16 @@ public class BatchListMenu extends AppCompatActivity {
 	}
 
 	public void Table(){
-		stk = (TableLayout) findViewById(R.id.table_list);
+
+		stk.removeAllViews();
+
+		SQLiteDAO database = new SQLiteDAO(BatchListMenu.this);
+		DatabaseAccess.batchOperationsInterface = database;
+		Batch[] batches = DatabaseAccess.batchOperationsInterface.GetBatches();
+
+
+
+
 		TableRow tbrow0 = new TableRow(this);
 
 		TextView tv0 = new TextView(this);
@@ -89,33 +114,25 @@ public class BatchListMenu extends AppCompatActivity {
 
 		stk.addView(tbrow0);
 
-		//List/Array com classe
-
-		//SQLiteDAO db = new SQLiteDAO(this);
-		//DatabaseAccess.batchOperationsInterface = db;
-		//Batch[] teste = CRUDBatch.GetBatches();
-
 		//Teste para encher a tabela e verificar o scroll
 		Batch[] teste = new Batch[34];
 		for(int i = 0; i < teste.length; i++){
 			teste[i] = new Batch(Integer.toString(i), "18/01/2023");
 		}
 
-		//Batch[] teste = TableRowGenerator.getTableRowGeneratorBatch();*/
-
 		if(teste != null){
-			for(int i = 0; i < teste.length; i++){
+			for (Batch batch : batches) {
 				TableRow tbrow = new TableRow(this);
 
 				TextView t1v = new TextView(this);
-				t1v.setText(teste[i].GetId());
+				t1v.setText(batch.GetId());
 				t1v.setTextColor(Color.parseColor("#FF765138"));
 				t1v.setGravity(Gravity.CENTER);
 				t1v.setTextSize(18);
 				tbrow.addView(t1v);
 
 				TextView t2v = new TextView(this);
-				t2v.setText(teste[i].GetCreationDate());
+				t2v.setText(batch.GetCreationDate());
 				t2v.setTextColor(Color.parseColor("#FF765138"));
 				t2v.setGravity(Gravity.CENTER);
 				t2v.setTextSize(18);
