@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toStartOf="@id/list_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Id_Batch_text"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <Button
         android:id="@+id/list_button"
@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_button"
         app:layout_constraintTop_toBottomOf="@id/creation_Date_text"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <EditText
         android:id="@+id/Id_Batch_text"
@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toStartOf="@+id/creation_Date_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062" />
+        app:layout_constraintVertical_bias="0.046" />
 
     <EditText
         android:id="@+id/creation_Date_text"
@@ -101,8 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/Id_Batch_text"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062" />
-
+        app:layout_constraintVertical_bias="0.046" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
