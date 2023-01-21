@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
                     i.DefineMenuClassPrincipal(userType);
                 }
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
-                openActivity2();
+                //openActivity2();
+                testeCoffeBagMenu();
             }
         });
 
@@ -112,5 +113,10 @@ public class MainActivity extends AppCompatActivity {
         DatabaseAccess.warehouseOperationsInterface = database;
         DatabaseAccess.loginInterface = database;
 
+    }
+
+    public void testeCoffeBagMenu(){
+        Intent intent = new Intent(this, CoffeeBagMenu.class);
+        startActivity(intent);
     }
 }
