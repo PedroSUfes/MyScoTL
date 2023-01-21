@@ -16,7 +16,7 @@ import Policy.Entity.Batch;
 
 public class BatchTabletest extends AppCompatActivity {
 
-	private TableLayout tableLayout;
+	private TableLayout stk;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class BatchTabletest extends AppCompatActivity {
 	}
 
 	public void init(){
-		TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+		stk = (TableLayout) findViewById(R.id.table_main);
 		TableRow tbrow0 = new TableRow(this);
 
 		TextView tv0 = new TextView(this);
