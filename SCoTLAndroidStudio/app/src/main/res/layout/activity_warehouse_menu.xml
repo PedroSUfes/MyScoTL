@@ -149,6 +149,17 @@
                 android:background="#2F4F4F"
                 android:gravity="center"
                 android:padding="7dp"
+                android:text="Data"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#2F4F4F"
+                android:gravity="center"
+                android:padding="7dp"
                 android:text="CPF Proprietário"
                 android:textColor="@color/white"
                 android:textSize="20dp"
