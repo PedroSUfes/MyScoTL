@@ -5,6 +5,9 @@ import static Policy.BusinessRules.CRUDBatch.GetBatches;
 import android.content.Context;
 import android.widget.TableRow;
 
+import java.lang.reflect.Array;
+
+import Frameworks.Adapters.WarehouseRow.WarehouseTableRowGenerator;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
@@ -15,10 +18,19 @@ public class TableRowGenerator {
 	private static TableRow[] TableRowGeneratorWarehouse;
 	private static BatchTableRowGenerator tableRowGeneratorBatch;
 	private static TableRow[] TableRowGeneratorCoffeeBag;
+	private static WarehouseTableRowGenerator m_warehouseTableRowGenerator;
 
 
-	public TableRowGenerator(){
+	public static void SetWarehouseTableRowGenerator(WarehouseTableRowGenerator warehouseTableRowGenerator) {
+		if (warehouseTableRowGenerator == null)
+		{
+			return;
+		}
+		m_warehouseTableRowGenerator = warehouseTableRowGenerator;
+	}
 
+	public static TableRow[] GetWarehouseTableRows(Warehouse[] warehouses, Context context) {
+		return m_warehouseTableRowGenerator.GenerateLines(warehouses, context);
 	}
 
 	public static TableRow[] getTableRowGeneratorEmployee() {

@@ -41,7 +41,7 @@
 
 
     <EditText
-        android:id="@+id/editText_Num"
+        android:id="@+id/editTextNum"
         android:layout_width="50dp"
         android:layout_height="40dp"
         android:layout_marginTop="140dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_Rua"
+        android:id="@+id/editTextStreet"
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_marginStart="152dp"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_Listar"
+        android:id="@+id/buttonListar"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginTop="192dp"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_Cidade"
+        android:id="@+id/editTextCity"
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_marginTop="88dp"
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_Estado"
+        android:id="@+id/editTextState"
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
@@ -104,7 +104,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_CPF_Proprietário"
+        android:id="@+id/editTextCPFOwner"
         android:layout_width="240dp"
         android:layout_height="45dp"
         android:layout_marginTop="28dp"

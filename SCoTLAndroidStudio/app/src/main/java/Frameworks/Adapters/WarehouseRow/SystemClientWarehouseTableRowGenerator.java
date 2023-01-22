@@ -7,6 +7,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.example.scotl.UpdateAndRemoveWarehouseActivity;
+
 import java.util.ArrayList;
 import Policy.Entity.Warehouse;
 
@@ -39,7 +42,7 @@ public class SystemClientWarehouseTableRowGenerator
             TextView IdWarehouseText = new TextView(context);
             ConfigureTextView(IdWarehouseText, e.GetId());
 
-            if ()
+
 
             TextView dataText = new TextView(context);
             ConfigureTextView(dataText, e.GetBeginDate());
@@ -55,13 +58,13 @@ public class SystemClientWarehouseTableRowGenerator
                     (
                             view ->
                             {
-                                //UpdateAndRemoveEmployeeActivity.SetCpf(e.GetCpf());
-                                //UpdateAndRemoveEmployeeActivity.SetName(e.GetName());
-                                //UpdateAndRemoveEmployeeActivity.SetBirthDate(e.GetBirthDate());
-                                //UpdateAndRemoveEmployeeActivity.SetCellphone(e.GetCellphone());
-                                //UpdateAndRemoveEmployeeActivity.SetHiringDate(e.GetHiringDate());
-                                //UpdateAndRemoveEmployeeActivity.SetEndDate(e.GetEndDate());
-                                //UpdateAndRemoveEmployeeActivity.SetProfession(e.GetEmployeeType().toString());
+                                UpdateAndRemoveWarehouseActivity.SetCpf(e.GetCpf());
+                                //UpdateAndRemoveWarehouseActivity.SetName(e.GetName());
+                                //UpdateAndRemoveWarehouseActivity.SetBirthDate(e.GetBirthDate());
+                                //UpdateAndRemoveWarehouseActivity.SetCellphone(e.GetCellphone());
+                                //UpdateAndRemoveWarehouseActivity.SetHiringDate(e.GetHiringDate());
+                                //UpdateAndRemoveWarehouseActivity.SetEndDate(e.GetEndDate());
+                                //UpdateAndRemoveWarehouseActivity.SetProfession(e.GetEmployeeType().toString());
 
                                 //context.startActivity(new Intent(context, UpdateAndRemoveEmployeeActivity.class));
                             }

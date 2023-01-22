@@ -8,5 +8,5 @@ import Policy.Entity.Warehouse;
 
 public interface WarehouseTableRowGenerator
 {
-    public TableRow[] GenerateLines(Warehouse[] employeeArray, Context context);
+    public TableRow[] GenerateLines(Warehouse[] warehouseArray, Context context);
 }
