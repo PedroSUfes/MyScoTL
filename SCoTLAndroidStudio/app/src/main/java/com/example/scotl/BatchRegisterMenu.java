@@ -54,7 +54,7 @@ public class BatchRegisterMenu extends AppCompatActivity {
 					}
 					else{
 						batch = new Batch(id, date);
-						Toast.makeText(BatchRegisterMenu.this, batch.toString(), Toast.LENGTH_SHORT).show();
+						//Toast.makeText(BatchRegisterMenu.this, batch.toString(), Toast.LENGTH_SHORT).show();
 
 						//Adicionando o novo Lote no banco
 
@@ -62,7 +62,7 @@ public class BatchRegisterMenu extends AppCompatActivity {
 						DatabaseAccess.batchOperationsInterface = database;
 						Boolean result = DatabaseAccess.batchOperationsInterface.TryRegisterBatch(batch);
 
-						Toast.makeText(BatchRegisterMenu.this, result.toString(), Toast.LENGTH_SHORT).show();
+						//Toast.makeText(BatchRegisterMenu.this, result.toString(), Toast.LENGTH_SHORT).show();
 
 						openActivityBatchList();
 

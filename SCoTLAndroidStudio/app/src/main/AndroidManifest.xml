@@ -42,14 +42,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".BatchTabletest"
-            android:exported="false"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Teste2"
             android:exported="false">
             <meta-data
