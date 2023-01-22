@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
                 UserType userType = LoginManager.GetUserType();
 
-                for(InterfaceClassDefiner i: interfaceClassesList){
+                for(InterfaceClassDefiner i: interfaceClassesList)
+                {
                     if(i == null){
                         continue;
                     }
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity2(){
 //        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
-        Intent intent = new Intent(this, SystemClientReadEmployeeActivity.class);
+        Intent intent = new Intent(this, SystemClientReadPropertyActivity.class);
         startActivity(intent);
     }
 

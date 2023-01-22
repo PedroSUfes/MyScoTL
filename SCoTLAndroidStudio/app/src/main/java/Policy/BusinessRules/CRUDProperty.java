@@ -21,7 +21,7 @@ public class CRUDProperty
 
     public static Boolean TryUpdateProperty(Property property)
     {
-        return DatabaseAccess.propertyOperationsInterface.TryRegisterProperty(property);
+        return DatabaseAccess.propertyOperationsInterface.TryUpdateProperty(property);
     }
     
     public static Boolean TryRemoveProperty(String id)
