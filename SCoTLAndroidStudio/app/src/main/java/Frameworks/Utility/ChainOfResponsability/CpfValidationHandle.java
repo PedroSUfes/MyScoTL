@@ -1,4 +1,4 @@
-package Frameworks.Utility;
+package Frameworks.Utility.ChainOfResponsability;
 
 import android.widget.EditText;
 
@@ -23,7 +23,7 @@ public class CpfValidationHandle
 
         if(cpfString.isEmpty())
         {
-            MyLog.LogMessage("No CPF");
+            MyLog.LogMessage("Nenhum CPF foi inserido");
             return false;
         }
 

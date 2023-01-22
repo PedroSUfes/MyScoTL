@@ -31,7 +31,7 @@ extends
             (
                     Person person,
                     String hiringDate,
-                     String endDate,
+                    String endDate,
                     Warehouse warehouse
             )
     {

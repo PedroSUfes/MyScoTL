@@ -498,12 +498,42 @@ public class SQLiteDAO
     }
 
     @Override
-    public Employee[] GetEmployees() {
-        return new Employee[0];
+    public Employee[] GetEmployees(boolean withPastRegister)
+    {
+        Employee[] servants = GetServants(withPastRegister);
+        Employee[] warehouseManagers = GetWarehouseManagers(withPastRegister);
+
+        int totalSize = (servants != null ? servants.length : 0) + (warehouseManagers != null ? warehouseManagers.length : 0);
+
+        if(totalSize == 0)
+        {
+            return null;
+        }
+
+        Employee[] toReturn = new Employee[totalSize];
+        if(servants != null)
+        {
+            System.arraycopy(servants, 0, toReturn, 0, servants.length);
+
+            if(warehouseManagers != null)
+            {
+                System.arraycopy(warehouseManagers, 0, toReturn, servants.length, warehouseManagers.length);
+            }
+        }
+        else
+        {
+            if(warehouseManagers != null)
+            {
+                System.arraycopy(warehouseManagers, 0, toReturn, 0, warehouseManagers.length);
+            }
+        }
+
+        return toReturn;
     }
 
     @Override
-    public Employee GetEmployee(String cpf) {
+    public Employee GetEmployee(String cpf, boolean withPastRegister)
+    {
         return null;
     }
 
@@ -514,7 +544,8 @@ public class SQLiteDAO
         Cursor worksOnCursor = database.rawQuery
         (
             withPastRegister ? WorksOnTableQueryHelper.GetSelectAllQuery() :
-            WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(), null
+            WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(),
+                null
         );
 
         if(!worksOnCursor.moveToFirst())

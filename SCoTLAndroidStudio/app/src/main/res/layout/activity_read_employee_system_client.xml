@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.25">
 
         <TableLayout
-            android:id="@+id/table"
+            android:id="@+id/system_client_read_employee_table_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
@@ -111,18 +111,23 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/system_client_register_employee_register_button"
+        android:id="@+id/system_client_read_employee_register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="107dp"
+        android:layout_marginEnd="11dp"
         android:padding="0dp"
         android:text="@string/cadastrar"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.977"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/system_client_read_employee_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:text="LISTAR"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

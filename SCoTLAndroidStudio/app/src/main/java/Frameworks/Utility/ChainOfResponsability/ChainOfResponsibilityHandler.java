@@ -1,4 +1,4 @@
-package Frameworks.Utility;
+package Frameworks.Utility.ChainOfResponsability;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ import Utility.ChainOfResponsibilityHandle;
 
 public class ChainOfResponsibilityHandler<T>
 {
-    private ArrayList<ChainOfResponsibilityHandle<T>> m_handleList = new ArrayList<>();
+    private final ArrayList<ChainOfResponsibilityHandle<T>> m_handleList = new ArrayList<>();
 
     public ChainOfResponsibilityHandler(ChainOfResponsibilityHandle<T> first)
     {

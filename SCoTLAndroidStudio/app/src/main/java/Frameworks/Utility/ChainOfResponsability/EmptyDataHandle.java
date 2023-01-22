@@ -1,19 +1,17 @@
-package Frameworks.Utility;
-
-import android.widget.EditText;
+package Frameworks.Utility.ChainOfResponsability;
 
 import Policy.Adapters.MyLog;
 import Utility.ChainOfResponsibilityHandle;
 import Utility.Func;
 
-public class EmptyDateHandle
+public class EmptyDataHandle
     extends
         ChainOfResponsibilityHandle<Boolean>
 {
     private Func<String> m_getStringMethod;
-    private String m_erroMessage;
+    private String m_errorMessage;
 
-    public EmptyDateHandle(Func<String> getStringMethod, String errorMessage)
+    public EmptyDataHandle(Func<String> getStringMethod, String errorMessage)
     {
         if(getStringMethod != null)
         {
@@ -21,14 +19,14 @@ public class EmptyDateHandle
         }
         if(errorMessage != null)
         {
-            m_erroMessage = new String(errorMessage);
+            m_errorMessage = new String(errorMessage);
         }
     }
 
     @Override
     public Boolean Validate()
     {
-        if(m_getStringMethod == null || m_erroMessage == null)
+        if(m_getStringMethod == null || m_errorMessage == null)
         {
             return false;
         }
@@ -36,7 +34,7 @@ public class EmptyDateHandle
         String text = m_getStringMethod.Invoke();
         if(text == null || text.isEmpty())
         {
-            MyLog.LogMessage(m_erroMessage);
+            MyLog.LogMessage(m_errorMessage);
             return false;
         }
 

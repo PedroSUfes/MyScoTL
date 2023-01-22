@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
 import Frameworks.Utility.SystemClientInterfaceClassDefiner;
+import Frameworks.Utility.TableRowDefiner.SystemClientTableRowGeneratorDefiner;
+import Frameworks.Utility.TableRowDefiner.TableRowGeneratorDefiner;
 import Frameworks.Utility.WarehouseManagerInterfaceClassDefiner;
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
 
     ArrayList<InterfaceClassDefiner> interfaceClassesList = new ArrayList<InterfaceClassDefiner>();
+    ArrayList<TableRowGeneratorDefiner> tableRowGeneratorDefinerList = new ArrayList<TableRowGeneratorDefiner>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         MyLog.SetLogAction((message)->Toast.makeText(MainActivity.this, (CharSequence) message, Toast.LENGTH_LONG).show());
         AddMainMenuInterfaces();
+        AddTableRowGeneratorDefiners();
         InjectDatabase();
-
 
         user = (EditText) findViewById(R.id.login_User);
         password = (EditText) findViewById(R.id.login_password);
@@ -72,6 +75,16 @@ public class MainActivity extends AppCompatActivity {
 
                     i.DefineMenuClassPrincipal(userType);
                 }
+                for(TableRowGeneratorDefiner t : tableRowGeneratorDefinerList)
+                {
+                    if(t == null)
+                    {
+                        continue;
+                    }
+
+                    t.DefineTableRowGenerator();
+                }
+
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
                 openActivity2();
             }
@@ -105,5 +118,11 @@ public class MainActivity extends AppCompatActivity {
         DatabaseAccess.warehouseOperationsInterface = database;
         DatabaseAccess.loginInterface = database;
 
+    }
+
+
+    private void AddTableRowGeneratorDefiners()
+    {
+        tableRowGeneratorDefinerList.add(new SystemClientTableRowGeneratorDefiner());
     }
 }

@@ -12,14 +12,10 @@ public class MyDialog
 {
     public static DatePickerDialog GetDatePickerDialog(Context context, Button dateButton, Boolean insertCurrentDate)
     {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) ->
         {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day)
-            {
-                String date = Utils.GetDateFormat(day, month, year);
-                dateButton.setText(date);
-            }
+            String date = Utils.GetDateFormat(day, month, year);
+            dateButton.setText(date);
         };
 
         Calendar cal = Calendar.getInstance();
