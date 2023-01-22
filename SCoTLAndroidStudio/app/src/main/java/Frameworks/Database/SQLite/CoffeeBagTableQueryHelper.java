@@ -13,7 +13,7 @@ public class CoffeeBagTableQueryHelper
 {
     public static final String COFFEE_BAG_TABLE = "coffeeBag";
     public static final String ID = "id";
-    public static final String BATCH_ID = "batchId";
+    public static final String BATCH_ID = "bachId";
     public static final String WAREHOUSE_ID = "warehouse_Id";
     public static final String STORAGE_DATE = "storageDate";
 

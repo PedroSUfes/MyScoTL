@@ -34,11 +34,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
             android:name=".RegisterEmployeeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+
         <activity
             android:name=".SystemClientReadEmployeeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SystemClientMenu"
             android:exported="false">
@@ -61,7 +63,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Teste"
+            android:name=".BatchTabletest"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

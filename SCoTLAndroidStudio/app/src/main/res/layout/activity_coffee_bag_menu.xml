@@ -60,7 +60,7 @@
         android:text="Cadastrar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.892"
+        app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scrollView1"
         app:layout_constraintVertical_bias="1.0" />
@@ -74,72 +74,69 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/storage_Date_text"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintTop_toBottomOf="@+id/id_batch_text"
+        app:layout_constraintVertical_bias="0.044" />
 
     <EditText
         android:id="@+id/Id_coffebag_text"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_text"
         android:ems="10"
         android:hint="ID Saca"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:background="@drawable/round_text"
         android:paddingStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/id_batch_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.121" />
 
     <EditText
         android:id="@+id/id_batch_text"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_text"
         android:ems="10"
         android:hint="ID Lote"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:background="@drawable/round_text"
         android:paddingStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/Id_coffebag_text"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.121" />
 
     <EditText
         android:id="@+id/id_warehouse_text"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_text"
         android:ems="10"
         android:hint="ID Galpão"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:background="@drawable/round_text"
         android:paddingStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/storage_Date_text"
+        app:layout_constraintEnd_toStartOf="@+id/list_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/Id_coffebag_text"
         app:layout_constraintVertical_bias="0.046" />
 
-    <EditText
-        android:id="@+id/storage_Date_text"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_text"
-        android:ems="10"
-        android:hint="Data de Armazenamento"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:paddingStart="10dp"
-        android:textSize="14sp"
+        android:text="Filtrar Sacas"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/id_warehouse_text"
-        app:layout_constraintTop_toBottomOf="@id/id_batch_text"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
