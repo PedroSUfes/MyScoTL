@@ -67,6 +67,7 @@ public class BatchListMenu extends AppCompatActivity {
 					date_batch_txt.setText("");
 
 				}
+
 			}
 		});
 	}

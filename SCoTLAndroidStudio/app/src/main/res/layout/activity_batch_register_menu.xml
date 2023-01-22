@@ -28,7 +28,7 @@
         android:layout_height="48dp"
         android:background="@drawable/round_text"
         android:ems="10"
-        android:hint="Inserir ID Lote"
+        android:hint="Inserir Id Lote"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:paddingStart="10dp"
