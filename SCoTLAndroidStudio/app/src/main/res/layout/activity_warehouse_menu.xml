@@ -10,98 +10,153 @@
         android:id="@+id/button_Cadastrar"
         android:layout_width="130dp"
         android:layout_height="45dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
         android:text="Cadastrar"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="29dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/switch_props"
         android:layout_width="240dp"
         android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="192dp"
         android:text="Adicionar antigos proprietários"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="136dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_Cidade"
-        android:layout_width="100dp"
+        android:id="@+id/editText_Bairro"
+        android:layout_width="130dp"
         android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:inputType="textAutoComplete"
-        android:text="Cidade"
+        android:text="Bairro"
         android:textSize="13dp"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="86dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
-    <EditText
-        android:id="@+id/editText_CPF_Proprietário"
-        android:layout_width="240dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="CPF Proprietário"
-        android:textSize="13dp"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="29dp" />
-
-    <Button
-        android:id="@+id/button_Listar"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Listar"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="136dp" />
 
     <EditText
         android:id="@+id/editText_Num"
         android:layout_width="50dp"
         android:layout_height="40dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Num"
         android:textSize="13dp"
-        tools:layout_editor_absoluteX="345dp"
-        tools:layout_editor_absoluteY="86dp" />
-
-    <EditText
-        android:id="@+id/editText_Bairro"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textAutoComplete"
-        android:text="Bairro"
-        android:textSize="13dp"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="86dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_Rua"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_height="40dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:inputType="textAutoComplete"
         android:text="Rua"
         android:textSize="13dp"
-        tools:layout_editor_absoluteX="235dp"
-        tools:layout_editor_absoluteY="86dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="382dp"
-        android:layout_height="494dp"
+    <Button
+        android:id="@+id/button_Listar"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="8dp"
+        android:text="Listar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_Cidade"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="128dp"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:text="Cidade"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_Estado"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="88dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Estado"
+        android:textSize="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_CPF_Proprietário"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="CPF Proprietário"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86">
+        app:layout_constraintVertical_bias="0.365">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#2F4F4F"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="ID"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#2F4F4F"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="CPF Proprietário"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+    </TableLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
