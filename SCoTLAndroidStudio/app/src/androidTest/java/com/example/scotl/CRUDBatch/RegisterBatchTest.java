@@ -25,8 +25,8 @@ public class RegisterBatchTest
         (
             new Batch
             (
-                "123",
-                "Yesterday"
+                "1234",
+                "22/01/2023"
             )
         );
 
