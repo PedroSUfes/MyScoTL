@@ -5,14 +5,17 @@ import android.widget.TableRow;
 
 import Frameworks.Adapters.BatchRow.BatchTableRowGenerator;
 import Frameworks.Adapters.EmployeeRow.EmployeeTableRowGenerator;
+import Frameworks.Adapters.PropertyRow.PropertyTableRowGenerator;
 import Policy.Entity.Batch;
 import Policy.Entity.Employee;
+import Policy.Entity.Property;
 
 public class TableRowGenerator {
 	private static EmployeeTableRowGenerator m_employeeTableRowGenerator;
-	//	private static TableRow[] TableRowGeneratorWarehouse;
 	private static BatchTableRowGenerator m_batchTableRowGenerator;
 //	private static TableRow[] TableRowGeneratorCoffeeBag;
+//	private static TableRow[] TableRowGeneratorWarehouse;
+	private static PropertyTableRowGenerator m_propertyTableRowGenerator;
 
 	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
 	{
@@ -37,6 +40,21 @@ public class TableRowGenerator {
 		m_employeeTableRowGenerator = employeeTableRowGenerator;
 	}
 
+	public static void SetPropertyTableRowGenerator(PropertyTableRowGenerator propertyTableRowGenerator)
+	{
+		if(propertyTableRowGenerator == null)
+		{
+			System.out.println("Null property table roww generator");
+		}
+
+		m_propertyTableRowGenerator = propertyTableRowGenerator;
+	}
+
+	public static TableRow[] GetPropertyTableRows(Property[] propertyArray, Context context)
+	{
+		return m_propertyTableRowGenerator.GenerateLines(propertyArray, context);
+	}
+
 //	public static TableRow[] getTableRowGeneratorWarehouse(String id, String state, String city, String street, String number) {
 //		return TableRowGeneratorWarehouse;
 //	}
@@ -58,8 +76,12 @@ public class TableRowGenerator {
 //		return m_batchTableRowGenerator.GenerateLines(batchArray, context);
 //	}
 
-	public static void setTableRowGeneratorBatch(BatchTableRowGenerator batchTableRowGenerator) {
-		m_batchTableRowGenerator = batchTableRowGenerator;
+	public static BatchTableRowGenerator GeneratorBatchLines(String id, String creationDate) {
+		return m_tableRowGeneratorBatch;
+	}
+
+	public static void setM_tableRowGeneratorBatch(BatchTableRowGenerator m_tableRowGeneratorBatch) {
+		//TableRowGeneratorBatch = tableRowGeneratorBatch;
 	}
 
 //	public static TableRow[] getTableRowGeneratorCoffeeBag() {

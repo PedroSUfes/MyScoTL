@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
                 UserType userType = LoginManager.GetUserType();
 
-                for(InterfaceClassDefiner i: interfaceClassesList){
+                for(InterfaceClassDefiner i: interfaceClassesList)
+                {
                     if(i == null){
                         continue;
                     }
