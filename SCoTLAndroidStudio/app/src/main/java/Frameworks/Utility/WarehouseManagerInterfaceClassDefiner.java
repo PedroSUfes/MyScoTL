@@ -1,6 +1,5 @@
 package Frameworks.Utility;
 
-import com.example.scotl.BatchTabletest;
 import com.example.scotl.WarehouseMenu;
 
 import Policy.BusinessRules.UserType;
