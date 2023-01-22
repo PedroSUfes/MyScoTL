@@ -45,6 +45,14 @@ public class ManageWarehouseTableQueryHelper
         return "SELECT * FROM "+MANAGE_WAREHOUSE_TABLE;
     }
 
+    public static String GetSelectAllWithNoPastRegister()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(GetSelectAllQuery());
+        stringBuilder.append(" WHERE "+END_DATE+" IS NULL");
+        return stringBuilder.toString();
+    }
+
     public static boolean PersonExists(SQLiteDatabase database, String personCpf)
     {
         Cursor cursor = database.rawQuery(GetSelectByPersonCpfQuery(personCpf), null);

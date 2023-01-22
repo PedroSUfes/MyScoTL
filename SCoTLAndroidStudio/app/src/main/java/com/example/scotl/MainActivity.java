@@ -3,30 +3,24 @@ package com.example.scotl;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Array;
-import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
-import Frameworks.Utility.InterfaceClasses;
 import Frameworks.Utility.SystemClientInterfaceClassDefiner;
+import Frameworks.Utility.TableRowDefiner.SystemClientTableRowGeneratorDefiner;
+import Frameworks.Utility.TableRowDefiner.TableRowGeneratorDefiner;
 import Frameworks.Utility.WarehouseManagerInterfaceClassDefiner;
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.BusinessRules.LoginManager;
 import Policy.BusinessRules.UserType;
-import Policy.Entity.Person;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
 
     ArrayList<InterfaceClassDefiner> interfaceClassesList = new ArrayList<InterfaceClassDefiner>();
+    ArrayList<TableRowGeneratorDefiner> tableRowGeneratorDefinerList = new ArrayList<TableRowGeneratorDefiner>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
         MyLog.SetLogAction((message)->Toast.makeText(MainActivity.this, (CharSequence) message, Toast.LENGTH_LONG).show());
         AddMainMenuInterfaces();
+        AddTableRowGeneratorDefiners();
         InjectDatabase();
-
 
         user = (EditText) findViewById(R.id.login_User);
         password = (EditText) findViewById(R.id.login_password);
@@ -80,6 +75,16 @@ public class MainActivity extends AppCompatActivity {
 
                     i.DefineMenuClassPrincipal(userType);
                 }
+                for(TableRowGeneratorDefiner t : tableRowGeneratorDefinerList)
+                {
+                    if(t == null)
+                    {
+                        continue;
+                    }
+
+                    t.DefineTableRowGenerator();
+                }
+
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
                 openActivity3();
                 //openActivity2();
@@ -91,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivity2(){
-        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
+//        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
+        Intent intent = new Intent(this, SystemClientReadEmployeeActivity.class);
         startActivity(intent);
     }
 
@@ -118,5 +124,9 @@ public class MainActivity extends AppCompatActivity {
     public void openActivity3(){
         Intent intent = new Intent(this, BatchListMenu.class);
         startActivity(intent);
+    }
+    private void AddTableRowGeneratorDefiners()
+    {
+        tableRowGeneratorDefinerList.add(new SystemClientTableRowGeneratorDefiner());
     }
 }

@@ -10,7 +10,6 @@ import Frameworks.Adapters.Warehouse.WarehouseTableRowGenerator;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
-import Policy.Entity.Warehouse;
 
 public class TableRowGenerator {
 	private static EmployeeTableRowGenerator tableRowGeneratorEmployee;
@@ -18,9 +17,27 @@ public class TableRowGenerator {
 	private static BatchTableRowGenerator tableRowGeneratorBatch;
 	private static CoffeeBagTableRowGenerator tableRowGeneratorCoffeeBag;
 
+	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
+	{
+		if(m_employeeTableRowGenerator == null)
+		{
+			return null;
+		}
 
-	public TableRowGenerator(){
+		return m_employeeTableRowGenerator.GenerateLines(employeeArray, context);
+	}
+//
+//	public static TableRow[] getTableRowGeneratorEmployeeByName(String nome) {
+//		return TableRowGeneratorEmployee;
+//	}
+//
+//	public static TableRow[] getTableRowGeneratorEmployeeByCpf(String cpf) {
+//		return TableRowGeneratorEmployee;
+//	}
 
+	public static void SetEmployeeTableRowGenerator(EmployeeTableRowGenerator employeeTableRowGenerator)
+	{
+		m_employeeTableRowGenerator = employeeTableRowGenerator;
 	}
 
 	//----------------------Employee Lines-----------------------------

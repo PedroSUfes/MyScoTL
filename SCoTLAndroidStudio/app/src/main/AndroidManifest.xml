@@ -28,7 +28,20 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".RegisterEmployeeActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".SystemClientReadEmployeeActivity"
+            android:exported="true"></activity>
+        <activity
             android:name=".SystemClientMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UpdateAndRemoveEmployeeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
