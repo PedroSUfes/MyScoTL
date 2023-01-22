@@ -28,9 +28,9 @@ public class BatchRegisterMenu extends AppCompatActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_batch_register_menu);
 
-		id_batch_txt = findViewById(R.id.id_batch_editView);
-		creation_date_txt = findViewById(R.id.creationDate_editView);
-		add_button = findViewById(R.id.cadastrar_button);
+		GetReferences();
+
+
 
 		add_button.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -79,5 +79,11 @@ public class BatchRegisterMenu extends AppCompatActivity {
 	public void openActivityBatchList(){
 		Intent intent = new Intent(this, BatchListMenu.class);
 		startActivity(intent);
+	}
+
+	private void GetReferences(){
+		id_batch_txt = findViewById(R.id.id_batch_editView);
+		creation_date_txt = findViewById(R.id.creationDate_editView);
+		add_button = findViewById(R.id.cadastrar_button);
 	}
 }
