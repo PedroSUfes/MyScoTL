@@ -49,7 +49,7 @@ public class ManageWarehouseTableQueryHelper
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(GetSelectAllQuery());
-        stringBuilder.append("WHERE "+END_DATE+" IS NULL");
+        stringBuilder.append(" WHERE "+END_DATE+" IS NULL");
         return stringBuilder.toString();
     }
 

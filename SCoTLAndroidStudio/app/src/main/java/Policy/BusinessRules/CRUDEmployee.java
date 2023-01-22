@@ -11,7 +11,7 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetEmployees(withPastRegister);
     }
 
-    public static Employee GetEmployee(String cpf, boolean withPastRegister)
+    public static Employee[] GetEmployee(String cpf, boolean withPastRegister)
     {
         return DatabaseAccess.employeeOperationsInterface.GetEmployee(cpf, withPastRegister);
     }

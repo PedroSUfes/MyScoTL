@@ -1,6 +1,7 @@
 package Frameworks.Adapters.EmployeeRow;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
+import com.example.scotl.SystemClientReadEmployeeActivity;
+import com.example.scotl.UpdateAndRemoveEmployeeActivity;
+
 import java.util.ArrayList;
 
-import Policy.Adapters.MyLog;
 import Policy.Entity.Employee;
 
 public class SystemClientEmployeeTableRowGenerator
@@ -56,7 +59,15 @@ public class SystemClientEmployeeTableRowGenerator
                     (
                             view ->
                             {
-                                MyLog.LogMessage("Hey");
+                                UpdateAndRemoveEmployeeActivity.SetCpf(e.GetCpf());
+                                UpdateAndRemoveEmployeeActivity.SetName(e.GetName());
+                                UpdateAndRemoveEmployeeActivity.SetBirthDate(e.GetBirthDate());
+                                UpdateAndRemoveEmployeeActivity.SetCellphone(e.GetCellphone());
+                                UpdateAndRemoveEmployeeActivity.SetHiringDate(e.GetHiringDate());
+                                UpdateAndRemoveEmployeeActivity.SetEndDate(e.GetEndDate());
+                                UpdateAndRemoveEmployeeActivity.SetProfession(e.GetEmployeeType().toString());
+
+                                context.startActivity(new Intent(context, UpdateAndRemoveEmployeeActivity.class));
                             }
                     );
 
@@ -88,8 +99,6 @@ public class SystemClientEmployeeTableRowGenerator
     {
         textView.setText(content);
         textView.setTextColor(Color.parseColor("#2F4F4F"));
-//        textView.setWidth(TableRow.LayoutParams.MATCH_PARENT);
-//        textView.setHeight(TableRow.LayoutParams.WRAP_CONTENT);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
         textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         textView.setVisibility(View.VISIBLE);

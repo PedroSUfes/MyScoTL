@@ -532,9 +532,50 @@ public class SQLiteDAO
     }
 
     @Override
-    public Employee GetEmployee(String cpf, boolean withPastRegister)
+    public Employee[] GetEmployee(String cpf, boolean withPastRegister)
     {
-        return null;
+        Employee[] employees = GetEmployees(withPastRegister);
+        if(employees == null)
+        {
+            MyLog.LogMessage("No Employee with cpf "+cpf+" was found");
+            return null;
+        }
+
+        ArrayList<Employee> employeeList = new ArrayList<Employee>();
+        for(Employee e : employees)
+        {
+            if(e == null || !e.GetCpf().equals(cpf))
+            {
+                continue;
+            }
+
+            if(!withPastRegister && e.GetEndDate() != null)
+            {
+                continue;
+            }
+
+            employeeList.add(e);
+        }
+
+        if(employeeList.isEmpty())
+        {
+            return null;
+        }
+
+        Employee[] toReturn = new Employee[employeeList.size()];
+        int index = -1;
+        for(Employee e : employeeList)
+        {
+            ++index;
+            if(e == null)
+            {
+                continue;
+            }
+
+            toReturn[index] = e;
+        }
+
+        return toReturn;
     }
 
     @Override

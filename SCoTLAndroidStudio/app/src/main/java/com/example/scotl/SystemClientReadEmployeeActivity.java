@@ -1,24 +1,32 @@
 package com.example.scotl;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import Frameworks.Adapters.TableRowGenerator;
-import Policy.Adapters.MyLog;
+import Frameworks.Utility.ChainOfResponsability.CpfValidationHandle;
 import Policy.BusinessRules.CRUDEmployee;
 import Policy.Entity.Employee;
+import Utility.Func;
 
 public class SystemClientReadEmployeeActivity extends AppCompatActivity
 {
     Button registerButton;
     Button listEmployeeButton;
     TableLayout tableLayout;
+    EditText cpfText;
+    SwitchCompat withPastRegisterSwitch;
+
+    // Relaciona (há algum valor no campo de filtro de cpf?) com o método para recuperar os funcionários
+    ArrayMap<Boolean, Func<Employee[]>> getEmployeeMap = new ArrayMap<Boolean, Func<Employee[]>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,6 +36,7 @@ public class SystemClientReadEmployeeActivity extends AppCompatActivity
 
         GetReferences();
 
+        DefineGetEmployeeMap();
         DefineRegisterButtonEvents();
         DefineListEmployeeButtonEvents();
     }
@@ -37,6 +46,23 @@ public class SystemClientReadEmployeeActivity extends AppCompatActivity
         registerButton = findViewById(R.id.system_client_read_employee_register_button);
         listEmployeeButton = findViewById(R.id.system_client_read_employee_list_button);
         tableLayout = findViewById(R.id.system_client_read_employee_table_layout);
+        cpfText = findViewById(R.id.system_client_read_employee_cpf_edit_text);
+        withPastRegisterSwitch = findViewById(R.id.system_client_read_employee_with_past_register_switch);
+    }
+
+    private void DefineGetEmployeeMap()
+    {
+        getEmployeeMap.put
+                (
+                        false,
+                        () -> CRUDEmployee.GetEmployees(withPastRegisterSwitch.isChecked())
+                );
+
+        getEmployeeMap.put
+                (
+                        true,
+                        () -> CRUDEmployee.GetEmployee(cpfText.getText().toString(), withPastRegisterSwitch.isChecked())
+                );
     }
 
     private void DefineRegisterButtonEvents()
@@ -73,7 +99,18 @@ public class SystemClientReadEmployeeActivity extends AppCompatActivity
 
                             tableLayout.removeViews(1, tableLayout.getChildCount() - 1);
 
-                            Employee[] employeeArray = CRUDEmployee.GetEmployees(true);
+                            Func<Employee[]> getEmployeeFunction = getEmployeeMap.get(!cpfText.getText().toString().isEmpty());
+                            if(getEmployeeFunction == null)
+                            {
+                                return;
+                            }
+
+                            Employee[] employeeArray = getEmployeeFunction.Invoke();
+                            if(employeeArray == null)
+                            {
+                                return;
+                            }
+
                             TableRow[] tableRowArray = TableRowGenerator.GetEmployeeTableRows(employeeArray, this);
 
                             if(tableRowArray == null)
