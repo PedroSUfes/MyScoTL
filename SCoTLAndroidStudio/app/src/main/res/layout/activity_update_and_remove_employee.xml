@@ -48,12 +48,12 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#F5F5DC"
                     android:enabled="false"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
                     android:gravity="center"
                     android:inputType="number"
                     android:textColor="#F5F5DC"
-                    android:textColorHint="#BDB76B" />
+                    android:textColorHint="#BDB76B"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -254,7 +254,7 @@
                     android:text="REMOVER"/>
 
                 <Button
-                    android:id="@+id/updater_employee_update_button"
+                    android:id="@+id/update_employee_update_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="135dp"
