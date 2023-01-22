@@ -88,6 +88,8 @@ extends
 
     public abstract EmployeeType GetEmployeeType();
 
+    public abstract String GetWorkLocalId();
+
     public static Employee GetEmployeeCopy(@NotNull Employee toCopy)
     {
         if(toCopy.GetEmployeeType() == EmployeeType.SERVANT)
