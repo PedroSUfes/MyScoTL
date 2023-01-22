@@ -12,7 +12,7 @@ import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
 
 public class TableRowGenerator {
-	private static EmployeeTableRowGenerator m_employeeTableRowGenerator;
+	private static EmployeeTableRowGenerator tableRowGeneratorEmployee;
 	private static WarehouseTableRowGenerator tableRowGeneratorWarehouse;
 	private static BatchTableRowGenerator tableRowGeneratorBatch;
 	private static CoffeeBagTableRowGenerator tableRowGeneratorCoffeeBag;
