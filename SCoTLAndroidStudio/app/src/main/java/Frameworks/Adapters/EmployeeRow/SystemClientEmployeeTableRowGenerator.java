@@ -66,6 +66,7 @@ public class SystemClientEmployeeTableRowGenerator
                                 UpdateAndRemoveEmployeeActivity.SetHiringDate(e.GetHiringDate());
                                 UpdateAndRemoveEmployeeActivity.SetEndDate(e.GetEndDate());
                                 UpdateAndRemoveEmployeeActivity.SetProfession(e.GetEmployeeType().toString());
+                                UpdateAndRemoveEmployeeActivity.SetWorkLocalId(e.GetWorkLocalId());
 
                                 context.startActivity(new Intent(context, UpdateAndRemoveEmployeeActivity.class));
                             }

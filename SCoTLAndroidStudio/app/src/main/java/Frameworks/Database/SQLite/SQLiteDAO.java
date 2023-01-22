@@ -874,7 +874,7 @@ public class SQLiteDAO
                 database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, newWorksOnValues);
             }catch (Exception e)
             {
-                MyLog.LogMessage(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
 

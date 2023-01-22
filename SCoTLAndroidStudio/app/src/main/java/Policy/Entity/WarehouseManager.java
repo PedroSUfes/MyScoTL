@@ -71,6 +71,12 @@ extends
         return EmployeeType.WAREHOUSE_MANAGER;
     }
 
+    @Override
+    public String GetWorkLocalId()
+    {
+        return m_warehouse.GetId();
+    }
+
     public void SetWarehouse(Warehouse warehouse)
     {
         m_warehouse.CopyAttributesOf(warehouse);

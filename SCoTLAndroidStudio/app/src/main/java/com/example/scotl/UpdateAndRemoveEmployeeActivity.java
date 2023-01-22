@@ -2,10 +2,19 @@ package com.example.scotl;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import Frameworks.Utility.ChainOfResponsability.ChainOfResponsibilityHandler;
+import Frameworks.Utility.ChainOfResponsability.CpfValidationHandle;
+import Frameworks.Utility.ChainOfResponsability.EmptyDataHandle;
+import Frameworks.Utility.Utils;
+import Policy.BusinessRules.CRUDEmployee;
+import Policy.Entity.Property;
+import Policy.Entity.Servant;
 
 public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
 {
@@ -27,8 +36,10 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
     private TextView m_endDateText;
     private TextView m_professionText;
 
-    private Button updateButton;
-    private Button removeButton;
+    private Button m_updateButton;
+    private Button m_removeButton;
+
+    ChainOfResponsibilityHandler<Boolean> validationHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +48,11 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
         setContentView(R.layout.activity_update_and_remove_employee);
 
         GetReferences();
+
+        BuildVerificationChain();
+
+        DefineUpdateButtonEvents();
+        DefineRemoveButtonEvents();
     }
 
     @Override
@@ -137,6 +153,9 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
         m_endDateText = findViewById(R.id.update_employee_end_date_text_view);
         m_workLocalEditText = findViewById(R.id.update_employee_work_local_id_edit_text);
         m_professionText = findViewById(R.id.update_employee_profession_text_view);
+
+        m_updateButton = findViewById(R.id.update_employee_update_button);
+        m_removeButton = findViewById(R.id.update_employee_remove_button);
     }
 
     private void PassStringsArgsToViews()
@@ -173,5 +192,68 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
         {
             m_workLocalEditText.setText(m_workLocalId);
         }
+    }
+
+    private void DefineUpdateButtonEvents()
+    {
+        if(m_updateButton == null)
+        {
+            return;
+        }
+
+        m_updateButton.setOnClickListener
+                (
+                        view ->
+                        {
+                            String text = m_workLocalEditText.getText().toString();
+                            if(!validationHandler.Validate())
+                            {
+                                return;
+                            }
+
+                            Servant toUpdateServant = new Servant
+                                    (
+                                            m_cpf,
+                                            m_nameText.getText().toString(),
+                                            m_cellphoneText.getText().toString(),
+                                            m_birthDate,
+                                            m_hiringDate,
+                                            m_endDate,
+                                            new Property(m_workLocalEditText.getText().toString())
+                                    );
+
+                            if(CRUDEmployee.TryUpdateServant(toUpdateServant, Utils.GetCurrentDate()))
+                            {
+                                startActivity(new Intent(this, SystemClientReadEmployeeActivity.class));
+                            }
+                        }
+                );
+    }
+
+    private void DefineRemoveButtonEvents()
+    {
+        if(m_removeButton == null)
+        {
+            return;
+        }
+
+        m_removeButton.setOnClickListener
+                (
+                        view ->
+                        {
+                            if(CRUDEmployee.TryRemoveEmployee(m_cpf))
+                            {
+                                startActivity(new Intent(this, SystemClientReadEmployeeActivity.class));
+                            }
+                        }
+                );
+    }
+
+    private void BuildVerificationChain()
+    {
+        validationHandler = new ChainOfResponsibilityHandler<Boolean>(new CpfValidationHandle(m_cpfText));
+        validationHandler.SetNext(new EmptyDataHandle(() -> m_nameText.getText().toString(), "Inserir nome"));
+        validationHandler.SetNext(new EmptyDataHandle(() -> m_workLocalEditText.getText().toString(), "Inserir id do local de trabalho"));
+        validationHandler.SetNext(new EmptyDataHandle(() -> m_cellphoneText.getText().toString(), "Inserir telefone"));
     }
 }
