@@ -6,14 +6,14 @@ import Policy.Entity.WarehouseManager;
 
 public class CRUDEmployee 
 {
-    public static Employee[] GetEmployees(boolean withPastRegister)
+    public static Employee[] GetEmployees()
     {
-        return DatabaseAccess.employeeOperationsInterface.GetEmployees(withPastRegister);
+        return DatabaseAccess.employeeOperationsInterface.GetEmployees();
     }
 
-    public static Employee[] GetEmployee(String cpf, boolean withPastRegister)
+    public static Employee GetEmployee(String cpf)
     {
-        return DatabaseAccess.employeeOperationsInterface.GetEmployee(cpf, withPastRegister);
+        return DatabaseAccess.employeeOperationsInterface.GetEmployee(cpf);
     }
 
     public static Servant[] GetServants(boolean withPastRegister)
@@ -26,9 +26,9 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetServant(cpf, withPastRegister);
     }
 
-    public static WarehouseManager[] GetWarehouseManagers(boolean withPastRegister)
+    public static WarehouseManager[] GetWarehouseManagers()
     {
-        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers(withPastRegister);
+        return DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers();
     }
 
     public static WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister)
@@ -36,7 +36,7 @@ public class CRUDEmployee
         return DatabaseAccess.employeeOperationsInterface.GetWarehouseManager(cpf, withPastRegister);
     }
 
-    public static Boolean TryRegisterServant(Servant servant)
+    public static Boolean TryRegisterServant(Servant servant, String date)
     {
         return DatabaseAccess.employeeOperationsInterface.TryRegisterServant(servant);
     }

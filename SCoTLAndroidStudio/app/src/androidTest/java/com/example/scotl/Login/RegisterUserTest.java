@@ -22,16 +22,16 @@ public class RegisterUserTest
 
         Boolean result = database.TryRegisterUser
                 (
-                        "Pedro4",
+                        "Pedro3",
                         "123",
                         new Person
                                 (
-                                        "11111111113",
+                                        "11111111112",
                                         "User Person",
                                         "0800",
                                         "Today"
                                 ),
-                        UserType.SYSTEM_CLIENT
+                        UserType.WAREHOUSE_MANAGER
                 );
 
         MyLog.LogMessage(result.toString());

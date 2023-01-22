@@ -72,12 +72,6 @@ extends
     }
 
     @Override
-    public String GetWorkLocalId()
-    {
-        return m_property.GetId();
-    }
-
-    @Override
     public String toString()
     {
         StringBuilder stringBuilder = new StringBuilder();

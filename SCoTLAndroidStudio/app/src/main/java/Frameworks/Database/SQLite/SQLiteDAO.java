@@ -198,6 +198,7 @@ public class SQLiteDAO
     @Override
     public Batch[] GetBatches()
     {
+
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(BatchTableQueryHelper.GetSelectAllQuery(), null);
 
@@ -212,7 +213,7 @@ public class SQLiteDAO
 						cursor.getString(BatchTableQueryHelper.GetCreationDateIndex())
 					)
 				);
-			} while(cursor.moveToNext());
+			}while(cursor.moveToNext());
 		}
 
 		if(batchList.isEmpty()){
@@ -498,84 +499,13 @@ public class SQLiteDAO
     }
 
     @Override
-    public Employee[] GetEmployees(boolean withPastRegister)
-    {
-        Employee[] servants = GetServants(withPastRegister);
-        Employee[] warehouseManagers = GetWarehouseManagers(withPastRegister);
-
-        int totalSize = (servants != null ? servants.length : 0) + (warehouseManagers != null ? warehouseManagers.length : 0);
-
-        if(totalSize == 0)
-        {
-            return null;
-        }
-
-        Employee[] toReturn = new Employee[totalSize];
-        if(servants != null)
-        {
-            System.arraycopy(servants, 0, toReturn, 0, servants.length);
-
-            if(warehouseManagers != null)
-            {
-                System.arraycopy(warehouseManagers, 0, toReturn, servants.length, warehouseManagers.length);
-            }
-        }
-        else
-        {
-            if(warehouseManagers != null)
-            {
-                System.arraycopy(warehouseManagers, 0, toReturn, 0, warehouseManagers.length);
-            }
-        }
-
-        return toReturn;
+    public Employee[] GetEmployees() {
+        return new Employee[0];
     }
 
     @Override
-    public Employee[] GetEmployee(String cpf, boolean withPastRegister)
-    {
-        Employee[] employees = GetEmployees(withPastRegister);
-        if(employees == null)
-        {
-            MyLog.LogMessage("No Employee with cpf "+cpf+" was found");
-            return null;
-        }
-
-        ArrayList<Employee> employeeList = new ArrayList<Employee>();
-        for(Employee e : employees)
-        {
-            if(e == null || !e.GetCpf().equals(cpf))
-            {
-                continue;
-            }
-
-            if(!withPastRegister && e.GetEndDate() != null)
-            {
-                continue;
-            }
-
-            employeeList.add(e);
-        }
-
-        if(employeeList.isEmpty())
-        {
-            return null;
-        }
-
-        Employee[] toReturn = new Employee[employeeList.size()];
-        int index = -1;
-        for(Employee e : employeeList)
-        {
-            ++index;
-            if(e == null)
-            {
-                continue;
-            }
-
-            toReturn[index] = e;
-        }
-
-        return toReturn;
+    public Employee GetEmployee(String cpf) {
+        return null;
     }
 
     @Override
@@ -585,8 +515,7 @@ public class SQLiteDAO
         Cursor worksOnCursor = database.rawQuery
         (
             withPastRegister ? WorksOnTableQueryHelper.GetSelectAllQuery() :
-            WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(),
-                null
+            WorksOnTableQueryHelper.GetSelectAllThatEndDateIsNullQuery(), null
         );
 
         if(!worksOnCursor.moveToFirst())
@@ -625,18 +554,13 @@ public class SQLiteDAO
     }
 
     @Override
-    public WarehouseManager[] GetWarehouseManagers(boolean withPastRegister)
+    public WarehouseManager[] GetWarehouseManagers()
     {
         SQLiteDatabase database = getReadableDatabase();
-        Cursor manageWarehouseCursor = database.rawQuery
-                (
-                        withPastRegister ? ManageWarehouseTableQueryHelper.GetSelectAllQuery() :
-                                ManageWarehouseTableQueryHelper.GetSelectAllWithNoPastRegister()
-                        , null
-                );
+        Cursor manageWarehouseCursor = database.rawQuery(ManageWarehouseTableQueryHelper.GetSelectAllQuery(), null);
         if(!manageWarehouseCursor.moveToFirst())
         {
-//            MyLog.LogMessage("No warehouse managers in database");
+            MyLog.LogMessage("No warehouse managers in database");
             database.close();
             return null;
         }
@@ -874,7 +798,7 @@ public class SQLiteDAO
                 database.insert(WorksOnTableQueryHelper.WORKS_ON_TABLE, null, newWorksOnValues);
             }catch (Exception e)
             {
-                System.out.println(e.getMessage());
+                MyLog.LogMessage(e.getMessage());
             }
         }
 

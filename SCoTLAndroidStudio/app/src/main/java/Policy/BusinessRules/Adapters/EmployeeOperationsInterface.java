@@ -6,11 +6,11 @@ import Policy.Entity.WarehouseManager;
 
 public interface EmployeeOperationsInterface 
 {
-    public Employee[] GetEmployees(boolean withPastRegister); // Remover
-    public Employee[] GetEmployee(String cpf, boolean withPastRegister); // Remover
+    public Employee[] GetEmployees(); // Remover
+    public Employee GetEmployee(String cpf); // Remover
     public Servant[] GetServants(boolean withPastRegister);
     public Servant[] GetServant(String cpf, boolean withPastRegister);
-    public WarehouseManager[] GetWarehouseManagers(boolean withPastRegister); // Atualizar !!
+    public WarehouseManager[] GetWarehouseManagers(); // Atualizar !!
     public WarehouseManager[] GetWarehouseManager(String cpf, boolean withPastRegister);
     public Boolean TryRegisterServant(Servant servant);
     public Boolean TryRegisterWarehouseManager(WarehouseManager warehouseManager);

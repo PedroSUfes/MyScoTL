@@ -31,7 +31,7 @@ extends
             (
                     Person person,
                     String hiringDate,
-                    String endDate,
+                     String endDate,
                     Warehouse warehouse
             )
     {
@@ -69,12 +69,6 @@ extends
     public EmployeeType GetEmployeeType()
     {
         return EmployeeType.WAREHOUSE_MANAGER;
-    }
-
-    @Override
-    public String GetWorkLocalId()
-    {
-        return m_warehouse.GetId();
     }
 
     public void SetWarehouse(Warehouse warehouse)
