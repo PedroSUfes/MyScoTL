@@ -16,6 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Frameworks.Adapters.TableRowGenerator;
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Batch;
@@ -93,6 +94,11 @@ public class BatchListMenu extends AppCompatActivity {
 		tbrow0.addView(tv1);
 
 		stk.addView(tbrow0);
+
+		TableRowGenerator.setTableRowGeneratorBatch();
+
+
+
 
 		if(batches != null){
 			for (Batch batch : batches) {
