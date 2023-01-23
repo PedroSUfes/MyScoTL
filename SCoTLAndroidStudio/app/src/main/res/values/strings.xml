@@ -9,4 +9,8 @@
     <string name="row1Name">Matheus</string>
     <string name="row1Age">21</string>
     <string name="row1Surname">Silva</string>
+    <string name="cadastrar">CADASTRAR</string>
+    <string name="cpf">CPF</string>
+    <string name="name">NOME</string>
+    <string name="profession">PROFISSÃO</string>
 </resources>
