@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
 import Frameworks.Utility.SystemClientInterfaceClassDefiner;
+import Frameworks.Utility.TableRowDefiner.ManagerTableRowGeneratorDefiner;
 import Frameworks.Utility.TableRowDefiner.SystemClientTableRowGeneratorDefiner;
 import Frameworks.Utility.TableRowDefiner.TableRowGeneratorDefiner;
 import Frameworks.Utility.WarehouseManagerInterfaceClassDefiner;
@@ -68,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
                 UserType userType = LoginManager.GetUserType();
 
-                for(InterfaceClassDefiner i: interfaceClassesList){
+                for(InterfaceClassDefiner i: interfaceClassesList)
+                {
                     if(i == null){
                         continue;
                     }
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity2(){
 //        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
-        Intent intent = new Intent(this, SystemClientReadEmployeeActivity.class);
+        Intent intent = new Intent(this, ManagerReadEmployeeActivity.class);
         startActivity(intent);
     }
 
@@ -129,5 +131,6 @@ public class MainActivity extends AppCompatActivity {
     private void AddTableRowGeneratorDefiners()
     {
         tableRowGeneratorDefinerList.add(new SystemClientTableRowGeneratorDefiner());
+        tableRowGeneratorDefinerList.add(new ManagerTableRowGeneratorDefiner());
     }
 }

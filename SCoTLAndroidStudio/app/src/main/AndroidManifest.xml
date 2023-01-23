@@ -37,7 +37,21 @@
         <activity
             android:name=".RegisterEmployeeActivity"
             android:exported="true" />
-
+        <activity
+            android:name=".ManagerReadEmployeeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateAndRemovePropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SystemClientReadPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterEmployeeActivity"
+            android:exported="true" />
         <activity
             android:name=".SystemClientReadEmployeeActivity"
             android:exported="true" />
