@@ -4,17 +4,18 @@ import android.content.Context;
 import android.widget.TableRow;
 
 import Frameworks.Adapters.BatchRow.BatchTableRowGenerator;
+import Frameworks.Adapters.CoffeeBagRow.CoffeeBagTableRowGenerator;
 import Frameworks.Adapters.EmployeeRow.EmployeeTableRowGenerator;
 import Frameworks.Adapters.PropertyRow.PropertyTableRowGenerator;
 import Policy.Entity.Batch;
+import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
 import Policy.Entity.Property;
 
 public class TableRowGenerator {
 	private static EmployeeTableRowGenerator m_employeeTableRowGenerator;
 	private static BatchTableRowGenerator m_batchTableRowGenerator;
-//	private static TableRow[] TableRowGeneratorCoffeeBag;
-//	private static TableRow[] TableRowGeneratorWarehouse;
+	private static CoffeeBagTableRowGenerator m_coffeeBagTableRowGenerator;
 	private static PropertyTableRowGenerator m_propertyTableRowGenerator;
 
 	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
@@ -58,6 +59,16 @@ public class TableRowGenerator {
 		m_batchTableRowGenerator = batchTableRowGenerator;
 	}
 
+	public static void SetCoffeeBagTableRowGenerator(CoffeeBagTableRowGenerator coffeeBagTableRowGenerator){
+		if(coffeeBagTableRowGenerator == null){
+			System.out.printf("Null coffeeBag table row generator");
+			return;
+		}
+
+		m_coffeeBagTableRowGenerator = coffeeBagTableRowGenerator;
+	}
+
+
 	public static TableRow[] GetPropertyTableRows(Property[] propertyArray, Context context)
 	{
 		return m_propertyTableRowGenerator.GenerateLines(propertyArray, context);
@@ -68,4 +79,10 @@ public class TableRowGenerator {
 
 		return m_batchTableRowGenerator.GenerateLines(batchArray, context);
 	}
+
+	public static TableRow[] GetCoffeeBagTableRows(CoffeeBag[] coffeeBagArray, Context context) {
+
+		return m_coffeeBagTableRowGenerator.GenerateLines(coffeeBagArray, context);
+	}
+
 }

@@ -23,7 +23,7 @@ public class SystemClientBatchTableRowGenerator implements BatchTableRowGenerato
 		if(batchArray == null){
 			return null;
 		}
-
+    
 		ArrayList<TableRow> tableRowList = new ArrayList<TableRow>();
 
 		for (Batch batch : batchArray) {

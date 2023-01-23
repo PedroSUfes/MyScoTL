@@ -13,4 +13,12 @@
     <string name="cpf">CPF</string>
     <string name="name">NOME</string>
     <string name="profession">PROFISSÃO</string>
+    <string name="name">Nome</string>
+    <string name="inserir_nome">Inserir nome</string>
+    <string name="inserir_cpf">Inserir CPF</string>
+    <string name="id_saca">ID Saca</string>
+    <string name="id_lote">ID Lote</string>
+    <string name="id_galpao">ID Galpão</string>
+    <string name="data_armazenado">Data Armazenado</string>
+
 </resources>

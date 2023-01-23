@@ -21,6 +21,7 @@ import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
 import Frameworks.Utility.InterfaceClasses;
 import Frameworks.Utility.SystemClientInterfaceClassDefiner;
+import Frameworks.Utility.TableRowDefiner.ManagerTableRowGeneratorDefiner;
 import Frameworks.Utility.TableRowDefiner.SystemClientTableRowGeneratorDefiner;
 import Frameworks.Utility.TableRowDefiner.TableRowGeneratorDefiner;
 import Frameworks.Utility.WarehouseManagerInterfaceClassDefiner;
@@ -95,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
                     t.DefineTableRowGenerator();
                 }
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
-                openActivity3();
+
                 //openActivity2();
+                testeCoffeBagMenu();
+
             }
         });
 
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity2(){
         Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
+//        Intent intent = new Intent(this, ManagerReadPropertyActivity.class);
         startActivity(intent);
     }
 
@@ -131,11 +135,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity3(){
         Intent intent = new Intent(this, BatchListMenu.class);
+    }
+
+    public void testeCoffeBagMenu(){
+        Intent intent = new Intent(this, CoffeeBagMenu.class);
+
         startActivity(intent);
     }
 
     private void AddTableRowGeneratorDefiners()
     {
         tableRowGeneratorDefinerList.add(new SystemClientTableRowGeneratorDefiner());
+        tableRowGeneratorDefinerList.add(new ManagerTableRowGeneratorDefiner());
     }
 }

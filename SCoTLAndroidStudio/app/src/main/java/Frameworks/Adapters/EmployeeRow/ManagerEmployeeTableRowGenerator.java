@@ -1,27 +1,20 @@
 package Frameworks.Adapters.EmployeeRow;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-
-import com.example.scotl.UpdateAndRemoveEmployeeActivity;
-
 import java.util.ArrayList;
 
 import Policy.Entity.Employee;
 
-public class SystemClientEmployeeTableRowGenerator
-		implements
-		EmployeeTableRowGenerator
+public class ManagerEmployeeTableRowGenerator
+    implements
+        EmployeeTableRowGenerator
 {
-
-    public SystemClientEmployeeTableRowGenerator() {}
-
     @Override
     public TableRow[] GenerateLines(Employee[] employeeArray, Context context)
     {
@@ -34,7 +27,7 @@ public class SystemClientEmployeeTableRowGenerator
 
         for(Employee e : employeeArray)
         {
-            if(e == null)
+            if (e == null)
             {
                 continue;
             }
@@ -52,24 +45,6 @@ public class SystemClientEmployeeTableRowGenerator
             tableRow.addView(cpfText);
             tableRow.addView(nameText);
             tableRow.addView(professionText);
-
-            // Adicionar evento de update
-            tableRow.setOnClickListener
-                    (
-                            view ->
-                            {
-                                UpdateAndRemoveEmployeeActivity.SetCpf(e.GetCpf());
-                                UpdateAndRemoveEmployeeActivity.SetName(e.GetName());
-                                UpdateAndRemoveEmployeeActivity.SetBirthDate(e.GetBirthDate());
-                                UpdateAndRemoveEmployeeActivity.SetCellphone(e.GetCellphone());
-                                UpdateAndRemoveEmployeeActivity.SetHiringDate(e.GetHiringDate());
-                                UpdateAndRemoveEmployeeActivity.SetEndDate(e.GetEndDate());
-                                UpdateAndRemoveEmployeeActivity.SetProfession(e.GetEmployeeType().toString());
-                                UpdateAndRemoveEmployeeActivity.SetWorkLocalId(e.GetWorkLocalId());
-
-                                context.startActivity(new Intent(context, UpdateAndRemoveEmployeeActivity.class));
-                            }
-                    );
 
             tableRowList.add(tableRow);
         }

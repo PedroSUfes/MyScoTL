@@ -15,10 +15,9 @@ import Policy.BusinessRules.CRUDProperty;
 import Policy.Entity.Property;
 import Utility.Func;
 
-public class SystemClientReadPropertyActivity extends AppCompatActivity
+public class ManagerReadPropertyActivity extends AppCompatActivity
 {
     Button m_listButton;
-    Button m_registerButton;
 
     EditText m_idFilterEditText;
 
@@ -31,21 +30,19 @@ public class SystemClientReadPropertyActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_system_client_read_property);
+        setContentView(R.layout.activity_manager_read_property);
 
         GetReferences();
         DefineGetPropertyMap();
 
         DefineListButtonEvents();
-        DefineRegisterButtonEvents();
     }
 
     private void GetReferences()
     {
-        m_listButton = findViewById(R.id.system_client_read_property_list_button);
-        m_registerButton = findViewById(R.id.system_client_read_property_register_button);
-        m_idFilterEditText = findViewById(R.id.system_client_read_property_filter_id_edit_text);
-        m_tableLayout = findViewById(R.id.system_client_read_property_table_layout);
+        m_listButton = findViewById(R.id.manager_read_property_list_button);
+        m_idFilterEditText = findViewById(R.id.manager_read_property_filter_id_edit_text);
+        m_tableLayout = findViewById(R.id.manager_read_property_table_layout);
     }
 
     private void DefineListButtonEvents()
@@ -94,22 +91,6 @@ public class SystemClientReadPropertyActivity extends AppCompatActivity
 
                                 m_tableLayout.addView(tb);
                             }
-                        }
-                );
-    }
-
-    private void DefineRegisterButtonEvents()
-    {
-        if(m_registerButton == null)
-        {
-            return;
-        }
-
-        m_registerButton.setOnClickListener
-                (
-                        view ->
-                        {
-                            startActivity(new Intent(this, RegisterPropertyActivity.class));
                         }
                 );
     }
