@@ -58,7 +58,7 @@ public class SystemClientWarehouseTableRowGenerator
                     (
                             view ->
                             {
-                                UpdateAndRemoveWarehouseActivity.SetCpf(e.GetCpf());
+                                //UpdateAndRemoveWarehouseActivity;
                                 //UpdateAndRemoveWarehouseActivity.SetName(e.GetName());
                                 //UpdateAndRemoveWarehouseActivity.SetBirthDate(e.GetBirthDate());
                                 //UpdateAndRemoveWarehouseActivity.SetCellphone(e.GetCellphone());
