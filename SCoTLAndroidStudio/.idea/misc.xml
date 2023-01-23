@@ -5,22 +5,28 @@
       <map>
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2765" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2765" />
+        <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout-v21/select_property_dialog.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_login.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_main_menu.xml" value="0.22327898550724637" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_manager_read_employee.xml" value="0.33" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_manager_read_property.xml" value="0.22327898550724637" />
+        <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_manager_read_warehouse.xml" value="0.271875" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_read_employee.xml" value="0.25" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_read_employee_system_client.xml" value="0.2" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_read_property.xml" value="0.25" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_register_employee.xml" value="0.38735177865612647" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_register_property.xml" value="0.18206521739130435" />
+        <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_register_warehouse.xml" value="0.25" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_system_client_menu.xml" value="0.33" />
+        <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_system_client_read_warehouse.xml" value="0.20885416666666667" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_system_client_register_property.xml" value="0.33" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_test.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_teste.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_teste2.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_update_and_remove_employee.xml" value="0.33" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_update_and_remove_property.xml" value="0.1" />
+        <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_update_and_remove_warehouse.xml" value="0.24592391304347827" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_update_property.xml" value="0.25" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/activity_warehouse_menu.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/pedro/Desktop/Meus_programas/Programacao_Orientada_a_objeto/SCoTL/MyScoTL/SCoTLAndroidStudio/app/src/main/res/layout/select_property_dialog.xml" value="0.2223731884057971" />

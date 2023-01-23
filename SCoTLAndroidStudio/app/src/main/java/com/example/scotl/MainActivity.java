@@ -3,19 +3,13 @@ package com.example.scotl;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Array;
-import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
@@ -29,7 +23,6 @@ import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.BusinessRules.LoginManager;
 import Policy.BusinessRules.UserType;
-import Policy.Entity.Person;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -97,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
 
-                //openActivity2();
-                testeCoffeBagMenu();
-
+                openActivity2();
+//                testeCoffeeBagMenu();
+//                OpenBatchActivity();
             }
         });
 
@@ -108,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivity2(){
-//        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
-        Intent intent = new Intent(this, CoffeeBagMenu.class);
+        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
         startActivity(intent);
     }
 
@@ -133,11 +125,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void openActivity3(){
+    public void OpenBatchActivity(){
         Intent intent = new Intent(this, BatchListMenu.class);
+        startActivity(intent);
     }
 
-    public void testeCoffeBagMenu(){
+    public void testeCoffeeBagMenu(){
         Intent intent = new Intent(this, CoffeeBagMenu.class);
 
         startActivity(intent);

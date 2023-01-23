@@ -1,25 +1,21 @@
 package Frameworks.Adapters.WarehouseRow;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.scotl.UpdateAndRemovePropertyActivity;
-import com.example.scotl.UpdateAndRemoveWarehouseActivity;
-
 import java.util.ArrayList;
-
 import Policy.Entity.Warehouse;
 
-public class SystemClientWarehouseTableRowGenerator
+
+public class ManagerWarehouseTableRowGenerator
     implements
         WarehouseTableRowGenerator
 {
-    public SystemClientWarehouseTableRowGenerator() {}
+    public ManagerWarehouseTableRowGenerator() {}
 
     @Override
     public TableRow[] GenerateLines(Warehouse[] warehouseArray, Context context)
@@ -51,15 +47,6 @@ public class SystemClientWarehouseTableRowGenerator
             tableRow.addView(idWarehouseText);
             tableRow.addView(cpfPropText);
             tableRow.addView(hiringDateText);
-
-            tableRow.setOnClickListener
-                    (
-                            view ->
-                            {
-                                UpdateAndRemoveWarehouseActivity.SetWarehouse(e);
-                                context.startActivity(new Intent(context, UpdateAndRemoveWarehouseActivity.class));
-                            }
-                    );
 
             tableRowList.add(tableRow);
         }

@@ -153,42 +153,6 @@
 
                 </TableRow>
 
-                <TableRow>
-
-                    <TextView
-                        android:id="@+id/tv_cpf"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
-                        android:text="15909585725"
-                        android:textColor="#2F4F4F"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:gravity="center_horizontal"
-                        android:padding="7dp"
-                        android:text="Pedro Santos Moreira"
-                        android:textColor="#2F4F4F"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tv_profession"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:gravity="center_horizontal"
-                        android:padding="7dp"
-                        android:text="Engenheiro de Software"
-                        android:textColor="#2F4F4F"
-                        android:textSize="15sp" />
-                </TableRow>
-
             </TableLayout>
 
         </LinearLayout>

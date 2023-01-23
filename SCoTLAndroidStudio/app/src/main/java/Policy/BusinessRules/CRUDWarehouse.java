@@ -34,6 +34,11 @@ public class CRUDWarehouse
         return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, cityName, streetName, withPastRegister);
     }
 
+    public static Warehouse[] GetWarehouses(String stateName, String cityName, String streetName, int residentialNumber, boolean withPastRegister)
+    {
+        return DatabaseAccess.warehouseOperationsInterface.GetWarehouses(stateName, cityName, streetName, residentialNumber, withPastRegister);
+    }
+
     public static Boolean TryRegisterWarehouse(Warehouse warehouse)
     {
         return DatabaseAccess.warehouseOperationsInterface.TryRegisterWarehouse(warehouse);

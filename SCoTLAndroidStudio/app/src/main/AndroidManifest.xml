@@ -14,29 +14,32 @@
         android:theme="@style/Theme.SCoTL"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateAndRemoveWarehouseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SystemClientReadWarehouseActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterWarehouse"
             android:exported="false">
             <meta-data
-            android:name="android.app.lib_name"
+                android:name="android.app.lib_name"
                 android:value="" />
-         </activity>   
-         
-         <activity
+        </activity>
+        <activity
             android:name=".BatchRemoveActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-         </activity>    
-         
-         <activity
+        </activity>
+        <activity
             android:name=".CoffeeBagRemoveMenu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".CoffeeBagInformationMenu"
             android:exported="false">
@@ -115,9 +118,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        
         <activity
-            android:name=".WarehouseMenu"
+            android:name=".ManagerReadWarehouseActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -3,7 +3,6 @@ package Frameworks.Adapters;
 import android.content.Context;
 import android.widget.TableRow;
 
-import java.lang.reflect.Array;
 
 import Frameworks.Adapters.WarehouseRow.WarehouseTableRowGenerator;
 import Policy.Entity.Batch;
@@ -16,6 +15,7 @@ import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
 import Policy.Entity.Property;
+import Policy.Entity.Warehouse;
 
 public class TableRowGenerator {
 	private static BatchTableRowGenerator tableRowGeneratorBatch;
@@ -28,10 +28,13 @@ public class TableRowGenerator {
 
 	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
 	{
-		if(m_employeeTableRowGenerator == null)
+		if (m_employeeTableRowGenerator == null)
 		{
 			return null;
 		}
+		
+		return m_employeeTableRowGenerator.GenerateLines(employeeArray, context);
+	}
 
 	public static void SetWarehouseTableRowGenerator(WarehouseTableRowGenerator warehouseTableRowGenerator) {
 		if (warehouseTableRowGenerator == null)
@@ -43,7 +46,6 @@ public class TableRowGenerator {
 
 	public static TableRow[] GetWarehouseTableRows(Warehouse[] warehouses, Context context) {
 		return m_warehouseTableRowGenerator.GenerateLines(warehouses, context);
-		return m_employeeTableRowGenerator.GenerateLines(employeeArray, context);
 	}
 
 	public static void SetEmployeeTableRowGenerator(EmployeeTableRowGenerator employeeTableRowGenerator)
