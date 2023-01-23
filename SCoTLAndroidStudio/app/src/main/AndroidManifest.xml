@@ -17,9 +17,59 @@
             android:name=".RegisterWarehouse"
             android:exported="false">
             <meta-data
+            android:name="android.app.lib_name"
+                android:value="" />
+         </activity>   
+         
+         <activity
+            android:name=".BatchRemoveActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+         </activity>    
+         
+         <activity
+            android:name=".CoffeeBagRemoveMenu"
+            android:exported="false">
+            <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name=".CoffeeBagInformationMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CoffeeBagRegisterMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CoffeeBagMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".RegisterEmployeeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ManagerReadPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerReadEmployeeActivity"
+            android:exported="false" />
         <activity
             android:name=".UpdateAndRemovePropertyActivity"
             android:exported="false" />
@@ -36,28 +86,38 @@
             android:name=".SystemClientReadEmployeeActivity"
             android:exported="true" />
         <activity
+            android:name=".BatchRegisterMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".BatchListMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UpdateAndRemovePropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SystemClientReadPropertyActivity"
+            android:exported="false" />
+        <activity
             android:name=".SystemClientMenu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".UpdateAndRemoveEmployeeActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+        
         <activity
             android:name=".WarehouseMenu"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".Teste"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

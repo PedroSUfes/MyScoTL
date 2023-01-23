@@ -3,17 +3,25 @@ package com.example.scotl;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Array;
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
+import Frameworks.Utility.InterfaceClasses;
 import Frameworks.Utility.SystemClientInterfaceClassDefiner;
+import Frameworks.Utility.TableRowDefiner.ManagerTableRowGeneratorDefiner;
 import Frameworks.Utility.TableRowDefiner.SystemClientTableRowGeneratorDefiner;
 import Frameworks.Utility.TableRowDefiner.TableRowGeneratorDefiner;
 import Frameworks.Utility.WarehouseManagerInterfaceClassDefiner;
@@ -21,6 +29,7 @@ import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.BusinessRules.LoginManager;
 import Policy.BusinessRules.UserType;
+import Policy.Entity.Person;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         AddMainMenuInterfaces();
         AddTableRowGeneratorDefiners();
         InjectDatabase();
+
 
         user = (EditText) findViewById(R.id.login_User);
         password = (EditText) findViewById(R.id.login_password);
@@ -85,9 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
                     t.DefineTableRowGenerator();
                 }
-
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
-                openActivity2();
+
+                //openActivity2();
+                testeCoffeBagMenu();
+
             }
         });
 
@@ -96,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivity2(){
-//        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
-        Intent intent = new Intent(this, SystemClientReadPropertyActivity.class);
+        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
+//        Intent intent = new Intent(this, ManagerReadPropertyActivity.class);
         startActivity(intent);
     }
 
@@ -121,9 +133,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void openActivity3(){
+        Intent intent = new Intent(this, BatchListMenu.class);
+    }
+
+    public void testeCoffeBagMenu(){
+        Intent intent = new Intent(this, CoffeeBagMenu.class);
+
+        startActivity(intent);
+    }
 
     private void AddTableRowGeneratorDefiners()
     {
         tableRowGeneratorDefinerList.add(new SystemClientTableRowGeneratorDefiner());
+        tableRowGeneratorDefinerList.add(new ManagerTableRowGeneratorDefiner());
     }
 }

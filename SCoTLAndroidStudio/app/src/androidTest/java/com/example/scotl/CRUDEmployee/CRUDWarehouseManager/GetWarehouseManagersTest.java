@@ -21,7 +21,7 @@ public class GetWarehouseManagersTest
 
         DatabaseAccess.employeeOperationsInterface = database;
 
-        WarehouseManager[] result = DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers(true);
+        WarehouseManager[] result = DatabaseAccess.employeeOperationsInterface.GetWarehouseManagers(false);
         if(result == null)
         {
             return;

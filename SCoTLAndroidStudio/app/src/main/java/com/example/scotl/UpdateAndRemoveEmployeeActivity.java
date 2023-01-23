@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,10 +12,16 @@ import android.widget.TextView;
 import Frameworks.Utility.ChainOfResponsability.ChainOfResponsibilityHandler;
 import Frameworks.Utility.ChainOfResponsability.CpfValidationHandle;
 import Frameworks.Utility.ChainOfResponsability.EmptyDataHandle;
+import Frameworks.Utility.InterfaceClasses;
 import Frameworks.Utility.Utils;
 import Policy.BusinessRules.CRUDEmployee;
+import Policy.Entity.Employee;
 import Policy.Entity.Property;
 import Policy.Entity.Servant;
+import Policy.Entity.Warehouse;
+import Policy.Entity.WarehouseManager;
+import Utility.Func;
+import Utility.Func1;
 
 public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
 {
@@ -41,6 +48,8 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
 
     ChainOfResponsibilityHandler<Boolean> validationHandler;
 
+    ArrayMap<String, Func<Boolean>> getUpdateFunctionMap = new ArrayMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -50,6 +59,7 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
         GetReferences();
 
         BuildVerificationChain();
+        DefineGetUpdateFunctionMap();
 
         DefineUpdateButtonEvents();
         DefineRemoveButtonEvents();
@@ -194,23 +204,33 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
         }
     }
 
-    private void DefineUpdateButtonEvents()
+    private void DefineGetUpdateFunctionMap()
     {
-        if(m_updateButton == null)
-        {
-            return;
-        }
-
-        m_updateButton.setOnClickListener
+        getUpdateFunctionMap.put
                 (
-                        view ->
+                        "WAREHOUSE_MANAGER",
+                        () ->
                         {
-                            String text = m_workLocalEditText.getText().toString();
-                            if(!validationHandler.Validate())
-                            {
-                                return;
-                            }
+                            WarehouseManager toUpdateWarehouseManager = new WarehouseManager
+                                    (
+                                            m_cpf,
+                                            m_nameText.getText().toString(),
+                                            m_cellphoneText.getText().toString(),
+                                            m_birthDate,
+                                            m_hiringDate,
+                                            m_endDate,
+                                            new Warehouse(m_workLocalEditText.getText().toString())
+                                    );
 
+                            return CRUDEmployee.TryUpdateWarehouseManager(toUpdateWarehouseManager, Utils.GetCurrentDate());
+                        }
+                );
+
+        getUpdateFunctionMap.put
+                (
+                        "SERVANT",
+                        () ->
+                        {
                             Servant toUpdateServant = new Servant
                                     (
                                             m_cpf,
@@ -222,9 +242,36 @@ public class UpdateAndRemoveEmployeeActivity extends AppCompatActivity
                                             new Property(m_workLocalEditText.getText().toString())
                                     );
 
-                            if(CRUDEmployee.TryUpdateServant(toUpdateServant, Utils.GetCurrentDate()))
+                            return CRUDEmployee.TryUpdateServant(toUpdateServant, Utils.GetCurrentDate());
+                        }
+                );
+    }
+
+    private void DefineUpdateButtonEvents()
+    {
+        if(m_updateButton == null)
+        {
+            return;
+        }
+
+        m_updateButton.setOnClickListener
+                (
+                        view ->
+                        {
+                            if(!validationHandler.Validate())
                             {
-                                startActivity(new Intent(this, SystemClientReadEmployeeActivity.class));
+                                return;
+                            }
+
+                            Func<Boolean> updateFunction = getUpdateFunctionMap.get(m_professionText.getText().toString());
+                            if(updateFunction == null)
+                            {
+                                return;
+                            }
+
+                            if(updateFunction.Invoke())
+                            {
+                                startActivity(new Intent(this, InterfaceClasses.employeeClass));
                             }
                         }
                 );
