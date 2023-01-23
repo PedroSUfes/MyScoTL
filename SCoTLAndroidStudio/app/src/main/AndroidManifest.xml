@@ -14,12 +14,21 @@
         android:theme="@style/Theme.SCoTL"
         tools:targetApi="31">
         <activity
+            android:name=".BatchRemoveActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+         </activity>    
+         
+         <activity
             android:name=".CoffeeBagRemoveMenu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".CoffeeBagInformationMenu"
             android:exported="false">
@@ -69,28 +78,38 @@
             android:name=".SystemClientReadEmployeeActivity"
             android:exported="true" />
         <activity
+            android:name=".BatchRegisterMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".BatchListMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UpdateAndRemovePropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SystemClientReadPropertyActivity"
+            android:exported="false" />
+        <activity
             android:name=".SystemClientMenu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".UpdateAndRemoveEmployeeActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+        
         <activity
             android:name=".WarehouseMenu"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".BatchTabletest"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

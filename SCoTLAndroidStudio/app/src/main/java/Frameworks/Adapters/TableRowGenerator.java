@@ -16,7 +16,6 @@ public class TableRowGenerator {
 	private static EmployeeTableRowGenerator m_employeeTableRowGenerator;
 	private static BatchTableRowGenerator m_batchTableRowGenerator;
 	private static CoffeeBagTableRowGenerator m_coffeeBagTableRowGenerator;
-//	private static TableRow[] TableRowGeneratorWarehouse;
 	private static PropertyTableRowGenerator m_propertyTableRowGenerator;
 
 	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
@@ -69,6 +68,7 @@ public class TableRowGenerator {
 		m_coffeeBagTableRowGenerator = coffeeBagTableRowGenerator;
 	}
 
+
 	public static TableRow[] GetPropertyTableRows(Property[] propertyArray, Context context)
 	{
 		return m_propertyTableRowGenerator.GenerateLines(propertyArray, context);
@@ -84,4 +84,5 @@ public class TableRowGenerator {
 
 		return m_coffeeBagTableRowGenerator.GenerateLines(coffeeBagArray, context);
 	}
+
 }
