@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivity2(){
 //        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
-        Intent intent = new Intent(this, ManagerReadEmployeeActivity.class);
+        Intent intent = new Intent(this, ManagerReadPropertyActivity.class);
         startActivity(intent);
     }
 
