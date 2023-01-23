@@ -16,7 +16,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Frameworks.Adapters.TableRowGenerator;
 import Frameworks.Database.SQLite.SQLiteDAO;
+import Policy.BusinessRules.CRUDBatch;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Batch;
 
@@ -72,31 +74,26 @@ public class BatchListMenu extends AppCompatActivity {
 
 	public void Table(){
 
-		stk.removeViews(1, stk.getChildCount() - 1);
+		stk.removeAllViews();
 
-		SQLiteDAO database = new SQLiteDAO(BatchListMenu.this);
-		DatabaseAccess.batchOperationsInterface = database;
-		Batch[] batches = DatabaseAccess.batchOperationsInterface.GetBatches();
+		header();
+
+		Batch[] batches = CRUDBatch.GetBatches();
 
 		if(batches != null){
-			for (Batch batch : batches) {
-				TableRow tbrow = new TableRow(this);
 
-				TextView t1v = new TextView(this);
-				t1v.setText(batch.GetId());
-				t1v.setTextColor(Color.WHITE);
-				t1v.setGravity(Gravity.CENTER);
-				t1v.setTextSize(18);
-				tbrow.addView(t1v);
+			TableRow[] tableRows = TableRowGenerator.GetBatchTableRows(batches, this);
 
-				TextView t2v = new TextView(this);
-				t2v.setText(batch.GetCreationDate());
-				t2v.setTextColor(Color.WHITE);
-				t2v.setGravity(Gravity.CENTER);
-				t2v.setTextSize(18);
-				tbrow.addView(t2v);
+			if(tableRows == null){
+				return;
+			}
 
-				stk.addView(tbrow);
+			for (TableRow tablerow : tableRows) {
+				if(tablerow == null){
+					continue;
+				}
+
+				stk.addView(tablerow);
 			}
 
 		}
@@ -107,47 +104,25 @@ public class BatchListMenu extends AppCompatActivity {
 
 		stk.removeAllViews();
 
-		SQLiteDAO database = new SQLiteDAO(BatchListMenu.this);
-		DatabaseAccess.batchOperationsInterface = database;
-		Batch[] batches = DatabaseAccess.batchOperationsInterface.GetBatches();
+		header();
 
-
-		TableRow tbrow0 = new TableRow(this);
-
-		TextView tv0 = new TextView(this);
-		tv0.setText(" ID ");
-		tv0.setTextColor(Color.WHITE);
-		tv0.setTextSize(30);
-		tbrow0.addView(tv0);
-
-		TextView tv1 = new TextView(this);
-		tv1.setText(" DATA DE CRIAÇÃO ");
-		tv1.setTextColor(Color.WHITE);
-		tv1.setTextSize(30);
-		tbrow0.addView(tv1);
-
-		stk.addView(tbrow0);
+		Batch[] batches = CRUDBatch.GetBatches();
 
 		if(batches != null){
-			for (Batch batch : batches) {
-				if(batch.GetCreationDate().equals(date)) {
-					TableRow tbrow = new TableRow(this);
 
-					TextView t1v = new TextView(this);
-					t1v.setText(batch.GetId());
-					t1v.setTextColor(Color.WHITE);
-					t1v.setGravity(Gravity.CENTER);
-					t1v.setTextSize(18);
-					tbrow.addView(t1v);
+			TableRow[] tableRows = TableRowGenerator.GetBatchTableRows(batches, this);
 
-					TextView t2v = new TextView(this);
-					t2v.setText(batch.GetCreationDate());
-					t2v.setTextColor(Color.WHITE);
-					t2v.setGravity(Gravity.CENTER);
-					t2v.setTextSize(18);
-					tbrow.addView(t2v);
+			if(tableRows == null){
+				return;
+			}
 
-					stk.addView(tbrow);
+			for (TableRow tablerow : tableRows) {
+				if(tablerow == null){
+					continue;
+				}
+				if(tablerow) {           //batch.GetCreationDate().equals(date)
+
+					stk.addView(tablerow);
 				}
 			}
 

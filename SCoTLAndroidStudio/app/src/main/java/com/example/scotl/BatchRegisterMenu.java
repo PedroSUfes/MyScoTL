@@ -31,7 +31,6 @@ public class BatchRegisterMenu extends AppCompatActivity {
 		GetReferences();
 
 
-
 		add_button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

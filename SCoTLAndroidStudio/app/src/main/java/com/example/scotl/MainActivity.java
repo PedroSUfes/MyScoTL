@@ -21,6 +21,8 @@ import Frameworks.Database.SQLite.SQLiteDAO;
 import Frameworks.Utility.InterfaceClassDefiner;
 import Frameworks.Utility.InterfaceClasses;
 import Frameworks.Utility.SystemClientInterfaceClassDefiner;
+import Frameworks.Utility.TableRowDefiner.SystemClientTableRowGeneratorDefiner;
+import Frameworks.Utility.TableRowDefiner.TableRowGeneratorDefiner;
 import Frameworks.Utility.WarehouseManagerInterfaceClassDefiner;
 import Policy.Adapters.MyLog;
 import Policy.BusinessRules.DatabaseAccess;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
 
     ArrayList<InterfaceClassDefiner> interfaceClassesList = new ArrayList<InterfaceClassDefiner>();
+    ArrayList<TableRowGeneratorDefiner> tableRowGeneratorDefinerList = new ArrayList<TableRowGeneratorDefiner>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         MyLog.SetLogAction((message)->Toast.makeText(MainActivity.this, (CharSequence) message, Toast.LENGTH_LONG).show());
         AddMainMenuInterfaces();
+        AddTableRowGeneratorDefiners();
         InjectDatabase();
 
 
@@ -80,6 +84,15 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     i.DefineMenuClassPrincipal(userType);
+                }
+                for(TableRowGeneratorDefiner t : tableRowGeneratorDefinerList)
+                {
+                    if(t == null)
+                    {
+                        continue;
+                    }
+
+                    t.DefineTableRowGenerator();
                 }
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
                 openActivity3();
@@ -119,5 +132,10 @@ public class MainActivity extends AppCompatActivity {
     public void openActivity3(){
         Intent intent = new Intent(this, BatchListMenu.class);
         startActivity(intent);
+    }
+
+    private void AddTableRowGeneratorDefiners()
+    {
+        tableRowGeneratorDefinerList.add(new SystemClientTableRowGeneratorDefiner());
     }
 }
