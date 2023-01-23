@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import Policy.Entity.Employee;
 
 public class SystemClientEmployeeTableRowGenerator
-    implements
-        EmployeeTableRowGenerator
+		implements
+		EmployeeTableRowGenerator
 {
 
     public SystemClientEmployeeTableRowGenerator() {}
