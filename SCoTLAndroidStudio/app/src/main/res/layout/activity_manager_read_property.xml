@@ -33,19 +33,19 @@
                     android:padding="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CPF:"
+                    android:text="ID:"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
                 <EditText
-                    android:id="@+id/manager_read_employee_cpf_edit_text"
+                    android:id="@+id/manager_read_property_filter_id_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="Filtrar com CPF"
-                    android:textColorHint="#7A8391"
                     android:gravity="center"
-                    android:inputType="number"/>
+                    android:hint="Filtrar com ID"
+                    android:inputType="number"
+                    android:textColorHint="#7A8391" />
 
             </LinearLayout>
 
@@ -53,43 +53,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:padding="7dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Incluir registros passados:"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/manager_read_employee_with_past_register_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:gravity="right"
-                android:orientation="horizontal">
+                android:padding="7dp">
 
                 <Button
-                    android:id="@+id/manager_read_employee_list_button"
+                    android:id="@+id/manager_read_property_list_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="10dp"
                     android:layout_marginEnd="10dp"
                     android:text="LISTAR" />
-
             </LinearLayout>
 
-
             <TableLayout
-                android:id="@+id/manager_read_employee_table_layout"
+                android:id="@+id/manager_read_property_table_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
@@ -105,7 +82,7 @@
                         android:background="#2F4F4F"
                         android:gravity="center"
                         android:padding="7dp"
-                        android:text="@string/cpf"
+                        android:text="ID"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -127,47 +104,11 @@
                         android:background="#2F4F4F"
                         android:gravity="center"
                         android:padding="7dp"
-                        android:text="@string/profession"
+                        android:text="Estado"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                </TableRow>
-
-                <TableRow>
-
-                    <TextView
-                        android:id="@+id/tv_cpf"
-                        android:layout_width="125dp"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:gravity="center_horizontal"
-                        android:padding="5dp"
-                        android:text="15909585725"
-                        android:textColor="#2F4F4F"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:gravity="center_horizontal"
-                        android:padding="7dp"
-                        android:text="Pedro Santos Moreira"
-                        android:textColor="#2F4F4F"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tv_profession"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:gravity="center_horizontal"
-                        android:padding="7dp"
-                        android:text="Engenheiro de Software"
-                        android:textColor="#2F4F4F"
-                        android:textSize="15sp" />
                 </TableRow>
 
             </TableLayout>

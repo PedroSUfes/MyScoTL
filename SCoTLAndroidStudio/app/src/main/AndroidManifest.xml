@@ -45,6 +45,12 @@
             android:name=".RegisterEmployeeActivity"
             android:exported="true" />
         <activity
+            android:name=".ManagerReadPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".ManagerReadEmployeeActivity"
             android:exported="false" />
         <activity
