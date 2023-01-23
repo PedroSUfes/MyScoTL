@@ -19,7 +19,7 @@ public class RemoveCoffeeBagTest
         SQLiteDAO database = new SQLiteDAO(appContext);
         DatabaseAccess.coffeeBagOperationsInterface = database;
 
-        Boolean result = DatabaseAccess.coffeeBagOperationsInterface.TryRemoveCoffeeBag("1112", "1111");
+        Boolean result = DatabaseAccess.coffeeBagOperationsInterface.TryRemoveCoffeeBag("1234", "2222");
         MyLog.LogMessage(result.toString());
     }
 }

@@ -13,9 +13,8 @@ import Policy.Entity.Batch;
 
 public class SystemClientBatchTableRowGenerator implements BatchTableRowGenerator {
 
-	public TableRow[] GenerateLines(Context context){
+	public TableRow[] GenerateLines(Batch[] batches, Context context){
 
-		Batch[] batches = CRUDBatch.GetBatches();
 		ArrayList<TableRow> tableRowList = new ArrayList<TableRow>();
 
 		if(batches != null){
