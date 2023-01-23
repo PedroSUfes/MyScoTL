@@ -4,104 +4,323 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< Updated upstream
     tools:context=".WarehouseMenu">
 
     <Button
         android:id="@+id/button_Cadastrar"
         android:layout_width="130dp"
         android:layout_height="45dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
         android:text="Cadastrar"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="29dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/switch_props"
         android:layout_width="240dp"
         android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="192dp"
         android:text="Adicionar antigos proprietários"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="136dp" />
-
-    <EditText
-        android:id="@+id/editText_Cidade"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textAutoComplete"
-        android:text="Cidade"
-        android:textSize="13dp"
-        tools:layout_editor_absoluteX="15dp"
-        tools:layout_editor_absoluteY="86dp" />
-
-
-
-    <EditText
-        android:id="@+id/editText_CPF_Proprietário"
-        android:layout_width="240dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="CPF Proprietário"
-        android:textSize="13dp"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="29dp" />
-
-    <Button
-        android:id="@+id/button_Listar"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="Listar"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="136dp" />
-
-    <EditText
-        android:id="@+id/editText_Num"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Num"
-        android:textSize="13dp"
-        tools:layout_editor_absoluteX="345dp"
-        tools:layout_editor_absoluteY="86dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_Bairro"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:inputType="textAutoComplete"
         android:text="Bairro"
         android:textSize="13dp"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="86dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
-        android:id="@+id/editText_Rua"
-        android:layout_width="100dp"
+        android:id="@+id/editTextNum"
+        android:layout_width="50dp"
         android:layout_height="40dp"
+        android:layout_marginTop="140dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Num"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextStreet"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="140dp"
         android:ems="10"
         android:inputType="textAutoComplete"
         android:text="Rua"
         android:textSize="13dp"
-        tools:layout_editor_absoluteX="235dp"
-        tools:layout_editor_absoluteY="86dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonListar"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="8dp"
+        android:text="Listar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextCity"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="128dp"
+        android:ems="10"
+        android:inputType="textAutoComplete"
+        android:text="Cidade"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextState"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="88dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Estado"
+        android:textSize="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextCPFOwner"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="CPF Proprietário"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+=======
+    tools:context=".SystemClientReadEmployeeActivity">
 
     <ScrollView
-        android:layout_width="382dp"
-        android:layout_height="494dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationY="0dp"
+>>>>>>> Stashed changes
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86">
+<<<<<<< Updated upstream
+        app:layout_constraintVertical_bias="0.365">
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#2F4F4F"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="ID"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#2F4F4F"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="Data"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#2F4F4F"
+                android:gravity="center"
+                android:padding="7dp"
+                android:text="CPF Proprietário"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+    </TableLayout>
+=======
+        app:layout_constraintVertical_bias="0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:layout_marginTop="25dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:padding="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CPF:"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/system_client_read_warehouse_cpf_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="Filtrar com CPF"
+                    android:textColorHint="#7A8391"
+                    android:gravity="center"
+                    android:inputType="number"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:padding="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Incluir registros passados:"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/system_client_read_warehouse_with_past_register_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left"
+                android:padding="7dp">
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/system_client_read_warehouse_register_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/cadastrar"
+                        android:textStyle="bold"/>
+                </TableLayout>
+>>>>>>> Stashed changes
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/system_client_read_employee_list_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="LISTAR" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TableLayout
+                android:id="@+id/system_client_read_warehouse_table_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="10dp"
+                android:shrinkColumns="*"
+                android:stretchColumns="*">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#2F4F4F"
+                        android:gravity="center"
+                        android:padding="7dp"
+                        android:text="ID"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#2F4F4F"
+                        android:gravity="center"
+                        android:padding="7dp"
+                        android:text="Cpf do Prop"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#2F4F4F"
+                        android:gravity="center"
+                        android:padding="7dp"
+                        android:text="Data"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
