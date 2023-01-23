@@ -16,7 +16,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import Frameworks.Adapters.TableRowGenerator;
 import Frameworks.Database.SQLite.SQLiteDAO;
+import Policy.BusinessRules.CRUDCoffeeBag;
 import Policy.BusinessRules.DatabaseAccess;
 import Policy.Entity.Batch;
 import Policy.Entity.CoffeeBag;
@@ -30,6 +34,7 @@ public class CoffeeBagMenu extends AppCompatActivity {
 	private EditText id_warehouse_txt;
 	private Button add_button;
 	private Button list_button;
+	private Button remove_button;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +43,7 @@ public class CoffeeBagMenu extends AppCompatActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_coffee_bag_menu);
 
-		id_coffeeBag_txt = findViewById(R.id.Id_coffebag_text);
-		id_batch_txt = findViewById(R.id.id_batch_text);
-		id_warehouse_txt = findViewById(R.id.id_warehouse_text);
-		add_button = findViewById(R.id.add_button);
-		list_button = findViewById(R.id.list_button);
-		stk = (TableLayout) findViewById(R.id.table_list);
-
-		SQLiteDAO database = new SQLiteDAO(CoffeeBagMenu.this);
-		DatabaseAccess.coffeeBagOperationsInterface = database;
-		DatabaseAccess.warehouseOperationsInterface = database;
-		DatabaseAccess.batchOperationsInterface = database;
+		GetReferences();
 
 		Table();
 
@@ -56,6 +51,13 @@ public class CoffeeBagMenu extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				openActivityCoffeBagRegister();
+			}
+		});
+
+		remove_button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				openActivityCoffeBagRemove();
 			}
 		});
 
@@ -102,296 +104,160 @@ public class CoffeeBagMenu extends AppCompatActivity {
 	}
 
 	public void Table(){
-		stk.removeAllViews();
-		CoffeeBag[] coffeeBags = DatabaseAccess.coffeeBagOperationsInterface.GetCoffeeBags();
 
+		stk.removeViews(1, stk.getChildCount() - 1);
 
-		TableRow tbrow0 = new TableRow(this);
-
-		TextView tv0 = new TextView(this);
-		tv0.setText(" ID SACA ");
-		tv0.setTextColor(Color.WHITE);
-		tv0.setTextSize(16);
-		tbrow0.addView(tv0);
-
-		TextView tv1 = new TextView(this);
-		tv1.setText(" ID LOTE ");
-		tv1.setTextColor(Color.WHITE);
-		tv1.setTextSize(16);
-		tbrow0.addView(tv1);
-
-		TextView tv2 = new TextView(this);
-		tv2.setText(" ID GALPÃO ");
-		tv2.setTextColor(Color.WHITE);
-		tv2.setTextSize(16);
-		tbrow0.addView(tv2);
-
-		TextView tv3 = new TextView(this);
-		tv3.setText(" DATA ARMAZENADO");
-		tv3.setTextColor(Color.WHITE);
-		tv3.setTextSize(16);
-		tbrow0.addView(tv3);
-
-		stk.addView(tbrow0);
+		CoffeeBag[] coffeeBags = CRUDCoffeeBag.GetCoffeeBags();
 
 		if(coffeeBags != null){
-			for (CoffeeBag coffeeBag : coffeeBags) {
-				TableRow tbrow = new TableRow(this);
 
-				TextView t1v = new TextView(this);
-				t1v.setText(coffeeBag.GetId());
-				t1v.setTextColor(Color.WHITE);
-				t1v.setGravity(Gravity.CENTER);
-				t1v.setTextSize(18);
-				tbrow.addView(t1v);
+			TableRow[] tableRows = TableRowGenerator.GetCoffeeBagTableRows(coffeeBags, this);
 
-				TextView t2v = new TextView(this);
-				t2v.setText(coffeeBag.GetBatch().GetId());
-				t2v.setTextColor(Color.WHITE);
-				t2v.setGravity(Gravity.CENTER);
-				t2v.setTextSize(18);
-				tbrow.addView(t2v);
-
-				TextView t3v = new TextView(this);
-				t3v.setText(coffeeBag.GetWarehouse().GetId());
-				t3v.setTextColor(Color.WHITE);
-				t3v.setGravity(Gravity.CENTER);
-				t3v.setTextSize(18);
-				tbrow.addView(t3v);
-
-				TextView t4v = new TextView(this);
-				t4v.setText(coffeeBag.GetStorageDate());
-				t4v.setTextColor(Color.WHITE);
-				t4v.setGravity(Gravity.CENTER);
-				t4v.setTextSize(18);
-				tbrow.addView(t4v);
-
-				stk.addView(tbrow);
+			if(tableRows == null){
+				return;
 			}
 
+			for (TableRow tableRow : tableRows) {
+				if(tableRow == null){
+					continue;
+				}
+
+				stk.addView(tableRow);
+			}
 		}
 	}
 
 	public void TableSortByCoffee(String coffeeID){
-		stk.removeAllViews();
-		CoffeeBag[] coffeeBags = DatabaseAccess.coffeeBagOperationsInterface.GetCoffeeBags();
 
+		stk.removeViews(1, stk.getChildCount() - 1);
 
-		TableRow tbrow0 = new TableRow(this);
+		CoffeeBag[] coffeeBags = CRUDCoffeeBag.GetCoffeeBags();
 
-		TextView tv0 = new TextView(this);
-		tv0.setText(" ID SACA ");
-		tv0.setTextColor(Color.WHITE);
-		tv0.setTextSize(16);
-		tbrow0.addView(tv0);
+		ArrayList<CoffeeBag> coffeeBagTableRows = new ArrayList<CoffeeBag>();
 
-		TextView tv1 = new TextView(this);
-		tv1.setText(" ID LOTE ");
-		tv1.setTextColor(Color.WHITE);
-		tv1.setTextSize(16);
-		tbrow0.addView(tv1);
+		for(CoffeeBag c : coffeeBags){
+			if(c == null){
+				continue;
+			}
 
-		TextView tv2 = new TextView(this);
-		tv2.setText(" ID GALPÃO ");
-		tv2.setTextColor(Color.WHITE);
-		tv2.setTextSize(16);
-		tbrow0.addView(tv2);
+			if(c.GetId().equals(coffeeID)){
+				coffeeBagTableRows.add(c);
+			}
+		}
 
-		TextView tv3 = new TextView(this);
-		tv3.setText(" DATA ARMAZENADO");
-		tv3.setTextColor(Color.WHITE);
-		tv3.setTextSize(16);
-		tbrow0.addView(tv3);
+		CoffeeBag[] coffeeBagFilter = new CoffeeBag[coffeeBagTableRows.size()];
+		coffeeBagTableRows.toArray(coffeeBagFilter);
 
-		stk.addView(tbrow0);
+		if(coffeeBagFilter != null){
+			TableRow[] tableRows = TableRowGenerator.GetCoffeeBagTableRows(coffeeBagFilter, this);
 
-		if(coffeeBags != null){
-			for (CoffeeBag coffeeBag : coffeeBags) {
+			if(tableRows == null){
+				return;
+			}
 
-				if(coffeeBag.GetId().equals(coffeeID)){
-					TableRow tbrow = new TableRow(this);
-
-					TextView t1v = new TextView(this);
-					t1v.setText(coffeeBag.GetId());
-					t1v.setTextColor(Color.WHITE);
-					t1v.setGravity(Gravity.CENTER);
-					t1v.setTextSize(18);
-					tbrow.addView(t1v);
-
-					TextView t2v = new TextView(this);
-					t2v.setText(coffeeBag.GetBatch().GetId());
-					t2v.setTextColor(Color.WHITE);
-					t2v.setGravity(Gravity.CENTER);
-					t2v.setTextSize(18);
-					tbrow.addView(t2v);
-
-					TextView t3v = new TextView(this);
-					t3v.setText(coffeeBag.GetWarehouse().GetId());
-					t3v.setTextColor(Color.WHITE);
-					t3v.setGravity(Gravity.CENTER);
-					t3v.setTextSize(18);
-					tbrow.addView(t3v);
-
-					TextView t4v = new TextView(this);
-					t4v.setText(coffeeBag.GetStorageDate());
-					t4v.setTextColor(Color.WHITE);
-					t4v.setGravity(Gravity.CENTER);
-					t4v.setTextSize(18);
-					tbrow.addView(t4v);
-
-					stk.addView(tbrow);
+			for(TableRow tablerow : tableRows){
+				if(tablerow == null){
+					continue;
 				}
+
+				stk.addView(tablerow);
 			}
 		}
 	}
 
 	public void TableSortByBatch(String batchID){
-		stk.removeAllViews();
-		CoffeeBag[] coffeeBags = DatabaseAccess.coffeeBagOperationsInterface.GetCoffeeBags();
 
+		stk.removeViews(1, stk.getChildCount() - 1);
 
-		TableRow tbrow0 = new TableRow(this);
+		CoffeeBag[] coffeeBags = CRUDCoffeeBag.GetCoffeeBags();
 
-		TextView tv0 = new TextView(this);
-		tv0.setText(" ID SACA ");
-		tv0.setTextColor(Color.WHITE);
-		tv0.setTextSize(16);
-		tbrow0.addView(tv0);
+		ArrayList<CoffeeBag> coffeeBagTableRows = new ArrayList<CoffeeBag>();
 
-		TextView tv1 = new TextView(this);
-		tv1.setText(" ID LOTE ");
-		tv1.setTextColor(Color.WHITE);
-		tv1.setTextSize(16);
-		tbrow0.addView(tv1);
+		for(CoffeeBag c : coffeeBags){
+			if(c == null){
+				continue;
+			}
 
-		TextView tv2 = new TextView(this);
-		tv2.setText(" ID GALPÃO ");
-		tv2.setTextColor(Color.WHITE);
-		tv2.setTextSize(16);
-		tbrow0.addView(tv2);
+			if(c.GetBatch().GetId().equals(batchID)){
+				coffeeBagTableRows.add(c);
+			}
+		}
 
-		TextView tv3 = new TextView(this);
-		tv3.setText(" DATA ARMAZENADO");
-		tv3.setTextColor(Color.WHITE);
-		tv3.setTextSize(16);
-		tbrow0.addView(tv3);
+		CoffeeBag[] coffeeBagFilter = new CoffeeBag[coffeeBagTableRows.size()];
+		coffeeBagTableRows.toArray(coffeeBagFilter);
 
-		stk.addView(tbrow0);
+		if(coffeeBagFilter != null){
+			TableRow[] tableRows = TableRowGenerator.GetCoffeeBagTableRows(coffeeBagFilter, this);
 
-		if(coffeeBags != null){
-			for (CoffeeBag coffeeBag : coffeeBags) {
+			if(tableRows == null){
+				return;
+			}
 
-				if(coffeeBag.GetBatch().GetId().equals(batchID)){
-					TableRow tbrow = new TableRow(this);
-
-					TextView t1v = new TextView(this);
-					t1v.setText(coffeeBag.GetId());
-					t1v.setTextColor(Color.WHITE);
-					t1v.setGravity(Gravity.CENTER);
-					t1v.setTextSize(18);
-					tbrow.addView(t1v);
-
-					TextView t2v = new TextView(this);
-					t2v.setText(coffeeBag.GetBatch().GetId());
-					t2v.setTextColor(Color.WHITE);
-					t2v.setGravity(Gravity.CENTER);
-					t2v.setTextSize(18);
-					tbrow.addView(t2v);
-
-					TextView t3v = new TextView(this);
-					t3v.setText(coffeeBag.GetWarehouse().GetId());
-					t3v.setTextColor(Color.WHITE);
-					t3v.setGravity(Gravity.CENTER);
-					t3v.setTextSize(18);
-					tbrow.addView(t3v);
-
-					TextView t4v = new TextView(this);
-					t4v.setText(coffeeBag.GetStorageDate());
-					t4v.setTextColor(Color.WHITE);
-					t4v.setGravity(Gravity.CENTER);
-					t4v.setTextSize(18);
-					tbrow.addView(t4v);
-
-					stk.addView(tbrow);
+			for(TableRow tablerow : tableRows){
+				if(tablerow == null){
+					continue;
 				}
+
+				stk.addView(tablerow);
 			}
 		}
 	}
 
 	public void TableSortByWarehouse(String warehouseID){
-		stk.removeAllViews();
-		CoffeeBag[] coffeeBags = DatabaseAccess.coffeeBagOperationsInterface.GetCoffeeBags();
 
+		stk.removeViews(1, stk.getChildCount() - 1);
 
-		TableRow tbrow0 = new TableRow(this);
+		CoffeeBag[] coffeeBags = CRUDCoffeeBag.GetCoffeeBags();
 
-		TextView tv0 = new TextView(this);
-		tv0.setText(" ID SACA ");
-		tv0.setTextColor(Color.WHITE);
-		tv0.setTextSize(16);
-		tbrow0.addView(tv0);
+		ArrayList<CoffeeBag> coffeeBagTableRows = new ArrayList<CoffeeBag>();
 
-		TextView tv1 = new TextView(this);
-		tv1.setText(" ID LOTE ");
-		tv1.setTextColor(Color.WHITE);
-		tv1.setTextSize(16);
-		tbrow0.addView(tv1);
+		for(CoffeeBag c : coffeeBags){
+			if(c == null){
+				continue;
+			}
 
-		TextView tv2 = new TextView(this);
-		tv2.setText(" ID GALPÃO ");
-		tv2.setTextColor(Color.WHITE);
-		tv2.setTextSize(16);
-		tbrow0.addView(tv2);
+			if(c.GetWarehouse().GetId().equals(warehouseID)){
+				coffeeBagTableRows.add(c);
+			}
+		}
 
-		TextView tv3 = new TextView(this);
-		tv3.setText(" DATA ARMAZENADO");
-		tv3.setTextColor(Color.WHITE);
-		tv3.setTextSize(16);
-		tbrow0.addView(tv3);
+		CoffeeBag[] coffeeBagFilter = new CoffeeBag[coffeeBagTableRows.size()];
+		coffeeBagTableRows.toArray(coffeeBagFilter);
 
-		stk.addView(tbrow0);
+		if(coffeeBagFilter != null){
+			TableRow[] tableRows = TableRowGenerator.GetCoffeeBagTableRows(coffeeBagFilter, this);
 
-		if(coffeeBags != null){
-			for (CoffeeBag coffeeBag : coffeeBags) {
-				if(coffeeBag.GetWarehouse().GetId().equals(warehouseID)){
-					TableRow tbrow = new TableRow(this);
+			if(tableRows == null){
+				return;
+			}
 
-					TextView t1v = new TextView(this);
-					t1v.setText(coffeeBag.GetId());
-					t1v.setTextColor(Color.WHITE);
-					t1v.setGravity(Gravity.CENTER);
-					t1v.setTextSize(18);
-					tbrow.addView(t1v);
-
-					TextView t2v = new TextView(this);
-					t2v.setText(coffeeBag.GetBatch().GetId());
-					t2v.setTextColor(Color.WHITE);
-					t2v.setGravity(Gravity.CENTER);
-					t2v.setTextSize(18);
-					tbrow.addView(t2v);
-
-					TextView t3v = new TextView(this);
-					t3v.setText(coffeeBag.GetWarehouse().GetId());
-					t3v.setTextColor(Color.WHITE);
-					t3v.setGravity(Gravity.CENTER);
-					t3v.setTextSize(18);
-					tbrow.addView(t3v);
-
-					TextView t4v = new TextView(this);
-					t4v.setText(coffeeBag.GetStorageDate());
-					t4v.setTextColor(Color.WHITE);
-					t4v.setGravity(Gravity.CENTER);
-					t4v.setTextSize(18);
-					tbrow.addView(t4v);
-
-					stk.addView(tbrow);
+			for(TableRow tablerow : tableRows){
+				if(tablerow == null){
+					continue;
 				}
+
+				stk.addView(tablerow);
 			}
 		}
 	}
 
+	private void GetReferences(){
+		id_coffeeBag_txt = findViewById(R.id.Id_coffebag_text);
+		id_batch_txt = findViewById(R.id.id_batch_text);
+		id_warehouse_txt = findViewById(R.id.id_warehouse_text);
+		add_button = findViewById(R.id.add_button);
+		list_button = findViewById(R.id.list_button);
+		remove_button = findViewById(R.id.remove_button);
+		stk = (TableLayout) findViewById(R.id.table_list);
+	}
+
 	public void openActivityCoffeBagRegister(){
 		Intent intent = new Intent(this, CoffeeBagRegisterMenu.class);
+		startActivity(intent);
+	}
+
+	public void openActivityCoffeBagRemove(){
+		Intent intent = new Intent(this, CoffeeBagRemoveMenu.class);
 		startActivity(intent);
 	}
 
