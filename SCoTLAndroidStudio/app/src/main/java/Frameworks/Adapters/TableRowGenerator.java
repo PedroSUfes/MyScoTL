@@ -37,6 +37,11 @@ public class TableRowGenerator {
 
 	public static void SetEmployeeTableRowGenerator(EmployeeTableRowGenerator employeeTableRowGenerator)
 	{
+		if(employeeTableRowGenerator == null)
+		{
+			return;
+		}
+
 		m_employeeTableRowGenerator = employeeTableRowGenerator;
 	}
 

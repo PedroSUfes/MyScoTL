@@ -9,7 +9,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
-import com.example.scotl.SystemClientReadEmployeeActivity;
 import com.example.scotl.UpdateAndRemoveEmployeeActivity;
 
 import java.util.ArrayList;
