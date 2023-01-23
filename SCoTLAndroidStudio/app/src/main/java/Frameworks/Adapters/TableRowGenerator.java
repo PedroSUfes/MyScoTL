@@ -3,6 +3,11 @@ package Frameworks.Adapters;
 import android.content.Context;
 import android.widget.TableRow;
 
+import java.lang.reflect.Array;
+
+import Frameworks.Adapters.WarehouseRow.WarehouseTableRowGenerator;
+import Policy.Entity.Batch;
+import Policy.Entity.CoffeeBag;
 import Frameworks.Adapters.BatchRow.BatchTableRowGenerator;
 import Frameworks.Adapters.CoffeeBagRow.CoffeeBagTableRowGenerator;
 import Frameworks.Adapters.EmployeeRow.EmployeeTableRowGenerator;
@@ -13,9 +18,12 @@ import Policy.Entity.Employee;
 import Policy.Entity.Property;
 
 public class TableRowGenerator {
+	private static BatchTableRowGenerator tableRowGeneratorBatch;
+	private static WarehouseTableRowGenerator m_warehouseTableRowGenerator;
 	private static EmployeeTableRowGenerator m_employeeTableRowGenerator;
 	private static BatchTableRowGenerator m_batchTableRowGenerator;
 	private static CoffeeBagTableRowGenerator m_coffeeBagTableRowGenerator;
+
 	private static PropertyTableRowGenerator m_propertyTableRowGenerator;
 
 	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
@@ -25,6 +33,16 @@ public class TableRowGenerator {
 			return null;
 		}
 
+	public static void SetWarehouseTableRowGenerator(WarehouseTableRowGenerator warehouseTableRowGenerator) {
+		if (warehouseTableRowGenerator == null)
+		{
+			return;
+		}
+		m_warehouseTableRowGenerator = warehouseTableRowGenerator;
+	}
+
+	public static TableRow[] GetWarehouseTableRows(Warehouse[] warehouses, Context context) {
+		return m_warehouseTableRowGenerator.GenerateLines(warehouses, context);
 		return m_employeeTableRowGenerator.GenerateLines(employeeArray, context);
 	}
 
@@ -77,6 +95,7 @@ public class TableRowGenerator {
 
 	public static TableRow[] GetBatchTableRows(Batch[] batchArray, Context context) {
 
+
 		return m_batchTableRowGenerator.GenerateLines(batchArray, context);
 	}
 
@@ -84,5 +103,4 @@ public class TableRowGenerator {
 
 		return m_coffeeBagTableRowGenerator.GenerateLines(coffeeBagArray, context);
 	}
-
 }
