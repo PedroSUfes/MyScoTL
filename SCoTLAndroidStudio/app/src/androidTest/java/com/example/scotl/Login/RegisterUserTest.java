@@ -22,7 +22,7 @@ public class RegisterUserTest
 
         Boolean result = database.TryRegisterUser
                 (
-                        "Pedro4",
+                        "Pedro3",
                         "123",
                         new Person
                                 (

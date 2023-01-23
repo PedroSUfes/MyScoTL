@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //Toast.makeText(MainActivity.this, passwordInput, Toast.LENGTH_LONG).show();
-                openActivity2();
+                //openActivity2();
+                testeCoffeBagMenu();
             }
         });
 
@@ -123,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void testeCoffeBagMenu(){
+        Intent intent = new Intent(this, CoffeeBagMenu.class);
+        startActivity(intent);
+    }
 
     private void AddTableRowGeneratorDefiners()
     {

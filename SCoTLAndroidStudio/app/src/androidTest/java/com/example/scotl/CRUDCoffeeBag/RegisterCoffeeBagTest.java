@@ -28,12 +28,12 @@ public class RegisterCoffeeBagTest
                         new CoffeeBag
                                 (
                                         "2222",
-                                        new Batch("1112", "Today"),
+                                        new Batch("1234", "22/01/2023"),
                                         new Warehouse
                                                 (
                                                         "1113"
                                                 ),
-                                        "Today"
+                                        "23/01/2023"
                                 )
                 );
 

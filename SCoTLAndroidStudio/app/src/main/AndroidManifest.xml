@@ -14,6 +14,37 @@
         android:theme="@style/Theme.SCoTL"
         tools:targetApi="31">
         <activity
+            android:name=".CoffeeBagRemoveMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CoffeeBagInformationMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CoffeeBagRegisterMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".CoffeeBagMenu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".RegisterEmployeeActivity"
+            android:exported="true" />
+        <activity
             android:name=".ManagerReadPropertyActivity"
             android:exported="false" />
         <activity
@@ -59,7 +90,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Teste"
+            android:name=".BatchTabletest"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

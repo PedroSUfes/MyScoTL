@@ -4,15 +4,19 @@ import android.content.Context;
 import android.widget.TableRow;
 
 import Frameworks.Adapters.BatchRow.BatchTableRowGenerator;
+import Frameworks.Adapters.CoffeeBagRow.CoffeeBagTableRowGenerator;
 import Frameworks.Adapters.EmployeeRow.EmployeeTableRowGenerator;
 import Frameworks.Adapters.PropertyRow.PropertyTableRowGenerator;
+import Policy.Entity.Batch;
+import Policy.Entity.CoffeeBag;
 import Policy.Entity.Employee;
 import Policy.Entity.Property;
 
 public class TableRowGenerator {
 	private static EmployeeTableRowGenerator m_employeeTableRowGenerator;
+	private static BatchTableRowGenerator m_batchTableRowGenerator;
+	private static CoffeeBagTableRowGenerator m_coffeeBagTableRowGenerator;
 //	private static TableRow[] TableRowGeneratorWarehouse;
-	private static BatchTableRowGenerator m_tableRowGeneratorBatch;
 	private static PropertyTableRowGenerator m_propertyTableRowGenerator;
 
 	public static TableRow[] GetEmployeeTableRows(Employee[] employeeArray, Context context)
@@ -24,14 +28,6 @@ public class TableRowGenerator {
 
 		return m_employeeTableRowGenerator.GenerateLines(employeeArray, context);
 	}
-//
-//	public static TableRow[] getTableRowGeneratorEmployeeByName(String nome) {
-//		return TableRowGeneratorEmployee;
-//	}
-//
-//	public static TableRow[] getTableRowGeneratorEmployeeByCpf(String cpf) {
-//		return TableRowGeneratorEmployee;
-//	}
 
 	public static void SetEmployeeTableRowGenerator(EmployeeTableRowGenerator employeeTableRowGenerator)
 	{
@@ -47,10 +43,30 @@ public class TableRowGenerator {
 	{
 		if(propertyTableRowGenerator == null)
 		{
-			System.out.println("Null property table roww generator");
+			System.out.println("Null property table row generator");
+			return;
 		}
 
 		m_propertyTableRowGenerator = propertyTableRowGenerator;
+	}
+
+	public static void SetBatchTableRowGenerator(BatchTableRowGenerator batchTableRowGenerator){
+
+		if(batchTableRowGenerator == null){
+			System.out.println("Null batch table row generator");
+			return;
+		}
+
+		m_batchTableRowGenerator = batchTableRowGenerator;
+	}
+
+	public static void SetCoffeeBagTableRowGenerator(CoffeeBagTableRowGenerator coffeeBagTableRowGenerator){
+		if(coffeeBagTableRowGenerator == null){
+			System.out.printf("Null coffeeBag table row generator");
+			return;
+		}
+
+		m_coffeeBagTableRowGenerator = coffeeBagTableRowGenerator;
 	}
 
 	public static TableRow[] GetPropertyTableRows(Property[] propertyArray, Context context)
@@ -58,40 +74,14 @@ public class TableRowGenerator {
 		return m_propertyTableRowGenerator.GenerateLines(propertyArray, context);
 	}
 
-//	public static TableRow[] getTableRowGeneratorWarehouse(String id, String state, String city, String street, String number) {
-//		return TableRowGeneratorWarehouse;
-//	}
-//
-//	public static void setTableRowGeneratorWarehouse(TableRow[] tableRowGeneratorWarehouse) {
-//		TableRowGeneratorWarehouse = tableRowGeneratorWarehouse;
-//	}
 
-	public static TableRow[] GeneratorBatchLines(Context context) {
+	public static TableRow[] GetBatchTableRows(Batch[] batchArray, Context context) {
 
-		if(m_tableRowGeneratorBatch == null){
-			System.out.println("table Row Generator Batch null");
-			return null;
-		}
-		return m_tableRowGeneratorBatch.GenerateLines(context);
+		return m_batchTableRowGenerator.GenerateLines(batchArray, context);
 	}
 
-	public static BatchTableRowGenerator GeneratorBatchLines(String id, String creationDate) {
-		return m_tableRowGeneratorBatch;
-	}
+	public static TableRow[] GetCoffeeBagTableRows(CoffeeBag[] coffeeBagArray, Context context) {
 
-	public static void setM_tableRowGeneratorBatch(BatchTableRowGenerator m_tableRowGeneratorBatch) {
-		//TableRowGeneratorBatch = tableRowGeneratorBatch;
+		return m_coffeeBagTableRowGenerator.GenerateLines(coffeeBagArray, context);
 	}
-
-//	public static TableRow[] getTableRowGeneratorCoffeeBag() {
-//		return TableRowGeneratorCoffeeBag;
-//	}
-//
-//	public static TableRow[] getTableRowGeneratorCoffeeBag(String id, String batch_Id, String warehouse_State, String warehouse_Street, String warehouse_Num){
-//		return TableRowGeneratorCoffeeBag;
-//	}
-//
-//	public static void setTableRowGeneratorCoffeeBag(TableRow[] tableRowGeneratorCoffeeBag) {
-//		TableRowGeneratorCoffeeBag = tableRowGeneratorCoffeeBag;
-//	}
 }
