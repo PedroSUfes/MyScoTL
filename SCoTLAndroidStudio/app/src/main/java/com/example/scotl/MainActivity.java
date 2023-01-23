@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openActivity2(){
-        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
-//        Intent intent = new Intent(this, ManagerReadPropertyActivity.class);
+//        Intent intent = new Intent(this, InterfaceClasses.mainMenuClass);
+        Intent intent = new Intent(this, CoffeeBagMenu.class);
         startActivity(intent);
     }
 

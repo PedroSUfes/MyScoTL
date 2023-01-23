@@ -1,5 +1,6 @@
 package Frameworks.Utility.TableRowDefiner;
 
+import Frameworks.Adapters.CoffeeBagRow.SystemClientCoffeeBagTableRowGenerator;
 import Frameworks.Adapters.EmployeeRow.ManagerEmployeeTableRowGenerator;
 import Frameworks.Adapters.PropertyRow.ManagerPropertyTableRowGenerator;
 import Frameworks.Adapters.TableRowGenerator;
@@ -20,5 +21,6 @@ public class ManagerTableRowGeneratorDefiner
 
         TableRowGenerator.SetEmployeeTableRowGenerator(new ManagerEmployeeTableRowGenerator());
         TableRowGenerator.SetPropertyTableRowGenerator(new ManagerPropertyTableRowGenerator());
+        TableRowGenerator.SetCoffeeBagTableRowGenerator(new SystemClientCoffeeBagTableRowGenerator());
     }
 }
