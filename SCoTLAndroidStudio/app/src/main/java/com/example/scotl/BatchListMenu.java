@@ -39,7 +39,7 @@ public class BatchListMenu extends AppCompatActivity {
 		add_button = findViewById(R.id.add_button);
 		list_button = findViewById(R.id.list_button);
 		stk = (TableLayout) findViewById(R.id.table_list);
-
+		header();
 		Table();
 
 		add_button.setOnClickListener(new View.OnClickListener() {
@@ -72,27 +72,11 @@ public class BatchListMenu extends AppCompatActivity {
 
 	public void Table(){
 
-		stk.removeAllViews();
+		stk.removeViews(1, stk.getChildCount() - 1);
 
 		SQLiteDAO database = new SQLiteDAO(BatchListMenu.this);
 		DatabaseAccess.batchOperationsInterface = database;
 		Batch[] batches = DatabaseAccess.batchOperationsInterface.GetBatches();
-
-		TableRow tbrow0 = new TableRow(this);
-
-		TextView tv0 = new TextView(this);
-		tv0.setText(" ID ");
-		tv0.setTextColor(Color.WHITE);
-		tv0.setTextSize(30);
-		tbrow0.addView(tv0);
-
-		TextView tv1 = new TextView(this);
-		tv1.setText(" DATA DE CRIAÇÃO ");
-		tv1.setTextColor(Color.WHITE);
-		tv1.setTextSize(30);
-		tbrow0.addView(tv1);
-
-		stk.addView(tbrow0);
 
 		if(batches != null){
 			for (Batch batch : batches) {
@@ -169,6 +153,24 @@ public class BatchListMenu extends AppCompatActivity {
 
 		}
 
+	}
+
+	public void header(){
+		TableRow tbrow0 = new TableRow(this);
+
+		TextView tv0 = new TextView(this);
+		tv0.setText(" ID ");
+		tv0.setTextColor(Color.WHITE);
+		tv0.setTextSize(30);
+		tbrow0.addView(tv0);
+
+		TextView tv1 = new TextView(this);
+		tv1.setText(" DATA DE CRIAÇÃO ");
+		tv1.setTextColor(Color.WHITE);
+		tv1.setTextSize(30);
+		tbrow0.addView(tv1);
+
+		stk.addView(tbrow0);
 	}
 
 	public void openActivityCadastrar(){
