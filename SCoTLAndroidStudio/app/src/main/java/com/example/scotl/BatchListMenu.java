@@ -16,6 +16,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import Frameworks.Adapters.TableRowGenerator;
 import Frameworks.Database.SQLite.SQLiteDAO;
 import Policy.BusinessRules.CRUDBatch;
@@ -28,6 +30,7 @@ public class BatchListMenu extends AppCompatActivity {
 	private EditText date_batch_txt;
 	private Button add_button;
 	private Button list_button;
+	private Button remove_button;
 
 
 	@Override
@@ -40,6 +43,7 @@ public class BatchListMenu extends AppCompatActivity {
 		date_batch_txt = findViewById(R.id.date_Batch_text);
 		add_button = findViewById(R.id.add_button);
 		list_button = findViewById(R.id.list_button);
+		remove_button = findViewById(R.id.remove_button);
 		stk = (TableLayout) findViewById(R.id.table_list);
 		header();
 		Table();
@@ -50,6 +54,14 @@ public class BatchListMenu extends AppCompatActivity {
 
 				openActivityCadastrar();
 
+			}
+		});
+
+		remove_button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+
+				openActivityRemover();
 			}
 		});
 
@@ -108,9 +120,24 @@ public class BatchListMenu extends AppCompatActivity {
 
 		Batch[] batches = CRUDBatch.GetBatches();
 
-		if(batches != null){
+		ArrayList<Batch> batchesTableRows = new ArrayList<Batch>();
 
-			TableRow[] tableRows = TableRowGenerator.GetBatchTableRows(batches, this);
+		for(Batch b : batches){
+			if(b == null){
+				continue;
+			}
+
+			if(b.GetCreationDate().equals(date)){
+				batchesTableRows.add(b);
+			}
+		}
+
+		Batch[] batchFilter = new Batch[batchesTableRows.size()];
+		batchesTableRows.toArray(batchFilter);
+
+		if(batchFilter != null){
+
+			TableRow[] tableRows = TableRowGenerator.GetBatchTableRows(batchFilter, this);
 
 			if(tableRows == null){
 				return;
@@ -120,10 +147,9 @@ public class BatchListMenu extends AppCompatActivity {
 				if(tablerow == null){
 					continue;
 				}
-				if(tablerow) {           //batch.GetCreationDate().equals(date)
 
-					stk.addView(tablerow);
-				}
+				stk.addView(tablerow);
+
 			}
 
 		}
@@ -150,6 +176,11 @@ public class BatchListMenu extends AppCompatActivity {
 
 	public void openActivityCadastrar(){
 		Intent intent = new Intent(this, BatchRegisterMenu.class);
+		startActivity(intent);
+	}
+
+	public void openActivityRemover(){
+		Intent intent = new Intent(this, BatchRemoveActivity.class);
 		startActivity(intent);
 	}
 }
