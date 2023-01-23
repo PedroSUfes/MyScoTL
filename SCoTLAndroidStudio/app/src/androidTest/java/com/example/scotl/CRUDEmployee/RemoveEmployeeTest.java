@@ -20,7 +20,7 @@ public class RemoveEmployeeTest
 
         DatabaseAccess.employeeOperationsInterface = database;
 
-        Boolean result = DatabaseAccess.employeeOperationsInterface.TryRemoveEmployee("1115");
+        Boolean result = DatabaseAccess.employeeOperationsInterface.TryRemoveEmployee("15909485725");
 
         MyLog.LogMessage(result.toString());
     }
