@@ -4,6 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenuActivity">
+    tools:context=".MainMenuActivity"
+    android:background="@drawable/gradient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.05">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menu Principal"
+            android:textSize="50dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/main_menu_employee_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="VER FUNCIONÁRIOS"
+            android:textSize="20dp"
+            android:layout_marginTop="90dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/main_menu_property_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="VER PROPRIEDADES"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/main_menu_batch_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="VER LOTES"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/main_menu_coffee_bag_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="VER SACAS DE CAFÉ"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/main_menu_coffee_warehouse_button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="VER SACAS DE GALPÕES"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

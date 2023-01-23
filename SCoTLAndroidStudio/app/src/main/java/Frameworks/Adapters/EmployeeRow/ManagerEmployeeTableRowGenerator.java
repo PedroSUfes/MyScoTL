@@ -77,7 +77,7 @@ public class ManagerEmployeeTableRowGenerator
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
         textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         textView.setVisibility(View.VISIBLE);
-        textView.setPadding(30, 30, 30, 30);
+        textView.setPadding(15, 15, 15, 15);
         textView.setTextSize(15);
     }
 }
