@@ -295,10 +295,10 @@ public class RegisterEmployeeActivity extends AppCompatActivity
     private void BuildValidationChain()
     {
         ChainOfResponsibilityHandle<Boolean> cpfVerification = new CpfValidationHandle(cpfText);
-        ChainOfResponsibilityHandle<Boolean> nameVerification = new EmptyDataHandle(nameText.getText()::toString, "Nenhum nome foi inserido");
-        ChainOfResponsibilityHandle<Boolean> dateVerification = new EmptyDataHandle(birthDatePickerButton.getText()::toString, "Nenhuma data de aniversario foi inserida");
-        ChainOfResponsibilityHandle<Boolean> cellphoneVerification = new EmptyDataHandle(cellphoneText.getText()::toString, "Nenhum telefone para contato inserido");
-        ChainOfResponsibilityHandle<Boolean> workLocalIdVerification = new WorkLocalIdValidationHandle(workLocalEditText.getText()::toString);
+        ChainOfResponsibilityHandle<Boolean> nameVerification = new EmptyDataHandle(() -> nameText.getText().toString(), "Nenhum nome foi inserido");
+        ChainOfResponsibilityHandle<Boolean> dateVerification = new EmptyDataHandle(() -> birthDatePickerButton.getText().toString(), "Nenhuma data de aniversario foi inserida");
+        ChainOfResponsibilityHandle<Boolean> cellphoneVerification = new EmptyDataHandle(() -> cellphoneText.getText().toString(), "Nenhum telefone para contato inserido");
+        ChainOfResponsibilityHandle<Boolean> workLocalIdVerification = new WorkLocalIdValidationHandle(() -> workLocalEditText.getText().toString());
 
         verificationHandler = new ChainOfResponsibilityHandler<>(cpfVerification);
         verificationHandler.SetNext(nameVerification);
